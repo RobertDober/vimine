@@ -1,0 +1,52 @@
+snippet >>
+	|> 
+snippet defm
+	defmodule ${1} do
+	  ${2}
+	end
+snippet def
+	def ${1}(${2}) do
+	  ${3}
+	end
+snippet defp
+	defp ${1}(${2}) do
+	  ${3}
+	end
+snippet rec
+	receive do
+	  ${1} -> ${2}
+	end
+snippet Testcase
+	defmodule ${1}Test do
+	  use ExUnit.Case
+	  ${2}
+	end
+snippet mdoc
+	@moduledoc """
+	${1}
+	"""
+	${2}
+snippet doct
+	@doc ~S"""
+	${1}
+	"""
+snippet doc
+	@doc """
+	${1}
+	"""
+	${2}
+snippet icode
+	\`${1}\`${2}
+snippet do
+	do
+	  ${1}
+	end
+snippet test
+	test "${1}" do
+	  ${2}
+	end
+snippet spec
+	@spec ${1}
+	def ${2}(${3}) do
+	  ${4}
+	end

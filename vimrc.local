@@ -1,0 +1,366 @@
+"
+set fileformat=unix
+set expandtab
+"let mapleader=","
+let mapleader="&"
+set laststatus=2
+set wildmenu
+set wildmode=full
+"
+set modeline
+set hidden
+"noremap i :nohlsearch<RETURN>i
+noremap <Esc> :nohlsearch<RETURN><Esc>
+map <Leader>a :'a,.
+
+set foldmethod=marker
+set foldlevel=999
+set guioptions-=T
+set guioptions-=m
+set lines=999
+map +m :set guioptions+=m<CR>
+map -m :set guioptions-=m<CR>
+set hlsearch
+set incsearch
+map <Esc> :nohlsearch<CR>
+" Dormant *Settings {{{
+" Move into plugin/ft_settings.vim when activating
+" function! s:configSettings()
+"   set sw=4 sts=4 ft=cfg expandtab tw=0
+"   "inoremap <C-Tab> <Esc>:rubyfile ~/.vim/vimruby/lab42/c-tab-completion.rb<CR>o
+"   "inoremap <C-Tab> <Esc>:.!ruby ~/.vim/vimruby/lab42/config-file-completion.rb<CR>A
+" endfunction
+" function! s:cssSettings() " {{{{{
+"    set sw=2 sts=2
+"    set indentexpr=""
+" endfunction " }}}}}
+" function! s:cucumberSettings()
+"   " foldlevel 1 provides an outline view of the feature
+"   set foldmethod=indent foldlevel=999 nu ft=cucumber sw=2 sts=2
+" endfunction
+" function! s:eelixirSettings()
+"   set ft=eelixir
+" endfunction
+" function! s:ElmSettings()
+"   set sw=2 sts=2 expandtab tw=0 nu
+" endfunction
+" function! s:erubySettings()
+"   set sw=2 sts=2 expandtab tw=0
+" endfunction
+" function! s:goSettings()
+"   set sw=4 sts=4 expandtab tw=0
+"   "inoremap <C-Tab> <Esc>:rubyfile ~/.vim/vimruby/lab42/c-tab-completion.rb<CR>o
+"   "inoremap <C-Tab> <Esc>:.!ruby ~/.vim/vimruby/lab42/config-file-completion.rb<CR>A
+" endfunction
+" function! s:haskellSettings()
+"   set ft=haskell
+"   set sw=2 sts=2 expandtab tw=0 nu
+" endfunction
+" function! s:LiveScriptSaveAndMake()
+"   exe "w"
+"   exe "LiveScriptMake!"
+" endfunction
+" function! s:LiveScriptSettings()
+"   setl foldmethod=indent nofoldenable
+"   setl shiftwidth=2 expandtab
+" endfunction
+" command! WW call s:LiveScriptSaveAndMake()
+" function! s:lispSettings()
+"   set sw=2 sts=2 ft=lisp expandtab tw=0
+" endfunction
+" function! s:lexSettings()
+"   set sw=2 ft=lex expandtab tw=0
+" endfunction
+" function! s:perlSettings()
+"   set sw=4 sts=4 ft=perl6 expandtab tw=0 foldmethod=syntax foldlevel=999 nu
+" endfunction
+" function! s:pugSettings() " {{{{{
+"   set sw=2 sts=2
+" endfunction " }}}}}
+" function! s:typeScriptSettings() " {{{{{
+"   set sw=2 sts=2
+" endfunction " }}}}}
+" function! s:pursSettings()
+"   set ft=purescript
+"   set sw=2 sts=2 expandtab tw=0 nu
+" endfunction
+" function! s:rustSettings()
+"   set sw=2 sts=2 ft=rust expandtab tw=0 foldmethod=syntax foldlevel=999 nu
+"   " set listchars=tab:>~,nbsp:_,trail:.
+"   " set list
+"   highlight ColorColumn ctermbg=magenta
+"   call matchadd('ColorColumn', '\%121v', 100)
+" endfunction
+" function! s:scalaSettings()
+"   set sw=2 sts=2 ft=scala expandtab tw=0 foldmethod=syntax foldlevel=999 nu
+" endfunction
+" function! s:schemeSettings() " {{{{{
+"   set ft=scheme sw=2 sts=2
+" endfunction " }}}}}
+"function! s:tntSettings()
+"  set sw=2 sts=2 ft=tnt expandtab tw=0
+"endfunction
+" function! s:slimSettings() " {{{{{
+"   set sw=2 foldmethod=indent foldlevel=999
+" endfunction " }}}}}
+" function! s:timSettings()
+"   set sw=2 sts=2 expandtab tw=0 nu
+" endfunction
+
+" function! s:cppSettings()
+"   set sw=4 sts=4 ft=cpp
+" endfunction
+
+" function! s:kotlinSettings()
+"   set sw=4 sts=4 ft=cpp
+" endfunction
+
+" function! s:luaSettings()
+"   set sw=2 sts=2 ft=lua
+" endfunction
+
+" function! s:moonSettings()
+"   set sw=2 sts=2 ft=moon
+" endfunction
+
+" function! s:ocamlSettings()
+"   set sw=4 sts=4 ft=ocaml
+" endfunction
+
+" function! s:phpSettings()
+"   set sw=4 sts=4 ft=php
+" endfunction
+" function! s:xmlSettings()
+"   set sw=2 sts=2 expandtab tw=0 nu
+"   set foldlevel=999 foldmethod=indent
+" endfunction
+
+"function! g:cleanRegexAnchors()
+"  exec ':%s/\/\^/\/\\A/'
+"  exec ':%s/\$\//\\z\//'
+"endfunction
+
+" command! RegexClean call g:cleanRegexAnchors()
+" au FileType haskell nnoremap <buffer> <Leader>t :w<CR>:HdevtoolsType<CR>
+" au FileType haskell nnoremap <buffer> <silent> <Leader>c :w<CR>:HdevtoolsClear<CR>
+
+" au BufNewFile,BufRead *.cfg call s:configSettings()
+" au BufNewFile,BufRead *.{css,sass,scss} call s:cssSettings()
+" au BufNewFile,BufRead *.{cpp,hpp} call s:cppSettings()
+" au BufNewFile,BufRead *.feature call s:cucumberSettings()
+
+" au BufNewFile,BufRead *.{leex} call s:eelixirSettings()
+" au BufNewFile,BufReadPost,BufRead *.elm call s:ElmSettings()
+" au BufNewFile,BufRead *.rhtml call s:erubySettings()
+
+" au BufNewFile,BufRead *.go call s:goSettings()
+" au BufNewFile,BufRead *.{hs} call s:haskellSettings()
+
+" Javascript
+" au BufNewFile,BufRead *.{json} call s:jsonSettings()
+" au BufNewFile,BufRead *.{kt,kts} call s:kotlinSettings()
+" au BufNewFile,BufRead *.xrl call s:lexSettings()
+" au BufNewFile,BufReadPost *.ls call s:LiveScriptSettings()
+" au BufNewFile,BufRead *.lua call s:luaSettings()
+" au BufNewFile,BufRead *.{cl} call s:lispSettings()
+" au BufNewFile,BufRead *.moon call s:moonSettings()
+" au BufNewFile,BufRead *.{ml,mli} call s:ocamlSettings()
+" au BufNewFile,BufRead *.{pl,pl6} call s:perlSettings()
+" au BufNewFile,BufRead *.{pug} call s:pugSettings()
+" au BufNewFile,BufRead *.php call s:phpSettings()
+" au BufNewFile,BufRead *.{purs} call s:pursSettings()
+" au BufNewFile,BufRead *.{ts,tsx} call s:typeScriptSettings()
+
+" au BufNewFile,BufRead *.{rs} call s:rustSettings()
+" au BufNewFile,BufRead *.tnt call s:tntSettings()
+
+" au BufNewfile,BufRead *.{rkt,scm} call s:schemeSettings()
+" au BufNewFile,BufRead *.scala call s:scalaSettings()
+
+" au BufNewFile,BufRead *.{slim} call s:slimSettings()
+" au BufNewFile,BufRead *.tim call s:timSettings()
+" au BufNewFile,BufRead *.{rdf,xml,xul} call s:xmlSettings()
+
+" au BufNewFile,BufRead *pp set ft=puppet
+" au BufNewFile,BufRead *.toml set ft=ini
+" au BufNewFile,BufRead * call lab42#buffer_init()
+" }}}
+
+set nobackup
+set noswapfile
+set autoread
+au CursorHold * checktime
+
+if filereadable(expand("$VIMCUSTOMRC"))
+  source $VIMCUSTOMRC
+endif
+
+set nu
+
+" let g:yankring_history_dir=expand('$HOME/tmp')
+
+" Define a function and a command to add a new branch into your git/config
+" file
+function! <SID>AddBranchToVim(branch,...) " {{{{
+  let l:origin = 'origin'
+  if a:0 > 0
+    let l:origin = a:1
+  endif
+  call append(line('$'), '[branch "' . a:branch . '"]' )
+  call append(line('$'), '        remote = ' . l:origin )
+  call append(line('$'), '        merge = refs/heads/' . a:branch )
+endfunction " }}}}
+
+" inoremap <C-Space> <C-x><C-o><C-p><C-n>
+" usage:
+" command! -nargs=* AddBranch call <SID>AddBranchToVim(<args>)
+
+let g:solarized_termcolors = 256
+nnoremap <C-p> :tabprev<CR>
+nnoremap <C-n> :tabnext<CR>
+" command! QTab :exe 'quit | tabprev'
+" show colorgroups
+"
+" nmap <C-Y> :call <SID>SynStack()<CR>
+" function! <SID>SynStack()
+"   if !exists("*synstack")
+"     return
+"   endif
+"   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+" endfunc
+" Window Navigation
+inoremap <C-d> <Space>do<Enter>end<Esc>O
+inoremap <C-e> <Enter>end<Esc>O
+
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a> :Tabularize /=><CR>
+vmap <Leader>a> :Tabularize /=><CR>
+nmap <Leader>a- :Tabularize /-><CR>
+vmap <Leader>a- :Tabularize /=-<CR>
+nmap <Leader>a: :Tabularize /:\s*\zs<CR>
+vmap <Leader>a: :Tabularize /:\s*\zs<CR>
+" let g:slime_target = 'tmux'
+" let g:slime_paste_file = '/home/robert/tmp/slime-paste-file'
+
+map <Leader>= gg=G''<CR>
+" Marvim
+
+" let marvim_store = '/home/robert/tmp/marvim_store'
+" let marvim_find_key = '<Space>'
+" let marvim_store_key = 'ms'
+
+" au VimEnter * RainbowParenthesesToggle
+" au Syntax * RainbowParenthesesLoadRound
+" au Syntax * RainbowParenthesesLoadSquare
+" au Syntax * RainbowParenthesesLoadBraces
+
+" set lispwords+=context
+" set lispwords+=describe
+" set lispwords+=it
+
+
+" try
+"   exe "source ~/.vimrc.abbreviations"
+" catch /E484/
+" endtry
+
+" if file_readable($PWD . "/.vimrc.project")
+"   exe "source " . $PWD . "/.vimrc.project"
+" endif
+
+   " if !exists('g:airline_symbols')
+   "      let g:airline_symbols = {}
+   "  endif
+
+   "  " unicode symbols
+   "  let g:airline_left_sep = '»'
+   "  let g:airline_left_sep = '▶'
+   "  let g:airline_right_sep = '«'
+   "  let g:airline_right_sep = '◀'
+   "  let g:airline_symbols.crypt = '🔒'
+   "  let g:airline_symbols.linenr = '☰'
+   "  let g:airline_symbols.linenr = '␊'
+   "  let g:airline_symbols.linenr = '␤'
+   "  let g:airline_symbols.linenr = '¶'
+   "  let g:airline_symbols.maxlinenr = ''
+   "  let g:airline_symbols.maxlinenr = '㏑'
+   "  let g:airline_symbols.branch = '⎇'
+   "  let g:airline_symbols.paste = 'ρ'
+   "  let g:airline_symbols.paste = 'Þ'
+   "  let g:airline_symbols.paste = '∥'
+   "  let g:airline_symbols.spell = 'Ꞩ'
+   "  let g:airline_symbols.notexists = 'Ɇ'
+   "  let g:airline_symbols.whitespace = 'Ξ'
+
+    " powerline symbols
+
+" This or airline?
+function! s:gitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = s:gitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+function! s:grep(list, expr) " {{{{{
+  let l:list = copy(a:list)
+  return filter(l:list, "match(v:val, '" . a:expr . "') >= 0") 
+endfunction " }}}}}
+
+function! GitCleanStatus()
+  let l:status = system("git status --porcelain 2>/dev/null" )
+  let l:status_lines = split(l:status, "\n")
+
+  let l:staged    = !empty(s:grep(l:status_lines, "^[AMRD]."))
+  let l:unmerged  = !empty(s:grep(l:status_lines, "^UU "))
+  let l:unstaged  = !empty(s:grep(l:status_lines, "^.[MTD]"))
+  let l:untracked = !empty(s:grep(l:status_lines, "^\?\? "))
+  let l:clean     = !l:staged && !l:unmerged && !l:unstaged && !l:untracked
+
+  let l:status_string = join([
+        \ (l:clean?"✓":"✘"), 
+        \ (l:staged?"+":""),
+        \ (l:unmerged?"!":""),
+        \ (l:unstaged?"●":""),
+        \ (l:untracked?"✖":""),
+        \ ])
+
+  return l:status_string
+endfunction
+set statusline=
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m\ %r
+set statusline+=\ %3n
+set statusline+=%=
+set statusline+=\ %{StatuslineGit()}
+set statusline+=\ %{GitCleanStatus()}
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=%5p%%
+set statusline+=%5l:%3c 
+set statusline+=[0x%B]
+set statusline+=\ 
+
+" let g:tex_flavor='latex'
+" let g:vimtex_view_method='zathura'
+" let g:vimtex_quickfix_mode=0
+" set conceallevel=1
+" let g:tex_conceal='abdmg'
+
+" if has('nvim')
+"   set statusline+=Neo
+"   let g:python3_host_prog = expand("$HOME/.vim/bundle/Lab42VimTools/ext/python/bin/python")
+"   let g:ruby_host_prog = "rvm default do neovim-ruby-host"
+" else
+"   set statusline+=Vim
+"   " call plug#begin()
+"   " Plug '/home/linuxbrew/.linuxbrew/bin/fzf'
+"   " Plug 'junegunn/fzf.vim'
+"   " call plug#end()
+" endif

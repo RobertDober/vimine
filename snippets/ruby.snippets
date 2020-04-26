@@ -1,0 +1,66 @@
+snippet #
+  	#{${1}}
+snippet sh
+	require 'spec_helper'
+	RSpec.describe ${1} do
+	  ${2}
+	end
+snippet subject
+	subject do
+	  ${1}
+	end
+snippet xp
+	expect{ ${1} }.${2:to} ${3}
+snippet memo
+	def ${1}
+	  @__${2}__ ||= ${3}
+	end
+snippet pry
+	require 'pry'
+	binding.pry${1}
+snippet let
+	let(:${1}) { ${2} }
+	${3}
+snippet letd
+	let_double(:${1})
+	${2}
+snippet letds
+	let_doubles(:${1})
+	${2}
+snippet letdo
+	let :${1} do
+	  ${2}
+	end
+	${3}
+snippet	itx
+	it { expect(${1}).to ${2} }
+snippet	itxp
+	it { expect{ ${1} }.to ${2} }
+snippet before
+	before do
+	  ${1}
+	end
+	${2}
+snippet after
+	after do
+	  ${1}
+	end
+	${2}
+# snippet xit
+# 	expect_it.to ${1}
+# snippet nxit
+# 	expect_it.not_to ${1}
+snippet x
+	expect( ${1} ).to ${2}
+snippet nx
+	expect( ${1} ).not_to ${2}
+snippet itn
+	it { expect( ${1} ).not_to ${2} }
+
+snippet do
+	do |${1}|
+	  ${2}
+	end
+snippet {
+	 { |${1}| ${2} }
+	${3}
