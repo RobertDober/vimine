@@ -1,11 +1,10 @@
-/ext/crytsal/docs/
-/ext/crytsal/lib/
-/ext/crytsal/bin/
-/ext/crytsal/.shards/
+/ext/crystal/docs/
+/ext/crystal/lib/
+/ext/crystal/bin/
+/ext/crystal/.shards/
 *.dwarf
 
 # Libraries don't need dependency lock
 # Dependencies will be locked in applications that use them
-/ext/crytsal/shard.lock
-/ext/crytsal/bin/
-
+/ext/crystal/shard.lock
+/ext/crystal/bin/

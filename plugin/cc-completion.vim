@@ -11,7 +11,7 @@ function! s:completeThat(last_lnb) " {{{{{
   let [_, l:first_lnb, l:col, _] = getpos('.')
   " call filter depending on ft
   " postion on end of next line
-  silent exec l:first_lnb . ',' . a:last_lnb . '!' . g:vimine_home . '/ext/crystal/cccomplete/complete_' . &ft
+  silent exec l:first_lnb . ',' . a:last_lnb . '!' . g:vimine_home . '/ext/crystal/bin/cccomplete_' . &ft
   " Potentially we need to interpret the first line returned and remvoe it, an idea would be the following pattern
   " if match(getline("."), "%%%exe:") == 0
   "   let l:comand = substitute(getline('.'), .%%%exe:\s*., '', '')
@@ -19,11 +19,10 @@ function! s:completeThat(last_lnb) " {{{{{
   "   exec l:command
   " endif
   exec 'normal ' . (l:first_lnb + 1) . 'G'
-  exec 'normal A'
 endfunction " }}}}}
 
 " inoremap <silent> <Plug>ParenComplete <Esc>: call <SID>parenComplete()<CR>a
 " imap <C-Space> <Plug>ParenComplete
 " map <Space> a<C-c>
 command! -range CCComplete call <SID>completeThat(<line2>)
-imap <C-c> <Esc>:CCComplete<CR>
+imap <C-c> <Esc>:CCComplete<CR>a
