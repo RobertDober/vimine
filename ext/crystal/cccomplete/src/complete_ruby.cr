@@ -1,4 +1,9 @@
+require "./tools/system"
+require "./completers/ruby"
 module CompleteRuby extend self
 
-  puts "CompleteRuby"
+  include Tools::System
+  include Completers
+  # puts "%%%exe: normal o" 
+  puts Ruby.new(read_stdin).complete
 end

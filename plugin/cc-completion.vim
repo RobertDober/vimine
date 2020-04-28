@@ -12,13 +12,18 @@ function! s:completeThat(last_lnb) " {{{{{
   " call filter depending on ft
   " postion on end of next line
   silent exec l:first_lnb . ',' . a:last_lnb . '!' . g:vimine_home . '/ext/crystal/bin/cccomplete_' . &ft
+  call cursor(l:first_lnb, 999999)
   " Potentially we need to interpret the first line returned and remvoe it, an idea would be the following pattern
-  " if match(getline("."), "%%%exe:") == 0
-  "   let l:comand = substitute(getline('.'), .%%%exe:\s*., '', '')
-  "   call deletebufline(bufname("%"), l:first_lnb).config/nvim/bundle/vimine/vimrc.local
-  "   exec l:command
-  " endif
-  exec 'normal ' . (l:first_lnb + 1) . 'G'
+  let l:commands = []
+  while match(getline("."), "%%%End Commands%%%") != 0
+    call add(l:commands, getline('.'))
+    exec '.d'
+  endwhile
+  exec '.d'
+  for l:command in l:commands
+    exec l:command
+  endfor
+  " exec 'normal ' . (l:first_lnb + 1) . 'G'
 endfunction " }}}}}
 
 " inoremap <silent> <Plug>ParenComplete <Esc>: call <SID>parenComplete()<CR>a

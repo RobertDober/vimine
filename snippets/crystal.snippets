@@ -1,0 +1,31 @@
+snippet sh
+	require "./spec_helper"
+	describe ${1} do
+	  ${2}
+	end
+snippet xp
+	expect{ ${1} }.${2:to} ${3}
+snippet memo
+	def ${1}
+	  @__${2}__ ||= ${3}
+	end
+snippet pry
+	require 'pry'
+	binding.pry${1}
+snippet before
+	before do
+	  ${1}
+	end
+	${2}
+snippet after
+	after do
+	  ${1}
+	end
+	${2}
+snippet do
+	do |${1}|
+	  ${2}
+	end
+snippet {
+	 { |${1}| ${2} }
+	${3}
