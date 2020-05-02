@@ -1,11 +1,10 @@
 module Completers
-  class Elixir
+  class Elixir < GenericCompleter
 
     def complete
-      @lines
+      complete_with_do
+      complete_rest
     end
 
-    def initialize(@lines : Array(String)) : Array(String)
-    end
   end
 end

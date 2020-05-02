@@ -9,27 +9,8 @@ module Completers
       else
         complete_with_do
       end
-      complete_rest
+      complete_rest_with_end
     end
-
-
-    private def complete_rest
-      @lines.shift
-      add_to_output("end")
-      add_call("append('.', '#{@prefix}' . repeat(' ', &sw))") 
-      add_normal("j$")
-      result
-    end
-
-    private def complete_with_do
-      add_to_output(with_do(@lines.first), prefix?: false)
-    end
-
-    private def complete_wo_do
-      add_to_output(@lines.first, prefix?: false)
-    end
-
-    
 
 
   end
