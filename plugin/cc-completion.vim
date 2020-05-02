@@ -7,6 +7,13 @@ if exists( 'g:vimine_did_cccomplete' )
 endif
 let g:vimine_did_cccomplete = 1
 
+function! s:completeZ(last_lnb) " {{{{{
+  let l:czcompleter = g:vimine_home . '/ext/crystal/bin/czcomplete '
+  for l:line in sys#system(l:czcompleter, getline('.'))
+    exec l:line
+  endfor
+endfunction " }}}}}
+
 function! s:completeThat(last_lnb) " {{{{{
   let [_, l:first_lnb, l:col, _] = getpos('.')
   " call filter depending on ft
@@ -30,4 +37,6 @@ endfunction " }}}}}
 " imap <C-Space> <Plug>ParenComplete
 " map <Space> a<C-c>
 command! -range CCComplete call <SID>completeThat(<line2>)
+command! -range CZComplete call <SID>completeZ(<line2>)alpha
 imap <C-c> <Esc>:CCComplete<CR>a
+imap <C-z> <Esc>:CZComplete<CR>a

@@ -44,6 +44,8 @@ function! s:send_and_switch(window, keys) " {{{{{
   for l:key in a:keys 
     let l:command = 'tmux send-keys -l' . a:window . shellescape(l:key)
     " echomsg l:command
+    call dbg#ts()
+    call dbg#dbg(a:window)
     call system(l:command)
     call system('tmux send-keys' . a:window . 'C-m')
   endfor
