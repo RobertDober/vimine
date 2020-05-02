@@ -29,6 +29,13 @@ function! s:hamlSettings() " {{{{{
 endfunction " }}}}}
 au BufNewFile,BufRead *.{haml} call s:hamlSettings()
 
+" Haskell & Purescript
+" --------------------
+function! s:haskellSettings() " {{{{{
+  set sw=2 foldmethod=indent foldlevel=999 tw=0 et
+endfunction: " }}}}}
+au BufNewFile,BufRead *.{hs,purs} call s:haskellSettings()
+
 "
 " HTML
 function! s:htmlSettings()
@@ -61,6 +68,13 @@ function! s:markdownSettings()
 endfunction
 au BufNewFile,BufRead *.{md,md.eex} call s:markdownSettings()
 
+" Racket
+" ------
+function! s:racketSettings() " {{{{{
+  set sw=2 sts=2 ft=scheme expandtab tw=0
+  " set autoindent
+endfunction: " }}}}}
+au BufNewFile,BufRead *.{rkt,rktl} call s:racketSettings()
 " Ruby
 " ----
 function! s:rubySettings()
