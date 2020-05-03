@@ -1,0 +1,9 @@
+name: cccomplete
+version: 0.1.0
+
+authors:
+  - Robert Dober <rdober@mediatech-cx>
+
+crystal: 0.34.0
+
+license: MIT

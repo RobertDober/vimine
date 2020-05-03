@@ -1,9 +1,9 @@
-require "../tools/string"
+require "../tools/str"
 
 module Completers
   class GenericCompleter
 
-    ST = Tools::String
+    ST = Tools::Str
 
 
     @commands : Array(String)
@@ -42,7 +42,7 @@ module Completers
 
 
     private def complete_with_do
-      add_to_output(ST::with_do(@lines.first), prefix?: false)
+      add_to_output(ST.with_do(@lines.first), prefix?: false)
     end
 
     private def complete_wo_do

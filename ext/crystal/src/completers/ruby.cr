@@ -8,4 +8,4 @@ module Completers
     def initialize(@lines : Array(String)) : Array(String)
     end
   end
-end
+tmux end
