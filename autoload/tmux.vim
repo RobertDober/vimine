@@ -2,11 +2,13 @@
 " Local {{{
 " =====
 let s:test_commands = {
+  \ 'crystal': 'crystal spec ',
   \ 'elixir': 'mix test ',
   \ 'ruby': 'bundle exec rspec '
   \ }
 
 let s:specific_line_triggers = {
+  \ 'crystal': '\v^\s*(describe\s|context\s|it\s)',
   \ 'elixir': '\v^\s*(describe\s|context\s|test\s)',
   \ 'ruby': '\v^\s*(describe\s|context\s|it\s)'
   \ }
@@ -22,7 +24,7 @@ function! s:compile_window(window) " {{{{{
 endfunction: " }}}}}
 
 function! s:get_file_and_lnb() " {{{{{
-  let l:file = expand('%:p')
+  let l:file = expand('%')
   let l:line = getline('.')
   let l:trigger = get(s:specific_line_triggers, &ft, 'none')
   " call dbg#ts()
