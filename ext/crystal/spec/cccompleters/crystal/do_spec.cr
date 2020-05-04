@@ -1,22 +1,23 @@
 require "../../spec_helper"
-describe Completers::Elixir do
+describe CCCompleters::Crystal do
 
   standard_prefix = [
         "normal j$",
         "%%%End Commands%%%"]
 
-
   context "do for most lines" do
-    it "works for def" do
-      input    = ["    def times(n)"]
-      output   = Completers::Elixir.new(input).complete
+    it "works for a lambda line" do
+      input    = ["    times"]
+      output   = CCCompleters::Crystal.new(input).complete
       expected = [
         "call append('.', '    ' . repeat(' ', &sw))" ] +
         standard_prefix + [ 
-        "    def times(n) do",
+        "    times do",
         "    end"]
 
       output.should eq(expected)
     end
   end
+  
 end
+

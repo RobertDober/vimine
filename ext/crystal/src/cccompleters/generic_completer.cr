@@ -1,6 +1,6 @@
 require "../tools/str"
 
-module Completers
+module CCCompleters
   class GenericCompleter
 
     ST = Tools::Str
@@ -55,6 +55,10 @@ module Completers
 
     private def result : Array(String)
       @commands + ["%%%End Commands%%%"] + @output + @lines
+    end
+
+    private def post_result() : Array(String)
+      @commands + ["%%%End Commands%%%"] + @lines + @output
     end
 
   end

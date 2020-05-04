@@ -17,4 +17,4 @@ bin/cccomplete_elixir: $(SOURCES)
 	crystal build src/cccomplete_elixir.cr -o bin/cccomplete_elixir
 
 bin/czcomplete_elixir: $(SOURCES)
-	crystal build src/czcomplete_elixir.cr -o bin/cccomplete_elixir
+	crystal build src/czcomplete_elixir.cr -o bin/czcomplete_elixir

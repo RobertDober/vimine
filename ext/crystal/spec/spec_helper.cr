@@ -1,3 +1,5 @@
 require "spec"
-require "../src/completers/crystal"
-require "../src/completers/elixir"
+require "../src/tools/system"
+require "../src/cccompleters/crystal"
+require "../src/cccompleters/elixir"
+require "../src/czcompleters/elixir"

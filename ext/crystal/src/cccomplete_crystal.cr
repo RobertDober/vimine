@@ -1,9 +1,9 @@
 require "./tools/system"
-require "./completers/crystal"
-module CompleteCrystal extend self
+require "./cccompleters/crystal"
+module CCCompleteCrystal extend self
 
   include Tools::System
-  include Completers
+  include CCCompleters
   # puts "%%%exe: normal o" 
   Crystal.new(read_stdin).complete.each { |line| puts line }
 

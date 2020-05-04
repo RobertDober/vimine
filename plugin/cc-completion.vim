@@ -12,9 +12,19 @@ function! s:czcomplete() " {{{{{
   let l:last_lnb = l:first_lnb + 1
   " call filter depending on ft
   " postion on end of next line
-  call cursor(l:first_lnb, 999999)
+  call dbg#ts()
   let l:czcompleter = g:vimine_home . '/ext/crystal/bin/czcomplete_' . &ft
-  silent exec l:first_lnb . ',' . l:last_lnb . '!' . l:czcompleter 
+  call dbg#dbg('invoking: ' . l:czcompleter)
+  silent exec l:first_lnb . ',' . l:last_lnb . '!' . l:czcompleter . ' ' . l:first_lnb . ' ' . l:col
+  let l:commands = []
+  while match(getline("."), "%%%End Commands%%%") != 0
+    call add(l:commands, getline('.'))
+    exec '.d'
+  endwhile
+  exec '.d'
+  for l:command in l:commands
+    exec l:command
+  endfor
 endfunction " }}}}}
 
 function! s:cccomplete(last_lnb) " {{{{{
@@ -33,7 +43,6 @@ function! s:cccomplete(last_lnb) " {{{{{
   for l:command in l:commands
     exec l:command
   endfor
-  exec 'normal ' . (l:first_lnb + 1) . 'G'
 endfunction " }}}}}
 
 " inoremap <silent> <Plug>ParenComplete <Esc>: call <SID>parenComplete()<CR>a

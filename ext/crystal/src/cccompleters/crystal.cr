@@ -1,5 +1,5 @@
 require "./generic_completer"
-module Completers
+module CCCompleters
   class Crystal < GenericCompleter
 
     def complete

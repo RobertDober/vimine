@@ -2,10 +2,12 @@
 " Local {{{
 " =====
 let s:test_commands = {
+  \ 'elixir': 'mix test ',
   \ 'ruby': 'bundle exec rspec '
   \ }
 
 let s:specific_line_triggers = {
+  \ 'elixir': '\v^\s*(describe\s|context\s|test\s)',
   \ 'ruby': '\v^\s*(describe\s|context\s|it\s)'
   \ }
 

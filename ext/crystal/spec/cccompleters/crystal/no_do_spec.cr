@@ -1,5 +1,5 @@
 require "../../spec_helper"
-describe Completers::Crystal do
+describe CCCompleters::Crystal do
 
   standard_prefix = [
         "normal j$",
@@ -8,7 +8,7 @@ describe Completers::Crystal do
   context "no do for class/def/module" do
     it "works for top level class" do
       input    = ["class Klass"]
-      output   = Completers::Crystal.new(input).complete
+      output   = CCCompleters::Crystal.new(input).complete
       expected = [
         "call append('.', '' . repeat(' ', &sw))" ] +
         standard_prefix + [ 
@@ -20,7 +20,7 @@ describe Completers::Crystal do
 
     it "works for an indented def" do
       line     = "  def mymethod( a : String )"
-      output   = Completers::Crystal.new([line]).complete
+      output   = CCCompleters::Crystal.new([line]).complete
       expected = [
         "call append('.', '  ' . repeat(' ', &sw))" ] +
         standard_prefix + [ 
@@ -32,7 +32,7 @@ describe Completers::Crystal do
 
     it "works for a module and spourious lines" do
       line     = "  module Alpha"
-      output   = Completers::Crystal.new([line, "some text"]).complete
+      output   = CCCompleters::Crystal.new([line, "some text"]).complete
       expected = [
         "call append('.', '  ' . repeat(' ', &sw))" ] +
         standard_prefix + [ 
