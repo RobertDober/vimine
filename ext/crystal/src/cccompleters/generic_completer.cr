@@ -46,7 +46,7 @@ module CCCompleters
     end
 
     private def complete_wo_do
-      add_to_output(@lines.first, prefix?: false)
+      add_to_output(@lines.first.rstrip, prefix?: false)
     end
 
     private def prefixed(str : String) : String

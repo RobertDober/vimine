@@ -41,5 +41,18 @@ describe CCCompleters::Ruby do
 
       output.should eq(expected)
     end
+
+    it "also gets rid of pending whitespace" do
+      line     = "  module Alpha "
+      output   = CCCompleters::Ruby.new([line, "some text"]).complete
+      expected = [
+        "call append('.', '  ' . repeat(' ', &sw))" ] +
+        standard_prefix + [ 
+        line.rstrip, 
+        "  end",
+        "some text"]
+
+      output.should eq(expected)
+    end
   end
 end
