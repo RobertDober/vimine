@@ -2,13 +2,16 @@ require "./generic_completer"
 module CZCompleters
   class Elixir < GenericCompleter
 
-    DefRgx  = %r{\A\s*defp?\s+(\w+)}
-    SpecRgx = %r{\A\s*@spec\s*\z}
+    DefRgx    = %r{\A\s*defp?\s+(\w+)}
+    ModuleRgx = %r{\A(?:def)?module\s*\z}
+    SpecRgx   = %r{\A\s*@spec\s*\z}
 
     def complete : Array(String)
       case @lines.first
       when SpecRgx
         complete_spec
+      when ModuleRgx
+        complete_default
       else
         complete_default
       end

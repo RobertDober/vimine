@@ -13,7 +13,7 @@ function! s:czcomplete() " {{{{{
   " call filter depending on ft
   " postion on end of next line
   call dbg#ts()
-  let l:czcompleter = g:vimine_home . '/ext/crystal/bin/czcomplete_' . &ft
+  let l:czcompleter = g:vimine_home . '/ext/crystal/bin/czcomplete_' . &ft . ' ' . expand('%')
   call dbg#dbg('invoking: ' . l:czcompleter)
   silent exec l:first_lnb . ',' . l:last_lnb . '!' . l:czcompleter . ' ' . l:first_lnb . ' ' . l:col
   let l:commands = []

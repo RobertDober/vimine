@@ -12,6 +12,7 @@ clean:
 
 spec:
 	crystal spec
+.PHONY: spec
 	
 
 bin/cccomplete_crystal: $(SOURCES)
