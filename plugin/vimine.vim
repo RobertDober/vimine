@@ -17,4 +17,9 @@ command! WriteAndSource :w|source %
 
 map <Leader>tnt :tabnew<CR><C-t>
 nnoremap <C-t> :FuzzyOpen<CR>
-
+vnoremap <Leader>wt :w! /tmp/xxx<CR>
+nnoremap <Leader>rt :read /tmp/xxx<CR>
+for i in range(10)
+  exec 'vnoremap <Leader>' . i . 'wt :w! /tmp/xxx' . i . '<CR>'
+  exec 'nnoremap <Leader>' . i . 'rt :read /tmp/xxx' . i . '<CR>'
+endfor
