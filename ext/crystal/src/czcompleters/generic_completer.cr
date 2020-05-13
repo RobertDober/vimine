@@ -13,7 +13,7 @@ module CZCompleters
       @commands = [] of String
       @lnb      = UInt64.new(@args.first)
       @output   = [] of String
-      @prefix   = @lines[1].sub(%r{\S.*}, "")
+      @prefix   = @lines[1].sub(%r{\S.*}, "") rescue ""
     end
     
     private def complete_default

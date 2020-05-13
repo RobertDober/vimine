@@ -40,13 +40,16 @@ module CCCompleters
       result
     end
 
-
     private def complete_with_do
       add_to_output(ST.with_do(@lines.first), prefix?: false)
     end
 
     private def complete_wo_do
       add_to_output(@lines.first.rstrip, prefix?: false)
+    end
+
+    private def complete_with_nop
+      result
     end
 
     private def prefixed(str : String) : String

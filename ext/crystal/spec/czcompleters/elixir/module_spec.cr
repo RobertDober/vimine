@@ -2,7 +2,7 @@ require "../../spec_helper"
 describe CZCompleters::Elixir do
 
   context "complete @spec" do
-    it "works if the line starts with module and there is no other text" do
+    pending "works if the line starts with module and there is no other text" do
       input = ["module"]
       output = CZCompleters::Elixir.new(input, %w[1 lib/vimine/hello_world/cli.ex]).complete 
 
