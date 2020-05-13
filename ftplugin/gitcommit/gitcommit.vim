@@ -12,3 +12,7 @@ function! s:insertTicketName() " {{{{{
 endfunction " }}}}}
 command! L42InsertTicketName : call <SID>insertTicketName()
 map <Leader>it :L42InsertTicketName<CR>o
+
+" Frequently used abbreviations
+abbreviate skipci [skip-ci]
+abbreviate amendme [amend-me]
