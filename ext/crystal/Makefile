@@ -24,5 +24,8 @@ bin/cccomplete_elixir: $(SOURCES)
 bin/cccomplete_ruby: $(SOURCES)
 	crystal build src/cccomplete_ruby.cr -o bin/cccomplete_ruby
 
+bin/cccomplete_shell: $(SOURCES)
+	crystal build src/cccomplete_sh.cr -o bin/cccomplete_sh
+
 bin/czcomplete_elixir: $(SOURCES)
 	crystal build src/czcomplete_elixir.cr -o bin/czcomplete_elixir

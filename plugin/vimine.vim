@@ -11,11 +11,14 @@ function! s:cleanup() " {{{{{
   exec 'normal ' . l:lnb . 'G'
 endfunction " }}}}}
 
+command! CheckoutBuffer :call system("git checkout " . expand("%:p") ) | edit!
 command! Cleanup call <SID>cleanup()
 command! Pry call pry#insert_pry()
+command! -range Rubocop :call ruby#cop#repair(<line1>, <line2>) 
 command! WriteAndSource :w|source %
 
 map <Leader>tnt :tabnew<CR><C-t>
+nnoremap gF :call tab#open_file_under_cursor()<CR> 
 nnoremap <C-t> :FuzzyOpen<CR>
 vnoremap <Leader>wt :w! /tmp/xxx<CR>
 nnoremap <Leader>rt :read /tmp/xxx<CR>
