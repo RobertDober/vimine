@@ -71,6 +71,7 @@ function! tmux#again(window) " {{{{{
   call s:switch_to(l:window)
 endfunction " }}}}}
 
+" tmux#send_and_switch('zsh', 'vlc "some file"')
 function! tmux#send_and_switch(window, keys) " {{{{{
   let l:window = s:compile_window(a:window)
   if type(a:keys) == s:string_type
