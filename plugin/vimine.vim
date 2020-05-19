@@ -3,7 +3,10 @@ if exists("g:vimine_home") || &cp || v:version < 800
 endif
 
 let g:vimine_home = expand("<sfile>:p:h:h")
-
+if has('ruby')
+  exec 'ruby $Vimine="' . g:vimine_home . '"'
+  exec 'ruby $:.unshift("' . g:vimine_home . '/ext/ruby/lib")'
+endif
 function! s:cleanup() " {{{{{
   let l:lnb = line('.')
   silent exec '%s/\s\+$//'

@@ -12,6 +12,8 @@ module CZCompleters
     def initialize(@lines : Array(String), @args : Array(String))
       @commands = [] of String
       @lnb      = UInt64.new(@args.first)
+      @col      = UInt64.new(@args[1])
+      
       @output   = [] of String
       @prefix   = @lines[1].sub(%r{\S.*}, "") rescue ""
     end
