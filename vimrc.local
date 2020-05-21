@@ -186,7 +186,7 @@ map <Esc> :nohlsearch<CR>
 " au BufNewFile,BufRead * call lab42#buffer_init()
 " }}}
 
-let g:ruby_host_prog = 'rvm system do neovim-ruby-host'
+" let g:ruby_host_prog = 'rvm system do neovim-ruby-host'
 set nobackup
 set noswapfile
 set autoread
