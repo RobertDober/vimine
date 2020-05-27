@@ -1,5 +1,6 @@
 let s:pry_commands = {
-  \ "ruby": 'require "pry"; binding.pry'
+  \ "ruby": 'require "pry"; binding.pry',
+  \ "haml": '- require "pry"; binding.pry' 
   \ }
 function! pry#insert_pry() " {{{{{
   let l:pry_command = s:pry_commands[&ft]
