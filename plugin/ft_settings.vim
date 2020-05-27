@@ -68,6 +68,10 @@ function! s:markdownSettings()
 endfunction
 au BufNewFile,BufRead *.{md,md.eex} call s:markdownSettings()
 
+function! s:lispSettings()
+  set sw=2 sts=2 ft=lisp expandtab tw=0
+endfunction
+au BufNewFile,BufRead *.{lfe} call s:lispSettings()
 " Racket
 " ------
 function! s:racketSettings() " {{{{{
