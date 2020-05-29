@@ -1,15 +1,22 @@
+require_relative "completer"
+require_relative "completers/elixir"
+require_relative "completers/ruby"
 class RubyCompleter
-  attr_reader :cursor, :line, :prefix, :subject
+  attr_accessor :line
+  attr_reader :cursor, :prefix, :subject
 
   def self.complete(context)
     new(context).complete
   end
 
-  def self.completions
-    [
-      [%r{\A:(\w+)}, :symbol_to_string],
-      [%r{\A(\w+):\s+}, :kwd_to_hash_rocket],
-    ]
+  def self.completers
+    { "ruby" => Completers::Ruby,
+      "elixir" => Completers::Elixir
+    }
+  end
+
+  def col= new_col
+    @cursor[-1] = new_col
   end
 
   def complete
@@ -17,29 +24,22 @@ class RubyCompleter
     self
   end
 
+  def inc_col by
+    @cursor[-1] += by
+  end
+
   private
 
   def dispatch
-    self.class.completions.find { |(creg, chandler)|
-      m = creg.match(subject)
-      if m
-        send(chandler, creg, m)
-      end
-    }
+    self.class.completers.fetch(@ft).complete(self)
   end
 
   def initialize(context)
-    @line = context[:line]
-    @cursor = context[:cursor]
-    @prefix = @line[0...cursor.last]
+    @line    = context[:line]
+    @cursor  = context[:cursor]
+    @ft      = context[:ft]
+    @prefix  = @line[0...cursor.last]
     @subject = @line[cursor.last..-1]
   end
 
-  def kwd_to_hash_rocket rgx, m
-    @line = prefix + subject.sub(rgx, %{"#{m[1]}" => })
-  end
-
-  def symbol_to_string rgx, m
-    @line = prefix + subject.sub(rgx, %{"#{m[1]}"})
-  end
 end

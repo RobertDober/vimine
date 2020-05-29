@@ -11,8 +11,9 @@ function! s:completeWithRuby() " {{{{{
   ruby << EOF
   require "ruby_completer"
   context = {
+    ft: VIM.evaluate("&ft"),
+    cursor: VIM::Window.current.cursor,
     line: VIM::Buffer.current.line,
-    cursor: VIM::Window.current.cursor
   }
   completion = RubyCompleter.complete(context)
   VIM::Buffer.current.line = completion.line
