@@ -54,9 +54,10 @@ endfunction
 " Javascript
 " ----------
 function! s:javascriptSettings()
-  set sw=2 sts=2 ft=javascript expandtab tw=0
+  set sw=2 sts=2 expandtab tw=0
+  set foldmethod=syntax
 endfunction
-au BufNewFile,BufRead *.{js} call s:javascriptSettings()
+au BufNewFile,BufRead *.{js,jsx} call s:javascriptSettings()
 
 " Markdown
 " --------
@@ -79,6 +80,12 @@ function! s:racketSettings() " {{{{{
   " set autoindent
 endfunction: " }}}}}
 au BufNewFile,BufRead *.{rkt,rktl} call s:racketSettings()
+" Routes
+" ------
+function! s:routesSettings() " {{{{{
+  set ft=routes
+endfunction " }}}}}
+au BufNewFile,BufRead routes.txt call s:routesSettings()
 " Ruby
 " ----
 function! s:rubySettings()

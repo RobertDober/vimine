@@ -17,6 +17,7 @@ endfunction " }}}}}
 command! CheckoutBuffer :call system("git checkout " . expand("%:p") ) | edit!
 command! Cleanup call <SID>cleanup()
 command! Pry call pry#insert_pry()
+command! UnPry call pry#remove_all_pries()
 command! -range Rubocop :call ruby#cop#repair(<line1>, <line2>) 
 command! WriteAndSource :w|source %
 
