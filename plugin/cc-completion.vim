@@ -16,32 +16,17 @@ function! s:completeWithRuby() " {{{{{
     line: VIM::Buffer.current.line,
   }
   completion = RubyCompleter.complete(context)
+  
+  VIM.command("call append('.', #{completion.inspect})") if $ruby_debug
   VIM::Buffer.current.line = completion.line
   VIM::Window.current.cursor = completion.cursor
 EOF
 endfunction " }}}}}
 function! s:czcomplete() " {{{{{
-  if has('ruby') && &ft == 'ruby'
+  if has('ruby')
     call s:completeWithRuby()
     return
   endif
-  " let [_, l:first_lnb, l:col, _] = getpos('.')
-  " let l:last_lnb = l:first_lnb + 1
-  " " call filter depending on ft
-  " " postion on end of next line
-  " call dbg#ts()
-  " let l:czcompleter = g:vimine_home . '/ext/crystal/bin/czcomplete_' . &ft . ' ' . expand('%')
-  " call dbg#dbg('invoking: ' . l:czcompleter)
-  " silent exec l:first_lnb . ',' . l:last_lnb . '!' . l:czcompleter . ' ' . l:first_lnb . ' ' . l:col
-  " let l:commands = []
-  " while match(getline("."), "%%%End Commands%%%") != 0
-  "   call add(l:commands, getline('.'))
-  "   exec '.d'
-  " endwhile
-  " exec '.d'
-  " for l:command in l:commands
-  "   exec l:command
-  " endfor
 endfunction " }}}}}
 
 function! s:cccomplete(last_lnb) " {{{{{
@@ -69,4 +54,7 @@ command! -range CCComplete call <SID>cccomplete(<line2>)
 command! CZComplete call <SID>czcomplete()
 imap <C-c> <Esc>:CCComplete<CR>a
 imap <C-z> <Esc>:CZComplete<CR>a
-map <C-z> :CZComplete<CR>a
+map <C-z> :CZComplete<CR>
+
+command! DebugRuby :ruby $ruby_debug=true
+command! UnDebugRuby :ruby $ruby_debug=false
