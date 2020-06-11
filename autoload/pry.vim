@@ -1,4 +1,5 @@
 let s:pry_commands = {
+  \ "elixir": 'require IEx; IEx.pry',
   \ "haml": '- require "pry"; binding.pry',
   \ "js":   'debugger',
   \ "javascript":   'debugger',
