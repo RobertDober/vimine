@@ -12,3 +12,11 @@ endif
 " command! IOInspect :call lab42#elixir#insert_inspect()
 command! ElixirInsertDebugInspect call buffer#insert_at_cursor(' |> IO.inspect() ')
 nmap <Leader>i :ElixirInsertDebugInspect<CR>
+
+function! s:formatThisFile() " {{{{{
+  write
+  call system('mix format ' . expand('%'))
+  edit!
+endfunction " }}}}}
+command! FormatThisFile call <SID>formatThisFile()
+nmap <Leader>f :FormatThisFile<CR>

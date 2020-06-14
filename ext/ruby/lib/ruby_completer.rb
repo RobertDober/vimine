@@ -3,7 +3,7 @@ require_relative "completers/elixir"
 require_relative "completers/ruby"
 class RubyCompleter
   attr_accessor :line
-  attr_reader :cursor, :prefix, :subject
+  attr_reader :cursor, :next_line, :prefix, :subject
 
   def self.complete(context)
     new(context).complete
@@ -36,6 +36,7 @@ class RubyCompleter
 
   def initialize(context)
     @line    = context[:line]
+    @next_line    = context[:next_line]
     @cursor  = context[:cursor]
     @ft      = context[:ft]
     @prefix  = @line[0...cursor.last]

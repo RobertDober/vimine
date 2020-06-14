@@ -14,6 +14,7 @@ function! s:completeWithRuby() " {{{{{
     ft: VIM.evaluate("&ft"),
     cursor: VIM::Window.current.cursor,
     line: VIM::Buffer.current.line,
+    next_line: VIM::Buffer.current[VIM::Buffer.current.line_number + 1]
   }
   completion = RubyCompleter.complete(context)
   
