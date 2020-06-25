@@ -4,6 +4,7 @@ let s:pry_commands = {
   \ "js":   'debugger',
   \ "javascript":   'debugger',
   \ "javascriptreact":   'debugger',
+  \ "markdown": 'require "pry"; binding.pry',
   \ "ruby": 'require "pry"; binding.pry'
   \ }
 function! pry#insert_pry() " {{{{{

@@ -1,4 +1,3 @@
-
 if exists( "b:did_vimine_elixir" )
   finish
 endif
@@ -20,3 +19,17 @@ function! s:formatThisFile() " {{{{{
 endfunction " }}}}}
 command! FormatThisFile call <SID>formatThisFile()
 nmap <Leader>f :FormatThisFile<CR>
+
+
+function! s:renumberIex(line1, line2) " {{{{{
+  ruby << EOF
+    fst_line = VIM.evaluate("a:line1")
+    lst_line = VIM.evaluate("a:line2")
+    range = fst_lnb.pred..lst_lnb.pred
+    lines = VIM::Buffer.current.lines[range]
+    output = machine.run(0, lines).output
+    VIM::Buffer.current.lines[range] = output
+EOF
+  
+endfunction " }}}}}
+command! -range=% RenumberIex call <SID>renumberIex(<line1>, <line2>)

@@ -83,7 +83,11 @@ function! tmux#send_and_switch(window, keys) " {{{{{
 endfunction " }}}}}
 
 function! tmux#test(...) " {{{{{
-  let l:command = get(s:test_commands, &ft)
+  if exists('b:local_test_command')
+    let l:command = b:local_test_command
+  else
+    let l:command = get(s:test_commands, &ft)
+  endif
   if a:0 && a:1 == 'all'
     let l:file = ''
   else
