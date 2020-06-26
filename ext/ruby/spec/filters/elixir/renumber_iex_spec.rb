@@ -56,5 +56,35 @@ RSpec.describe RenumberIex do
     end
   end
   
+  describe "what we do for our developers" do
+    it "becomes really easy to write iex> doctests" do
+      lines = [
+        "    ...> first",
+        "",
+        "    iex(10)> second",
+        "     > third"]
+      expected = [ 
+        "    iex(1)> first",
+        "",
+        "    iex(2)> second",
+        "    ...(2)> third"]
+      output = described_class.run(lines)
+      expect( output ).to eq(expected)
+    end
+    it "becomes ridicolously easy to write iex> doctests" do
+      lines = [
+        "    ...> first",
+        "",
+        "      > second",
+        "     > third"]
+      expected = [ 
+        "    iex(1)> first",
+        "",
+        "      iex(2)> second",
+        "      ...(2)> third"]
+      output = described_class.run(lines)
+      expect( output ).to eq(expected)
+    end
+  end
 end
 
