@@ -17,6 +17,7 @@ SUPPORT_HOME = File.expand_path("../support", __FILE__)
 Dir.glob(File.join(SUPPORT_HOME, "**", "*.rb")).each { |file| require file }
 $:.unshift(File.expand_path("../../lib", __FILE__))
 require "ruby_completer"
+require "cccompleter"
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

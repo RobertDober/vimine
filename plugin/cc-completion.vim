@@ -7,54 +7,63 @@ if exists( 'g:vimine_did_cccomplete' )
 endif
 let g:vimine_did_cccomplete = 1
 
-function! s:completeWithRuby() " {{{{{
+function! s:completeWithRuby(line1, line2) " {{{{{
   ruby << EOF
   require "ruby_completer"
+  lnb1 = VIM.evaluate("a:line1").pred
+  lnb2 = VIM.evaluate("a:line2").pred
   context = {
     ft: VIM.evaluate("&ft"),
     cursor: VIM::Window.current.cursor,
     line: VIM::Buffer.current.line,
-    next_line: VIM::Buffer.current[VIM::Buffer.current.line_number + 1]
+    line_number: VIM::Buffer.current.line_number,
+    next_line: VIM::Buffer.current[VIM::Buffer.current.line_number + 1],
+    path: VIM.evaluate("expand('%')"),
+    range: $curbuf.lines[lnb1..lnb2] 
   }
   completion = RubyCompleter.complete(context)
   
   VIM.command("call append('.', #{completion.inspect})") if $ruby_debug
-  VIM::Buffer.current.line = completion.line
-  VIM::Window.current.cursor = completion.cursor
+  $curbuf.lines[lnb1..lnb2] = completion.lines rescue completion.line
+  VIM::Window.current.cursor = completion.cursor rescue cursor
 EOF
 endfunction " }}}}}
-function! s:czcomplete() " {{{{{
+function! s:czcomplete(line1, line2) " {{{{{
   if has('ruby')
-    call s:completeWithRuby()
+    call s:completeWithRuby(a:line1, a:line2)
     return
   endif
+  # Coming soon
 endfunction " }}}}}
 
-function! s:cccomplete(last_lnb) " {{{{{
-  let [_, l:first_lnb, l:col, _] = getpos('.')
-  " call filter depending on ft
-  " postion on end of next line
-  silent exec l:first_lnb . ',' . a:last_lnb . '!' . g:vimine_home . '/ext/crystal/bin/cccomplete_' . &ft
-  call cursor(l:first_lnb, 999999)
-  " Potentially we need to interpret the first line returned and remvoe it, an idea would be the following pattern
-  let l:commands = []
-  while match(getline("."), "%%%End Commands%%%") != 0
-    call add(l:commands, getline('.'))
-    exec '.d'
-  endwhile
-  exec '.d'
-  for l:command in l:commands
-    exec l:command
-  endfor
+function! s:cccomplete(line1, line2) " {{{{{
+  ruby << EOF
+  require "cccompleter"
+  lnb1 = VIM.evaluate("a:line1").pred
+  lnb2 = VIM.evaluate("a:line2").pred
+  context = {
+    cursor: $curwin.cursor,
+    ft: VIM.evaluate("&ft"),
+    line_number: $curbuf.line_number,
+    lines: $curbuf.lines[lnb1..lnb2],
+    path: VIM.evaluate("expand('%')")
+  }
+  completion = CCCompleter.complete(context)
+  
+  VIM.command("call append('.', #{completion.inspect})") if $ruby_debug
+  $curbuf.lines[lnb1..lnb2] = completion.lines
+  $curwin.cursor = completion.cursor
+EOF
 endfunction " }}}}}
 
 " inoremap <silent> <Plug>ParenComplete <Esc>: call <SID>parenComplete()<CR>a
 " imap <C-Space> <Plug>ParenComplete
 " map <Space> a<C-c>
-command! -range CCComplete call <SID>cccomplete(<line2>)
-command! CZComplete call <SID>czcomplete()
+command! -range CCComplete call <SID>cccomplete(<line1>, <line2>)
+command! -range CZComplete call <SID>czcomplete(<line1>, <line2>)
 imap <C-c> <Esc>:CCComplete<CR>a
 imap <C-z> <Esc>:CZComplete<CR>a
+map <C-c> :CCComplete<CR>a
 map <C-z> :CZComplete<CR>
 
 command! DebugRuby :ruby $ruby_debug=true

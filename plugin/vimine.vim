@@ -42,7 +42,6 @@ function! s:toggleComment(line1, line2) " {{{{{
     lines = VIM::Buffer.current.lines[range]
     output = Toggle.run(lines, filetyp) 
     VIM::Buffer.current.lines[range] = output
-
 EOF
 endfunction " }}}}}
 command! -range ToggleComment call <SID>toggleComment(<line1>, <line2>)
