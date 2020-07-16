@@ -29,11 +29,10 @@ function! s:completeWithRuby(line1, line2) " {{{{{
 EOF
 endfunction " }}}}}
 function! s:czcomplete(line1, line2) " {{{{{
-  if has('ruby')
-    call s:completeWithRuby(a:line1, a:line2)
-    return
-  endif
-  # Coming soon
+  let [_, _, l:col, _] = getpos('.')
+  let l:suffix = getline(a:line1-1)[l:col:]
+  call setline(a:line1, getline(a:line1) . l:suffix)
+  silent exec 'normal A'
 endfunction " }}}}}
 
 function! s:cccomplete(line1, line2) " {{{{{

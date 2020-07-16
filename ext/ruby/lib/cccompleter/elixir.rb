@@ -6,10 +6,13 @@ module CCCompleter
 
     DefModuleRgx = %r{\A\s*(?:def)?module\s*\z}
     EndDoRgx     = %r{\s*(?:\s+do\s*)?\z}
+    PipelineRgx  = %r{\A\s*\|>\s+}
 
     def complete
       if DefModuleRgx === @lines.first
         _defmodule_completion
+      elsif PipelineRgx === @lines.first
+        _pipeline_completion
       else
         _default_completion
       end
@@ -48,6 +51,11 @@ module CCCompleter
       segments
         .map(&:camelize)
         .join(".")
+    end
+
+    def _pipeline_completion
+      lines << prefix + "|> "
+      context.cursor = [ cursor.first.succ, lines[1].size ]
     end
 
   end
