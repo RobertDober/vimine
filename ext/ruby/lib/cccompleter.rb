@@ -1,11 +1,13 @@
 require "ostruct"
 require_relative "cccompleter/common"
 require_relative "cccompleter/elixir"
+require_relative "cccompleter/html"
 require_relative "cccompleter/ruby"
 module CCCompleter extend self
 
   Completers = {
     "elixir" => Elixir,
+    "html"   => HTML,
     "ruby"   => Ruby
   }
 
