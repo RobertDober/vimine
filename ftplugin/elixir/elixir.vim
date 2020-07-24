@@ -60,3 +60,5 @@ function! s:parseMarkdown(line1, line2) " {{{{
   exec l:line3 . ',' . l:line5 . '!' . g:vimine_home . '/ext/elixir/parse_html/parse_html'
 endfunction " }}}}}
 command! -range ParseMarkdown call <SID>parseMarkdown(<line1>, <line2>)
+
+let b:ale_fixers = { 'elixir': ['mix_format'] }

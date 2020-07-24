@@ -47,3 +47,13 @@ endfunction " }}}}}
 command! -range ToggleComment call <SID>toggleComment(<line1>, <line2>)
 vnoremap <Leader>tc :ToggleComment<CR>
 nnoremap <Leader>tc :ToggleComment<CR>
+
+function! s:addApacheSPXLicenceIdentifier() " {{{{{
+  let l:identifier = printf(&commentstring, ' SPDX-License-Identifier: Apache-2.0')
+  let l:candidate = getline('$')
+  if l:candidate == l:identifier
+    return
+  endif
+  call append('$', l:identifier)
+endfunction " }}}}}
+command! AddApacheSPXLicenceIdentifier call <SID>addApacheSPXLicenceIdentifier()
