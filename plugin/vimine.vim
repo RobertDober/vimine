@@ -57,3 +57,9 @@ function! s:addApacheSPXLicenceIdentifier() " {{{{{
   call append('$', l:identifier)
 endfunction " }}}}}
 command! AddApacheSPXLicenceIdentifier call <SID>addApacheSPXLicenceIdentifier()
+
+function! s:loadOnDemand(name)
+  let l:file = g:vimine_home . '/' . a:name
+  exec 'source ' . l:file
+endfunction
+command! -nargs=1 LoadOnDemand call <SID>loadOnDemand(<q-args>)

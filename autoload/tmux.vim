@@ -83,8 +83,8 @@ function! tmux#send_and_switch(window, keys) " {{{{{
 endfunction " }}}}}
 
 function! tmux#test(...) " {{{{{
-  if exists('b:local_test_command')
-    let l:command = b:local_test_command
+  if exists('b:local_tmux_test_command')
+    let l:command = b:local_tmux_test_command
   else
     let l:command = get(s:test_commands, &ft)
   endif

@@ -365,3 +365,5 @@ set statusline+=\
 "   " Plug 'junegunn/fzf.vim'
 "   " call plug#end()
 " endif
+
+let g:coc_global_extensions = ['coc-solargraph']

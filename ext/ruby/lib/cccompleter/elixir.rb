@@ -7,12 +7,15 @@ module CCCompleter
     DefModuleRgx = %r{\A\s*(?:def)?module\s*\z}
     EndDoRgx     = %r{\s*(?:\s+do\s*)?\z}
     PipelineRgx  = %r{\A\s*\|>\s+}
+    StartPipeRgx = %r{>>\s*\z}
 
     def complete
       if DefModuleRgx === @lines.first
         _defmodule_completion
       elsif PipelineRgx === @lines.first
         _pipeline_completion
+      elsif StartPipeRgx
+        _pipeline_start_completion
       else
         _default_completion
       end
@@ -56,6 +59,12 @@ module CCCompleter
     def _pipeline_completion
       lines << prefix + "|> "
       context.cursor = [ cursor.first.succ, lines[1].size ]
+    end
+    
+    def _pipeline_start_completion
+      line = lines.shift
+      lines.unshift(line.sub(StartPipeRgx, "|> "))
+      context.cursor = [cursor.first, lines.first.size]
     end
 
   end
