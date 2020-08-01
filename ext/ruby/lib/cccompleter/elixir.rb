@@ -39,8 +39,9 @@ module CCCompleter
       lines.shift
       lines.unshift(prefix + "end")
       lines.unshift(prefix + "  ")
+      lines.unshift(prefix + "  @moduledoc false")
       lines.unshift(prefix + _make_module_def)
-      context.cursor = [ cursor.first.succ, lines[1].size ]
+      context.cursor = [ cursor.first + 2, lines[2].size ]
     end
 
     def _make_module_def

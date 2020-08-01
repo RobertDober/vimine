@@ -9,8 +9,8 @@ RSpec.describe CCCompleter do
 
     it "worx" do
       expected = mk_context(
-        cursor: [43, 2],
-        lines: ["defmodule MyModule.NextModule do", "  ", "end"],
+        cursor: [44, 2],
+        lines: ["defmodule MyModule.NextModule do", "  @moduledoc false", "  ",  "end"],
         path: "lib/my_module/next_module.ex"
       )
       expect( described_class.complete(context) ).to eq(expected)
