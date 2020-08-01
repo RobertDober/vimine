@@ -8,14 +8,17 @@ module CCCompleter
     EndDoRgx     = %r{\s*(?:\s+do\s*)?\z}
     PipelineRgx  = %r{\A\s*\|>\s+}
     StartPipeRgx = %r{>>\s*\z}
+    StructFnRgx  = %r{\A\s*defp?\s+[[:alnum:]_]+(?:!\?)?(?:\(\s*\))?\s*\z}
 
     def complete
       if DefModuleRgx === @lines.first
         _defmodule_completion
       elsif PipelineRgx === @lines.first
         _pipeline_completion
-      elsif StartPipeRgx
+      elsif StartPipeRgx === @lines.first
         _pipeline_start_completion
+      elsif StructFnRgx === @lines.first
+        _struct_fn_completion
       else
         _default_completion
       end
@@ -68,5 +71,11 @@ module CCCompleter
       context.cursor = [cursor.first, lines.first.size]
     end
 
+    def _struct_fn_completion
+      line = lines.shift.sub(%r{(?:\(\s*\))?\s*\z}, "(%__MODULE__{})")
+      lines.unshift(line)
+      context.cursor[-1] =
+        line.size - 3
+    end
   end
 end
