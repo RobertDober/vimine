@@ -7,6 +7,7 @@ module CCCompleter
     DefModuleRgx = %r{\A\s*(?:def)?module\s*\z}
     EndDoRgx     = %r{\s*(?:\s+do\s*)?\z}
     PipelineRgx  = %r{\A\s*\|>\s+}
+    SpecRgx      = %r{\A\s*@spec\z}
     StartPipeRgx = %r{>>\s*\z}
     StructFnRgx  = %r{\A\s*defp?\s+[[:alnum:]_]+(?:!\?)?(?:\(\s*\))?\s*\z}
 
@@ -19,6 +20,8 @@ module CCCompleter
         _pipeline_start_completion
       elsif StructFnRgx === @lines.first
         _struct_fn_completion
+      elsif SpecRgx === @lines.first
+        _spec_completion
       else
         _default_completion
       end
@@ -42,9 +45,13 @@ module CCCompleter
       lines.shift
       lines.unshift(prefix + "end")
       lines.unshift(prefix + "  ")
-      lines.unshift(prefix + "  @moduledoc false")
+      lines.unshift(prefix + _module_second_line)
       lines.unshift(prefix + _make_module_def)
       context.cursor = [ cursor.first + 2, lines[2].size ]
+    end
+
+    def _is_test?
+      context.path.start_with?("test/") && File.extname(context.path) == ".exs"
     end
 
     def _make_module_def
@@ -60,6 +67,10 @@ module CCCompleter
         .join(".")
     end
 
+    def _module_second_line
+      _is_test? ?  "  use ExUnit.Case" : "  @moduledoc false"
+    end
+
     def _pipeline_completion
       lines << prefix + "|> "
       context.cursor = [ cursor.first.succ, lines[1].size ]
@@ -69,6 +80,14 @@ module CCCompleter
       line = lines.shift
       lines.unshift(line.sub(StartPipeRgx, "|> "))
       context.cursor = [cursor.first, lines.first.size]
+    end
+
+    def _spec_completion
+      m = %r{\A(\s*)defp?\s+([[:alnum:]_]+(?:\?|!)?)}.match lines[1]
+      return unless m
+      lines.shift
+      lines.unshift("#{m[1]}@spec #{m[2]}() ::")
+      context.cursor[-1] = lines.first.size - 5
     end
 
     def _struct_fn_completion
