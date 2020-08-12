@@ -4,12 +4,14 @@ module CCCompleter
 
     include Common
 
-    DefModuleRgx = %r{\A\s*(?:def)?module\s*\z}
-    EndDoRgx     = %r{\s*(?:\s+do\s*)?\z}
-    PipelineRgx  = %r{\A\s*\|>\s+}
-    SpecRgx      = %r{\A\s*@spec\z}
-    StartPipeRgx = %r{>>\s*\z}
-    StructFnRgx  = %r{\A\s*defp?\s+[[:alnum:]_]+(?:!\?)?(?:\(\s*\))?\s*\z}
+    DefModuleRgx    = %r{\A\s*(?:def)?module\s*\z}
+    DocTestIexStart = %r{\A\s{4,}iex>\s*\z}
+    DocTestIexNext  = %r{\A\s{4,}(?:\.\.\.|iex)\(\d+\)>}
+    EndDoRgx        = %r{\s*(?:\s+do\s*)?\z}
+    PipelineRgx     = %r{\A\s*\|>\s+}
+    SpecRgx         = %r{\A\s*@spec\z}
+    StartPipeRgx    = %r{>>\s*\z}
+    StructFnRgx     = %r{\A\s*defp?\s+[[:alnum:]_]+(?:!\?)?(?:\(\s*\))?\s*\z}
 
     def complete
       if DefModuleRgx === @lines.first
@@ -22,6 +24,10 @@ module CCCompleter
         _struct_fn_completion
       elsif SpecRgx === @lines.first
         _spec_completion
+      elsif DocTestIexStart === @lines.first
+        _doctest_iex_start_completion
+      elsif DocTestIexNext === @lines.first
+        _doctest_iex_next_completion
       else
         _default_completion
       end
@@ -50,6 +56,18 @@ module CCCompleter
       context.cursor = [ cursor.first + 2, lines[2].size ]
     end
 
+    def _doctest_iex_next_completion
+      line = lines.shift
+      lines.unshift(prefix + "...(0)> ")
+      lines.unshift(line)
+      context.cursor = [cursor.first.succ, lines[1].size]
+    end
+
+    def _doctest_iex_start_completion
+      lines.first.sub!(%r{>\s*\z},"(0)> ")
+      context.cursor = [ cursor.first, lines.first.size ]
+    end
+
     def _is_test?
       context.path.start_with?("test/") && File.extname(context.path) == ".exs"
     end
@@ -75,7 +93,7 @@ module CCCompleter
       lines << prefix + "|> "
       context.cursor = [ cursor.first.succ, lines[1].size ]
     end
-    
+
     def _pipeline_start_completion
       line = lines.shift
       lines.unshift(line.sub(StartPipeRgx, "|> "))
