@@ -37,6 +37,18 @@ function! buffer#append_with_prefix(text) " {{{{{
   call append('.', buffer#get_prefix() . a:text)
 endfunction: " }}}}}
 
+function! buffer#comment_suffix(suffix)
+  let l:line = getline('.')
+  let l:line = substitute(l:line, a:suffix, '#' . a:suffix, '')
+  call setline('.', l:line)
+endfunction
+
+function! buffer#insert_at_cursor(text) " {{{{{
+  let [l:before, l:after, l:lnb, l:col] = buffer#split_line_at_cursor()
+  let l:new_line = l:before . a:text . l:after
+  call setline(l:lnb, l:new_line)
+endfunction " }}}}}
+
 function! buffer#split_line_at_cursor() " {{{{{
   let [_, l:lnb, l:col, _] = getpos('.')
   let l:line               = getline(l:lnb)
@@ -45,8 +57,8 @@ function! buffer#split_line_at_cursor() " {{{{{
   return [l:before, l:after, l:lnb, l:col]
 endfunction " }}}}}
 
-function! buffer#insert_at_cursor(text) " {{{{{
-  let [l:before, l:after, l:lnb, l:col] = buffer#split_line_at_cursor()
-  let l:new_line = l:before . a:text . l:after
-  call setline(l:lnb, l:new_line)
-endfunction " }}}}}
+function! buffer#uncomment_suffix(suffix)
+  let l:line = getline('.')
+  let l:line = substitute(l:line, '#\s*' . a:suffix, a:suffix, '')
+  call setline('.', l:line)
+endfunction

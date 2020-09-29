@@ -9,6 +9,8 @@ if !exists('g:lab42_tmux_elixir_test_window')
 endif
 
 " command! IOInspect :call lab42#elixir#insert_inspect()
+command! ElixirActivateInsertDebugInspect call buffer#uncomment_suffix(' |> IO.inspect')
+command! ElixirDeactivateInsertDebugInspect call buffer#comment_suffix(' |> IO.inspect')
 command! ElixirInsertDebugInspect call buffer#insert_at_cursor(' |> IO.inspect() ')
 nmap <Leader>i :ElixirInsertDebugInspect<CR>
 

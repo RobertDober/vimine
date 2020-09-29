@@ -42,7 +42,7 @@ function! s:htmlSettings()
   set sw=2 sts=2 ft=html expandtab tw=0
   set foldmethod=indent
 endfunction
-au BufNewFile,BufRead *.{html,htm,html.eex} call s:htmlSettings()
+au BufNewFile,BufRead *.{html,htm,html.eex,svelte} call s:htmlSettings()
 
 " JASON
 " -----
