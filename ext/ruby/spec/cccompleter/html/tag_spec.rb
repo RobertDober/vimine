@@ -48,5 +48,28 @@ RSpec.describe CCCompleter do
         expect( described_class.complete(context) ).to eq(expected)
       end
     end
+
+    describe "text but no >"
+    let :context do
+      mk_context(
+        ft: "html",
+        lines: [
+          "   <title class=\"hello\""
+        ]
+      )
+    end
+    it "completes closing the tag and w/o erasing the text" do
+      expected = mk_context(
+        cursor: [43, 5],
+        ft: "html",
+        lines: [
+          "   <title class=\"hello\">",
+          "     ",
+          "   </title>"
+        ]
+      )
+      expect( described_class.complete(context) ).to eq(expected)
+    end
+
   end
 end
