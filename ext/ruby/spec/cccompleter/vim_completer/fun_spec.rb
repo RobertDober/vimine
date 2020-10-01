@@ -16,6 +16,24 @@ RSpec.describe CCCompleter do
 
         expect( described_class.complete(context) ).to eq(expected)
       end
+    end
+
+    describe "simple case, missing parens" do
+      let :context do
+        mk_vim_context(
+          lines: [" fun s:hello"])
+      end
+      it "completes with folding" do
+        expected = mk_vim_context(
+          cursor: [43, 2],
+          lines: [
+            "function! s:hello() {{{{{",
+            "  ",
+            "endfunction }}}}}"
+          ])
+
+        expect( described_class.complete(context) ).to eq(expected)
+      end
 
     end
     
