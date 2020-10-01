@@ -11,6 +11,18 @@ module Support
         }.merge(params)
       )
     end
+
+    def mk_vim_context(**params)
+      OpenStruct.new(
+        {
+          ft: "vim",
+          cursor: [42, 4],
+          lines: [],
+          line_number: 42,
+          path: "path"
+        }.merge(params)
+      )
+    end
   end
 end
 
