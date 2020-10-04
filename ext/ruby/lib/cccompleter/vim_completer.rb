@@ -19,7 +19,7 @@ module CCCompleter
       _fun, rest = @line.split(nil, 2)
       @lines.unshift("endfunction }}}}}")
       @lines.unshift("  ")
-      @lines.unshift("function! " + _maybe_add_parens(rest) + " {{{{{")
+      @lines.unshift("function! " + _maybe_add_parens(rest) + " \" {{{{{")
       @context.cursor = [@cursor.first.succ, 2]
     end
 

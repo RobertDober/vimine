@@ -9,7 +9,7 @@ RSpec.describe CCCompleter do
         expected = mk_vim_context(
           cursor: [43, 2],
           lines: [
-            "function! s:hello(x) {{{{{",
+            "function! s:hello(x) \" {{{{{",
             "  ",
             "endfunction }}}}}"
           ])
@@ -27,7 +27,7 @@ RSpec.describe CCCompleter do
         expected = mk_vim_context(
           cursor: [43, 2],
           lines: [
-            "function! s:hello() {{{{{",
+            "function! s:hello() \" {{{{{",
             "  ",
             "endfunction }}}}}"
           ])
