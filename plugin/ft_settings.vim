@@ -38,18 +38,12 @@ au BufNewFile,BufRead *.{hs,purs} call s:haskellSettings()
 
 "
 " HTML
+" ----
 function! s:htmlSettings()
   set sw=2 sts=2 ft=html expandtab tw=0
   set foldmethod=indent
 endfunction
 au BufNewFile,BufRead *.{html,htm,html.eex,svelte} call s:htmlSettings()
-
-" JASON
-" -----
-function! s:jsonSettings()
-  set sw=2 sts=2 ft=json expandtab tw=0 foldmethod=syntax foldlevel=999
-  syntax on
-endfunction
 
 " Javascript
 " ----------
@@ -59,6 +53,24 @@ function! s:javascriptSettings()
 endfunction
 au BufNewFile,BufRead *.{js,jsx} call s:javascriptSettings()
 
+" JSON
+" ----
+function! s:jsonSettings()
+  set sw=2 sts=2 ft=json expandtab tw=0 foldmethod=syntax foldlevel=999
+  syntax on
+endfunction
+
+" Julia
+" -----
+function! s:juliaSettings()
+  set sw=4 sts=4 ft=julia expandtab tw=0 foldmethod=syntax foldlevel=999 nu
+  " set listchars=tab:>~,nbsp:_,trail:.
+  " set list
+  highlight ColorColumn ctermbg=magenta
+  let b:local_ft="julia"
+  call matchadd('ColorColumn', '\%121v', 100)
+endfunction
+au BufNewFile,BufRead *.{jl} call s:juliaSettings()
 " Markdown
 " --------
 function! s:markdownSettings()
