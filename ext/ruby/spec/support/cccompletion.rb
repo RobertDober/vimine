@@ -1,28 +1,32 @@
+require "lab42/open_map/include"
 module Support
   module CCCompletion
-    def mk_context(**params)
-      OpenStruct.new(
-        {
+    Base = OpenMap.new(
           ft: "elixir",
           cursor: [42, 4],
           lines: [],
           line_number: 42,
           path: "path"
-        }.merge(params)
-      )
+        )
+    def mk_context(**params)
+      OpenStruct.new(Base.merge(**params))
+    end
+
+    def mk_ft_context(ft, **params)
+      OpenStruct.new(
+        Base
+          .merge(**params)
+          .merge(ft: ft))
+    end
+
+    def mk_md_context(**params)
+      mk_ft_context("markdown", **params)
     end
 
     def mk_vim_context(**params)
-      OpenStruct.new(
-        {
-          ft: "vim",
-          cursor: [42, 4],
-          lines: [],
-          line_number: 42,
-          path: "path"
-        }.merge(params)
-      )
+      mk_ft_context("vim", **params)
     end
+
   end
 end
 

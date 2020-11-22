@@ -2,6 +2,7 @@ require "ostruct"
 require_relative "cccompleter/common"
 require_relative "cccompleter/elixir"
 require_relative "cccompleter/html"
+require_relative "cccompleter/markdown"
 require_relative "cccompleter/ruby"
 require_relative "cccompleter/rust"
 require_relative "cccompleter/vim_completer"
@@ -10,6 +11,7 @@ module CCCompleter extend self
   Completers = {
     "elixir" => Elixir,
     "html"   => HTML,
+    "markdown" => Markdown,
     "ruby"   => Ruby,
     "rust"   => Rust,
     "vim"    => VimCompleter
