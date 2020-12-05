@@ -1,15 +1,45 @@
+local ruby = require'cccomplete.ruby'()
+local function assert_complete_without_do(line)
+end
 describe("ruby", function()
   -- tests go here
 
-  describe("a nested block", function()
-    describe("can have many describes", function()
-      -- tests
-      it("works", function()
-              assert.is_nil(nil)
+  describe("complete without do", function()
+    describe("module", function()
+      completion = ruby.complete("  module X")
+      it("has the correct lines", function()
+        assert.are.same({"  module X", "    ", "  end"}, completion.lines)
       end)
+      it("has the correct offset", function()
+        assert.is_equal(1, completion.offset)
+      end)
+      it("has the correct col", function()
+        assert.is_equal(999, completion.col)
+      end)
+    end)
+
+    describe("class", function()
+      completion = ruby.complete("class Y")
+      it("has the correct lines", function()
+        assert.are.same({"class Y", "  ", "end"}, completion.lines)
+      end)
+      it("has the correct offset", function()
+        assert.is_equal(1, completion.offset)
+      end)
+      it("has the correct col", function()
+        assert.is_equal(999, completion.col)
+      end)
+      
     end)
   end)
 
-  -- more tests pertaining to the top level
+  describe("complete with do", function()
+    describe("any line", function()
+      completion = ruby.complete("  something")
+      it("adds a  do", function()
+        assert.are.same({"  something do", "    ", "  end"}, completion.lines)
+      end)
+    end)
+  end)
 end)
 

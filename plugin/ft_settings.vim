@@ -45,6 +45,13 @@ function! s:htmlSettings()
 endfunction
 au BufNewFile,BufRead *.{html,htm,html.eex,svelte} call s:htmlSettings()
 
+" Lua
+" ---
+function! s:luaSettings() " {{{{{
+  set sw=2 sts=2 foldmethod=indent foldlevel=999 tw=0 et
+endfunction: " }}}}}
+au BufNewFile,BufRead *.{lua} call s:haskellSettings()
+
 " Javascript
 " ----------
 function! s:javascriptSettings()
