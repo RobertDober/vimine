@@ -1,10 +1,9 @@
-require("cccomplete/ruby")
-
 -- keep usage of vim api in a minimal scope, this file only
 local api = vim.api
 
 local completers = {
-  ruby = RubyCompleter,
+  ruby = require("cccomplete.ruby")(),
+  markdown = require("cccomplete.markdown")()
 }
 
 local function cccomplete(lnb1, lnb2)
@@ -18,8 +17,7 @@ local function cccomplete(lnb1, lnb2)
   local completer = completers[ft]
   local result
   if completer then
-    instance = completer:new(nil, lines[1])
-    result = instance:complete() 
+    result = completer.complete(lines[1]) 
     print("result lines:")
     for k, v in pairs(result.lines) do
       print("  "..v)

@@ -1,4 +1,4 @@
-require("cccomplete/completer")
+local indent = require "cccomplete.helpers"().indent
 
 local ruby_no_do = "^%s*(%a+)"
 local ruby_no_dos = {
@@ -7,40 +7,46 @@ local ruby_no_dos = {
   def = true,
 }
 
-RubyCompleter = Completer:new(nil)
+return function()
 
-function RubyCompleter:complete()
-  no_do = ruby_no_dos[string.match(self.line, ruby_no_do)] 
-  if no_do then
-    return self:complete_ruby_no_do()
-  else
-    return self:complete_ruby_do()
+  local function complete_ruby_no_do(line)
+    return {
+      lines = {
+        line,
+        indent(line) .. "  ",
+        indent(line) .. "end"
+      },
+      offset = 1,
+      col = 999
+    }
   end
-end
+
+  local function complete_ruby_do(line)
+    local line = string.gsub(line, "%s+do%s*$", "")
+    print("doline", line)
+    return {
+      lines = {
+        line .. " do",
+        indent(line) .. "  ",
+        indent(line) .. "end"
+      },
+      offset = 1,
+      col = 999
+    }
+  end
 
 
-function RubyCompleter:complete_ruby_no_do()
+  local function complete(line)
+    no_do = ruby_no_dos[string.match(line, ruby_no_do)] 
+    if no_do then
+      return complete_ruby_no_do(line)
+    else
+      return complete_ruby_do(line)
+    end
+  end
+
+
   return {
-    lines = {
-      self.line,
-      self.indent .. "  ",
-      self.indent .. "end"
-    },
-    offset = 1,
-    col = 999
-  }
-end
-
-function RubyCompleter:complete_ruby_do()
-  local line = string.gsub(self.line, "%s+do%s*$", "")
-  print("doline", line)
-  return {
-    lines = {
-      line .. " do",
-      self.indent .. "  ",
-      self.indent .. "end"
-    },
-    offset = 1,
-    col = 999
+    complete = complete
   }
 end
