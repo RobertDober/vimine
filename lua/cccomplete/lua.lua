@@ -64,6 +64,11 @@ return function()
       return H.complete_with_end(line)
     end
 
+    local function complete_object(line)
+      local line = string.gsub(line, "%s+{%s*$", " {")
+      return H.complete_with_custom(line, "}")
+    end
+
     local function complete(line)
       local match = string.match(line, busted_fn_pattern)
       if match then
@@ -79,6 +84,8 @@ return function()
           return complete_if(line)
         elseif string.match(line, else_patten) then
           return complete_if(line, true)
+        elseif string.match(line, "%s+{%s*$") then
+          return complete_object(line)
         else
           return H.complete_with_do(line)
         end

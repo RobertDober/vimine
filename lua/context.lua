@@ -1,5 +1,12 @@
 local api = vim.api
 
+local function add_variables(to, ...)
+  local args = {...}
+  for _, varname in ipairs(args) do
+    to[varname] = api.nvim_get_var(varname)
+  end
+end
+
 local function context(...)
   local cursor = api.nvim_win_get_cursor(0)
   local ctxt = {
@@ -11,10 +18,8 @@ local function context(...)
     file_name = api.nvim_eval('expand("%:t")'),
     file_path = api.nvim_eval('expand("%")')
   }
-  local args = {...}
-  for _, varname in ipairs(args) do
-    ctxt[varname] = api.nvim_get_var(varname)
-  end
+  add_variables(ctx, ...)
+  ctx.add_variables = add_variables
   return ctxt 
 end
 

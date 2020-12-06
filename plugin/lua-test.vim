@@ -6,9 +6,13 @@ if exists( 'g:vimine_did_lua_test' )
   endif
 endif
 let g:vimine_did_lua_test = 1
+" FT specific
 let g:vimine_lua_test_command = "busted -c"
 let g:vimine_lua_test_window  = "test"
 let g:vimine_lua_test_suffix  = ""
+let g:vimine_ruby_test_command = "bundle exec rspec"
+let g:vimine_ruby_test_window  = "test"
+let g:vimine_ruby_test_suffix  = ""
 
 
 let s:save_cpo = &cpo " save user coptions
