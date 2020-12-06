@@ -23,14 +23,16 @@ return function()
 
   local function complete_busted(line, nocomma)
     local comma
-    local line = line
+    local line = string.gsub(line, "function[()%s]*$", "")
+
     if nocomma then
       comma = "("
-      line = string.gsub(line, "[(]?%s*$", "")
+      line = string.gsub(line, "[()]?%s*$", "")
     else
       comma = ", "
-      line = string.gsub(line, ",?%s*$", "")
+      line = string.gsub(line, "[,)]?%s*$", "")
     end
+
     return H.complete_with_end(line .. comma .. "function()", {suffix=")"} )
     end
 
@@ -50,7 +52,7 @@ return function()
       local match = string.match(line, busted_fn_pattern)
       if match then
         if busted_fn_names[match] then
-          -- print("busted fn", match)
+          -- print("busted fn", match, line)
           return complete_busted(line)
         elseif busted_single_names[match] then
           -- print("busted single", match)

@@ -1,6 +1,5 @@
 local lua = require('cccomplete.lua')()
 describe("lua", function()
-  -- tests go here
 
   describe("complete without do", function()
     local function check_function_completion(name, input, fncompleted)

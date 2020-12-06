@@ -1,24 +1,19 @@
 local lua = require('cccomplete.lua')()
 describe("lua", function()
-  -- tests go here
+
+  local fn_suffix = ", function()"
+  function suffixed(str)
+    return str .. fn_suffix
+  end
 
   describe("complete busted function", function()
-    local function check_busted_completion(name, input, nocomma)
-      local comma
-      local input = input
-      local completion = lua.complete(input)
+    local function check_busted_completion(name, input, expected)
       local indent = string.match(input, "^%s*")
-      if nocomma then
-        comma = "("
-        input = string.gsub(input, "[(]?%s*$", "")
-      else
-        comma = ", "
-        input = string.gsub(input, ",%s*$", "")
-      end
+      local completion = lua.complete(input)
 
       describe(name, function()
         it("has the correct lines", function()
-          assert.are.same({input .. comma .. "function()", indent .. "  ", indent .. "end)"}, completion.lines)
+          assert.are.same({indent .. expected, indent .. "  ", indent .. "end)"}, completion.lines)
         end)
         it("has the correct offset", function()
           assert.is_equal(1, completion.offset)
@@ -29,14 +24,17 @@ describe("lua", function()
       end)
     end
 
-    check_busted_completion("before_each", "before_each(", true)
-    check_busted_completion("describe", "describe('hello'")
-    check_busted_completion("describe #wip", "describe('hello',  ")
-    check_busted_completion("expose", "expose(\"something\"")
-    check_busted_completion("insulate", "insulate(hello")
-    check_busted_completion("it", "it(is Monty Python's Flying Circus")
-    check_busted_completion("setup", "setup(", true)
-    check_busted_completion("teardown", "teardown", true)
+    check_busted_completion("before_each", "before_each(", "before_each(function()")
+    check_busted_completion("describe", "describe('hello'", suffixed("describe('hello'"))
+    check_busted_completion("describe", "describe('hello', ", suffixed("describe('hello'"))
+    check_busted_completion("expose", "expose(\"something\"", suffixed("expose(\"something\""))
+    check_busted_completion("insulate", "insulate(hello", suffixed("insulate(hello"))
+    check_busted_completion("it", "it(is Monty Python's Flying Circus", suffixed("it(is Monty Python's Flying Circus"))
+    check_busted_completion("it", "it(is Monty Python's Flying Circus)", suffixed("it(is Monty Python's Flying Circus"))
+    check_busted_completion("setup", "setup(", "setup(function()")
+    check_busted_completion("teardown", "  teardown", "teardown(function()")
+    check_busted_completion("no multiple function", "   describe(\"hello\", function()", suffixed('describe("hello"'))
+
   end)
 end)
 
