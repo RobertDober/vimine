@@ -8,3 +8,4 @@
 # Dependencies will be locked in applications that use them
 /ext/crystal/shard.lock
 /ext/crystal/bin/
+luacov.*
