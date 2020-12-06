@@ -1,26 +1,44 @@
-local context = require'context'.context("vimine_lua_test_command", "vimine_lua_test_window")
+local _context = require'context'
+local context
+
 local api     = require'vimapi'
-local api = vim.api
 
 local test_command_makers = {
   lua = lua_test_command_maker,
 }
 
-local function run_test()
-  -- TODO: move into a helper
-  local line         = api.nvim_get_current_line()
-  local ft           = api.nvim_buf_get_option(0, 'filetype')
-  local test_command = api.nvim_get_var("vimine_lua_test_command")
-  local test_window  = api.nvim_get_var("vimine_lua_test_window")
-  local file_name    = api.nvim_eval('expand("%:t")')
-  local test_command_maker = test_command_makers[ft]
-  local ctxt = context
-  if not test_command_makers then return end
+local function lua_test_command_maker()
+  local commands = {}
+  local file_path = context.file_path
+  if context.lnb == 1 then
+    file_path = "specs"
+  end
+  local test_args = context.vimine_lua_test_command .. ' ' .. file_path
 
+  table.insert(commands, 'tmux send-keys -t ' .. context.vimine_lua_test_window .. ' "' .. test_args .. '" C-m')
+  table.insert(commands, 'tmux select-window -t ' .. context.vimine_lua_test_window )
+
+  return commands
+end
+
+local test_command_makers = {
+  lua = lua_test_command_maker,
+}
+local function run_tests()
+  context = _context.context("vimine_lua_test_command", "vimine_lua_test_window")
+  local test_command_maker = test_command_makers[context.ft]
+  -- print("test command maker", test_command_maker)
+  if not test_command_maker then return end
+
+  local commands = test_command_maker()
   -- execute tmux commands
-  api.nvim_command("exec system('tmux select-window -t " .. test_window .."')")
+  for _, command in ipairs(commands) do
+    print(command)
+    api.system(command)
+  end
+  -- print(test_command)
 end
 
 return {
-  run_test = run_test,
+  run_tests = run_tests,
 }
