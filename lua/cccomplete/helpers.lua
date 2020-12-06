@@ -36,9 +36,10 @@ return function()
 
   local function match_any_of(target, patterns)
     for i, pattern in ipairs(patterns) do
-      if string.match(target,  pattern) then return true end
+      local result = string.match(target,  pattern)
+      if result then return result end
     end
-    return false
+    return nil
   end
 
   local function nop(line)

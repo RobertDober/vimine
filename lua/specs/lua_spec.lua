@@ -2,7 +2,7 @@ local lua = require('cccomplete.lua')()
 describe("lua", function()
 
   describe("complete without do", function()
-    local function check_function_completion(name, input, fncompleted)
+    local function check_indented_completion(name, input, fncompleted)
       local fncompleted = fncompleted or input
       local indent = string.match(input, "^%s*")
       local completion = lua.complete(input)
@@ -19,12 +19,20 @@ describe("lua", function()
       end)
     end
 
-    check_function_completion("global function with no params #wip", "function X()")
-    check_function_completion("global function with no params, parens added", "  function X", "  function X()")
-    check_function_completion("local function with params", "  local function hello(world)")
-    check_function_completion("local function with params, rparen added", "  local function hello(world", "  local function hello(world)")
-    check_function_completion("globally assigned function", "alpha = function()")
-    check_function_completion("locally assigned function", "local beta = function(a, b, ...)")
+    check_indented_completion("global function with no params #wip", "function X()")
+    check_indented_completion("global function with no params, parens added", "  function X", "  function X()")
+    check_indented_completion("local function with params", "  local function hello(world)")
+    check_indented_completion("local function with params, rparen added", "  local function hello(world", "  local function hello(world)")
+    check_indented_completion("globally assigned function", "alpha = function()")
+    check_indented_completion("locally assigned function", "local beta = function(a, b, ...)")
+
+    check_indented_completion("if (bare)", "  if some_condition", "  if some_condition then")
+    check_indented_completion("if (with then)", "  if some_condition  then ", "  if some_condition then")
+    check_indented_completion("elseif (bare)", "elseif some_condition", "elseif some_condition then")
+    check_indented_completion("elseif (with then)", "elseif some_condition  then ", "elseif some_condition then")
+    check_indented_completion("else (bare)", "else")
+
+
   end)
 
   describe("complete with do", function()

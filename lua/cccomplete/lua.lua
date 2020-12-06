@@ -19,6 +19,13 @@ local function_def_patterns = {
   "^%s*[%a_]+%s+=%s+function",
   "^%s*local%s+[%a_]+%s+=%s+function",
 }
+
+local else_patten = "^%s*else%s*$"
+local if_patterns = {
+  "^%s*if%s",
+  "^%s*elseif%s"
+}
+
 return function()
 
   local function complete_busted(line, nocomma)
@@ -48,6 +55,15 @@ return function()
       return H.complete_with_end(line .. add)
     end
 
+    local function complete_if(line, nosuffix)
+      local suffix = " then"
+      if nosuffix then
+        suffix = ""
+      end
+      local line = string.gsub(line, "%s+then%s*$", "") .. suffix
+      return H.complete_with_end(line)
+    end
+
     local function complete(line)
       local match = string.match(line, busted_fn_pattern)
       if match then
@@ -59,6 +75,10 @@ return function()
           return complete_busted(line, true)
         elseif H.match_any_of(line, function_def_patterns) then
           return complete_function_def(line)
+        elseif H.match_any_of(line, if_patterns) then
+          return complete_if(line)
+        elseif string.match(line, else_patten) then
+          return complete_if(line, true)
         else
           return H.complete_with_do(line)
         end

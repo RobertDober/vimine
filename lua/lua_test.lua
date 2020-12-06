@@ -16,6 +16,9 @@ local function lua_test_command_maker()
   local test_args = context.vimine_lua_test_command .. ' ' .. file_path
 
   table.insert(commands, 'tmux send-keys -t ' .. context.vimine_lua_test_window .. ' "' .. test_args .. '" C-m')
+  if #context.vimine_lua_test_suffix > 0 then
+    table.insert(commands, 'tmux send-keys -t ' .. context.vimine_lua_test_window .. ' "' .. context.vimine_lua_test_suffix .. '" C-m')
+  end
   table.insert(commands, 'tmux select-window -t ' .. context.vimine_lua_test_window )
 
   return commands
@@ -25,7 +28,8 @@ local test_command_makers = {
   lua = lua_test_command_maker,
 }
 local function run_tests()
-  context = _context.context("vimine_lua_test_command", "vimine_lua_test_window")
+  api.command("write")
+  context = _context.context("vimine_lua_test_command", "vimine_lua_test_suffix", "vimine_lua_test_window")
   local test_command_maker = test_command_makers[context.ft]
   -- print("test command maker", test_command_maker)
   if not test_command_maker then return end
@@ -33,10 +37,9 @@ local function run_tests()
   local commands = test_command_maker()
   -- execute tmux commands
   for _, command in ipairs(commands) do
-    print(command)
+    -- print(command)
     api.system(command)
   end
-  -- print(test_command)
 end
 
 return {

@@ -1,12 +1,13 @@
 local nop = require "cccomplete.helpers"().nop
 
-local trigger = "^(%u%a+)[%s:]"
+local trigger = "^(%u%a+)[%s,:]"
 local bare    = "^(%u%a+)$"
 local gherkin_like = {
   And   = true,
   But   = true,
   Example = true,
   Given = true,
+  However = true,
   Then  = true,
   When  = true,
 }

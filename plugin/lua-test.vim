@@ -8,6 +8,7 @@ endif
 let g:vimine_did_lua_test = 1
 let g:vimine_lua_test_command = "busted -c"
 let g:vimine_lua_test_window  = "test"
+let g:vimine_lua_test_suffix  = ""
 
 
 let s:save_cpo = &cpo " save user coptions
