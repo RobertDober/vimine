@@ -19,7 +19,7 @@ local function context(...)
     file_path = api.nvim_eval('expand("%")')
   }
   add_variables(ctx, ...)
-  ctx.add_variables = add_variables
+  ctxt.add_variables = add_variables
   return ctxt 
 end
 

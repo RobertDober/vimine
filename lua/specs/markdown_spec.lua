@@ -22,6 +22,7 @@ describe("markdown", function()
     it_behaves_like_a_nop("# Just a headline")
   end)
 
+   
   describe("rcode", function()
     local function it_behaves_like_an_rcode(line)
       describe("rcode line:" .. line, function()
