@@ -3,5 +3,10 @@ include = {
   "ccomplete",
   "ccomplete%/.+$",
   "tools",
+  "tools%/.+$",
+}
+
+exclude = {
+  "specs%/.+$"
 }
 

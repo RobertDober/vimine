@@ -19,7 +19,7 @@ describe("lua", function()
       end)
     end
 
-    check_indented_completion("global function with no params #wip", "function X()")
+    check_indented_completion("global function with no params", "function X()")
       check_indented_completion("global function with no params, parens added", "  function X", "  function X()")
         check_indented_completion("local function with params", "  local function hello(world)")
           check_indented_completion("local function with params, rparen added", "  local function hello(world", "  local function hello(world)")

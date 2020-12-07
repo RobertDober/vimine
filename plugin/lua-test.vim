@@ -7,6 +7,7 @@ if exists( 'g:vimine_did_lua_test' )
 endif
 let g:vimine_did_lua_test = 1
 " FT specific
+let g:vimine_lua_general_test_command = "lcov"
 let g:vimine_lua_test_command = "busted -c"
 let g:vimine_lua_test_window  = "test"
 let g:vimine_lua_test_suffix  = ""

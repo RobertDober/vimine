@@ -4,15 +4,24 @@ local context
 
 local api     = require'vimapi'
 
+local function lua_extract_test_tag()
+  local tag = string.match(context.line, '#(%w+)"')
+  if tag then
+    return " -t " .. tag .. " "
+  else
+    return ""
+  end
+end
 
 local function lua_test_command_maker()
   local commands = {}
   local file_path = context.file_path
-  context:add_variables( "vimine_lua_test_command", "vimine_lua_test_suffix", "vimine_lua_test_window")
+  context:add_variables( "vimine_lua_general_test_command", "vimine_lua_test_command", "vimine_lua_test_suffix", "vimine_lua_test_window")
+  local tag = lua_extract_test_tag() 
+  local test_args = context.vimine_lua_test_command .. tag .. ' ' .. file_path
   if context.lnb == 1 then
-    file_path = "specs"
+    test_args = context.vimine_lua_general_test_command
   end
-  local test_args = context.vimine_lua_test_command .. ' ' .. file_path
 
   table.insert(commands, 'tmux send-keys -t ' .. context.vimine_lua_test_window .. ' "' .. test_args .. '" C-m')
   if #context.vimine_lua_test_suffix > 0 then
