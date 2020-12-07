@@ -15,11 +15,11 @@ gherkin_like["Example:"] = true
 
 return function()
 
-  local function complete_rcode(line)
+  local function complete_ruby(line)
     return {
       lines = {
         line,
-        "```rcode", 
+        "```ruby", 
         "    ",
         "```"
       },
@@ -33,7 +33,7 @@ return function()
 
     if match then
       if gherkin_like[match] then
-        return complete_rcode(line)
+        return complete_ruby(line)
       end
     end
     return nop(line)
