@@ -1,12 +1,22 @@
 require'tools.line_chunk'
+-- local dbg = require("debugger")
+-- -- Consider enabling auto_where to make stepping through code easier to follow.
+-- dbg.auto_where = 2
+
+local function assert_chunk(chunk, content, startpos, endpos)
+   assert.is_equal(content, chunk.content()) 
+   if startpos then
+     assert.is_equal(startpos, chunk.startpos())
+     local endpos = endpos or startpos + #content - 1
+     assert.is_equal(endpos, chunk.endpos())
+   end
+end
 
 describe("LineChunk", function()
-  describe("plain vanilla", function()
-    local line_chunk = LineChunk:new{content = "alpha", start = 4}
+  describe("plain vanilla #wip", function()
+    local line_chunk = LineChunk({content = "alpha", start = 4})
     it("has it's elements", function()
-      assert.is_equal(line_chunk.content, "alpha")
-      assert.is_equal(line_chunk.startpos, 4)
-      assert.is_equal(line_chunk.endpos, 8)
+      assert_chunk(line_chunk, "alpha", 4, 8)
     end)
     it("cannot be changed", function()
       assert.has_error(function()
@@ -16,17 +26,20 @@ describe("LineChunk", function()
   end)
   describe("constructed from match", function()
     it("has it's elements", function()
-      local line_chunk = LineChunk:new{content = "alpha", matching = "%f[l](%w+)"}
-      assert.is_equal(line_chunk.content, "lpha")
-      assert.is_equal(line_chunk.startpos, 2)
-      assert.is_equal(line_chunk.endpos, 5)
+      local line_chunk = LineChunk{content = "alpha", matching = "%f[l](%w+)"}
+      assert_chunk(line_chunk, "lpha", 2)
     end)
     it("can be empty", function()
-      local line_chunk = LineChunk:new{content = "alpha", matching = "%f[x](%w+)"}
-      assert.is_equal(line_chunk.content, "")
-      assert.is_equal(line_chunk.startpos, 0)
-      assert.is_equal(line_chunk.endpos, 0)
-      
+      local line_chunk = LineChunk{content = "alpha", matching = "%f[x](%w+)"}
+      assert_chunk(line_chunk, "", 0, 0)
+    end)
+  end)
+  describe("copy with adjusted positions", function()
+    local original = LineChunk{content = "alpha", start = 4}
+    it("will adjust immutably #wip", function()
+      local new = original.adjust_positions(1)
+      assert_chunk(original, "alpha", 4)
+      assert_chunk(new, "alpha", 5)
     end)
   end)
 end)
