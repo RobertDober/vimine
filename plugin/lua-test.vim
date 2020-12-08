@@ -7,13 +7,20 @@ if exists( 'g:vimine_did_lua_test' )
 endif
 let g:vimine_did_lua_test = 1
 " FT specific
-let g:vimine_lua_general_test_command = "lcov"
+let g:vimine_elixir_test_command = "mix test"
+let g:vimine_elixir_test_general_command = "mix test --cover"
+let g:vimine_elixir_test_suffix  = ""
+let g:vimine_elixir_test_window  = "tests"
+
 let g:vimine_lua_test_command = "busted -c"
-let g:vimine_lua_test_window  = "test"
+let g:vimine_lua_test_general_command = "lcov"
 let g:vimine_lua_test_suffix  = ""
+let g:vimine_lua_test_window  = "test"
+
 let g:vimine_ruby_test_command = "bundle exec rspec"
-let g:vimine_ruby_test_window  = "test"
 let g:vimine_ruby_test_suffix  = ""
+let g:vimine_ruby_test_general_command = ""
+let g:vimine_ruby_test_window  = "test"
 
 
 let s:save_cpo = &cpo " save user coptions
