@@ -25,6 +25,7 @@ return function()
   local function complete_with_do(line, indnt)
     local indnt = indnt or 2
     local line = string.gsub(line, "%s+do%s*$", "")
+    line = string.gsub(line, "%s+$", "")
     local lines = {
         line .. " do",
         indent(line, string.rep(" ", indnt)),
