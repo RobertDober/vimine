@@ -55,4 +55,12 @@ describe("Line", function()
       end)
     end)
   end)
+
+  describe("error case, cannot find parts", function()
+    it("will croak", function()
+      assert.has_error(function()
+        Line{}
+      end, "Missing arguments to construct a Line: (parts)")
+    end)
+  end)
 end)
