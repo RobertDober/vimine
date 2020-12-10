@@ -1,8 +1,5 @@
 local ruby = require'cccomplete.ruby'()
-local function assert_complete_without_do(line)
-end
 describe("ruby", function()
-  -- tests go here
 
   describe("complete without do", function()
     describe("module", function()

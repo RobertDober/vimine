@@ -2,9 +2,10 @@
 local api = vim.api
 
 local completers = {
-  lua            = require("cccomplete.lua")(),
-  markdown       = require("cccomplete.markdown")(),
-  ruby           = require("cccomplete.ruby")(),
+  elixir   = require("cccomplete.elixir")(),
+  lua      = require("cccomplete.lua")(),
+  markdown = require("cccomplete.markdown")(),
+  ruby     = require("cccomplete.ruby")(),
 }
 
 local function cccomplete(lnb1, lnb2)
