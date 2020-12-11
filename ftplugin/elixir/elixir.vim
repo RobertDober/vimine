@@ -25,18 +25,6 @@ command! FormatThisFile call <SID>formatThisFile()
 nmap <Leader>f :FormatThisFile<CR>
 
 
-function! s:renumberIex(line1, line2) " {{{{{
-
-  " ruby << EOF
-  "   require "filters/elixir/renumber_iex"
-  "   fst_lnb = VIM.evaluate("a:line1")
-  "   lst_lnb = VIM.evaluate("a:line2")
-  "   range = fst_lnb.pred..lst_lnb.pred
-  "   lines = VIM::Buffer.current.lines[range]
-  "   output = RenumberIex.run(lines) 
-  "   VIM::Buffer.current.lines[range] = output
-" EOF
-endfunction " }}}}}
 command! -range=% RenumberIex lua require'filter'.filter_with(<line1>, <line2>, require'filters.iex_renumber')
 
 function! s:getLastLine(lnb) " {{{{{

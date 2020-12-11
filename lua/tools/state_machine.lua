@@ -1,16 +1,28 @@
 -- local dbg = require("debugger")
 -- -- Consider enabling auto_where to make stepping through code easier to follow.
 -- dbg.auto_where = 2
-local function state_machine(description)
-  local states = description.states
-  local current_state
-  local current_description
+local match_any_of = require'tools'().match_any_of
 
+local function state_machine(states)
+  local current_state
+  local current_triggers
+
+  local function match(line, pattern)
+    if type(pattern) == "string" then
+      return string.match(line, pattern)
+    elseif type(pattern) == "table" then
+      return match_any_of(line, pattern)
+    elseif type(pattern) == "function" then
+      return pattern(line)
+    else
+      return pattern
+    end
+  end
   local function set_state(state)
     if not state or (current_state == state) then return end
     current_state = state
-    current_description = states[current_state]
-    if not current_description then
+    current_triggers = states[current_state]
+    if not current_triggers then
       error("Undefined state: " .. state)
     end
   end
@@ -30,9 +42,9 @@ local function state_machine(description)
   end
 
   local function transition(line, acc)
-    for _ , pattern_action in ipairs(current_description) do
+    for _ , pattern_action in ipairs(current_triggers) do
       pattern, action = table.unpack(pattern_action)
-      local m = string.match(line, pattern)
+      local m = match(line, pattern)
       if m then
         return trigger(line, m, action, acc) 
       end
@@ -40,8 +52,8 @@ local function state_machine(description)
     return acc
   end
 
-  return function(input, acc)
-    set_state(description.start or "start")
+  return function(input, acc, start_state)
+    set_state(start_start or "start")
     for _, line in ipairs(input) do
       -- print("state", current_state, "line", line, "acc", acc)
       acc = transition(line, acc)
