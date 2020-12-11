@@ -3,6 +3,8 @@ if exists( "b:did_vimine_elixir" )
 endif
 let b:did_vimine_elixir = 1
 
+let s:save_cpo = &cpo " save user coptions
+set cpo&vim " reset them to defaults
 
 if !exists('g:lab42_tmux_elixir_test_window')
   let g:lab42_tmux_elixir_test_window = 'tests'
@@ -24,17 +26,18 @@ nmap <Leader>f :FormatThisFile<CR>
 
 
 function! s:renumberIex(line1, line2) " {{{{{
-  ruby << EOF
-    require "filters/elixir/renumber_iex"
-    fst_lnb = VIM.evaluate("a:line1")
-    lst_lnb = VIM.evaluate("a:line2")
-    range = fst_lnb.pred..lst_lnb.pred
-    lines = VIM::Buffer.current.lines[range]
-    output = RenumberIex.run(lines) 
-    VIM::Buffer.current.lines[range] = output
-EOF
+
+  " ruby << EOF
+  "   require "filters/elixir/renumber_iex"
+  "   fst_lnb = VIM.evaluate("a:line1")
+  "   lst_lnb = VIM.evaluate("a:line2")
+  "   range = fst_lnb.pred..lst_lnb.pred
+  "   lines = VIM::Buffer.current.lines[range]
+  "   output = RenumberIex.run(lines) 
+  "   VIM::Buffer.current.lines[range] = output
+" EOF
 endfunction " }}}}}
-command! -range=% RenumberIex call <SID>renumberIex(<line1>, <line2>)
+command! -range=% RenumberIex lua require'filter'.filter_with(<line1>, <line2>, require'filters.iex_renumber')
 
 function! s:getLastLine(lnb) " {{{{{
   let l:lnb = a:lnb + 1
@@ -64,3 +67,6 @@ endfunction " }}}}}
 command! -range ParseMarkdown call <SID>parseMarkdown(<line1>, <line2>)
 
 let b:ale_fixers = { 'elixir': ['mix_format'] }
+
+let &cpo = s:save_cpo " and restore after
+unlet s:save_cpo
