@@ -32,7 +32,6 @@ local function state_machine(states)
     local new
     if type(action) == "function" then
       acc, new = action(line, match, acc)
-      -- print("acc", acc, "new", new)
       set_state(new)
       return acc
     elseif type(action) == "string" then
@@ -43,9 +42,12 @@ local function state_machine(states)
 
   local function transition(line, acc)
     for _ , pattern_action in ipairs(current_triggers) do
-      pattern, action = table.unpack(pattern_action)
+      -- print("candidate", vim.inspect(pattern_action))
+      pattern = pattern_action[1]
+      action = pattern_action[2]
       local m = match(line, pattern)
       if m then
+        -- print("matched", vim.inspect(pattern))
         return trigger(line, m, action, acc) 
       end
     end
@@ -55,7 +57,7 @@ local function state_machine(states)
   return function(input, acc, start_state)
     set_state(start_start or "start")
     for _, line in ipairs(input) do
-      -- print("state", current_state, "line", line, "acc", acc)
+      -- print("state", current_state, "line", line, "out", vim.inspect(acc.lines))
       acc = transition(line, acc)
     end
     return acc

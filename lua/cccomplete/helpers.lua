@@ -1,3 +1,5 @@
+local T = require "tools"()
+
 return function()
   local function indent(line, suffix)
     local suffix = suffix or ""
@@ -10,6 +12,14 @@ return function()
       offset = opts.offset or 1,
       col = opts.col or 999
     }
+  end
+
+  local function complete_from_patterns(line, all_patterns, alternative)
+    for _, current_patterns in ipairs(all_patterns) do
+      local fn_completer = T.access_by_match(line, current_patterns)
+      if fn_completer then return fn_completer(line) end
+    end
+    if alternative then return alternative(line) end
   end
 
   local function complete_with_custom(line, custom, indnt)
@@ -46,6 +56,7 @@ return function()
   end
 
   return {
+    complete_from_patterns = complete_from_patterns,
     complete_with_custom = complete_with_custom,
     complete_with_do = complete_with_do,
     complete_with_end = complete_with_end,

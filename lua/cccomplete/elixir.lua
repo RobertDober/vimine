@@ -27,15 +27,34 @@ local doctest_patterns = {
   ["^%s%s%s%s+iex[(]%d+[)]>"] = fn_complete_docstring(),
   ["^%s%s%s%s+[.][.][.][(]%d+[)]>"] = fn_complete_docstring(),
 }
+
+local function fn_continue_pipe(line)
+  return H.make_return_object{lines = {line, H.indent(line, "|> ")}}
+end
+local function fn_first_pipe(line)
+  local line = string.gsub(line, "%s*>%s*$", "")
+  return H.make_return_object{lines = {line, H.indent(line, "|> ")}}
+end
+
+local pipe_patterns = {
+  ["%s>%s*$"] = fn_first_pipe,
+  ["^%s*|>%s"] = fn_continue_pipe
+}
+
+local function fn_doctest(line)
+  return H.make_return_object{lines = {line, H.indent(line), H.indent(line, '"""')}}
+end
+local docstring_patterns = {
+  ['^%s*@doc%s+"""'] = fn_doctest,
+  ['^%s*@moduledoc%s+"""'] = fn_doctest,
+}
+
+local all_patterns = {
+  doctest_patterns, docstring_patterns, pipe_patterns, fn_patterns
+}
 return function()
   local function complete(line)
-    local fn_completer = T.access_by_match(line, doctest_patterns)
-    if fn_completer then return fn_completer(line) end
-
-    fn_completer = T.access_by_match(line, fn_patterns)
-    if fn_completer then return fn_completer(line) end
-
-    return H.complete_with_do(line)
+    return H.complete_from_patterns(line, all_patterns, H.complete_with_do)
   end
 
   return {
