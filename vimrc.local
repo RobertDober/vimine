@@ -147,8 +147,7 @@ map <Esc> :nohlsearch<CR>
 " au BufNewFile,BufRead *.cfg call s:configSettings()
 " au BufNewFile,BufRead *.{css,sass,scss} call s:cssSettings()
 " au BufNewFile,BufRead *.{cpp,hpp} call s:cppSettings()
-" au BufNewFile,BufRead *.feature call s:cucumberSettings()
-
+au BufNewFile, BufRead *.md.template set filetype=markdown
 " au BufNewFile,BufRead *.{leex} call s:eelixirSettings()
 " au BufNewFile,BufReadPost,BufRead *.elm call s:ElmSettings()
 " au BufNewFile,BufRead *.rhtml call s:erubySettings()
