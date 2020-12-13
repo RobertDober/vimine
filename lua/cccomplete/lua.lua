@@ -20,6 +20,7 @@ local function_def_patterns = {
   "^%s*local%s+function%s+[%a_]+",
   "^%s*[%a_]+%s+=%s+function",
   "^%s*local%s+[%a_]+%s+=%s+function",
+  "^%s*return%s+function",
 }
 
 local else_patten = "^%s*else%s*$"

@@ -12,7 +12,7 @@ let g:vimine_elixir_test_general_command = "mix test --cover"
 let g:vimine_elixir_test_suffix  = ""
 let g:vimine_elixir_test_window  = "tests"
 
-let g:vimine_lua_test_command = "busted -c"
+let g:vimine_lua_test_command = "busted -v"
 let g:vimine_lua_test_general_command = "lcov"
 let g:vimine_lua_test_suffix  = ""
 let g:vimine_lua_test_window  = "test"

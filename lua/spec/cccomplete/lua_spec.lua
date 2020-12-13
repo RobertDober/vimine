@@ -25,6 +25,8 @@ describe("lua", function()
     check_indented_completion("local function with params, rparen added", "  local function hello(world", "  local function hello(world)")
     check_indented_completion("globally assigned function", "alpha = function()")
     check_indented_completion("locally assigned function", "local beta = function(a, b, ...)")
+    check_indented_completion("returned function", " return function(a, b, ...)")
+
 
     check_indented_completion("if (bare)", "  if some_condition", "  if some_condition then")
     check_indented_completion("if (with then)", "  if some_condition  then ", "  if some_condition then")
