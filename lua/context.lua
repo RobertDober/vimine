@@ -1,8 +1,8 @@
 local api = vim.api
 
-local function add_variables(self, args)
+local function add_variables(ctxt, args)
   for _, varname in ipairs(args) do
-    self[varname] = api.nvim_get_var(varname)
+    ctxt[varname] = api.nvim_get_var(varname)
   end
 end
 
@@ -17,7 +17,7 @@ local function context(...)
     file_name = api.nvim_eval('expand("%:t")'),
     file_path = api.nvim_eval('expand("%")')
   }
-  add_variables(ctx, {...})
+  add_variables(ctxt, {...})
   ctxt.add_variables = add_variables
   return ctxt 
 end

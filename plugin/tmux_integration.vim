@@ -7,7 +7,7 @@ if exists( 'g:vimine_did_tmux_integration' )
 endif
 
 let g:vimine_did_tmux_integration = 1
-let g:vimine_tmux_again_window = 'zsh'
+let g:vimine_tmux_again_window = 'tests'
 
 map <Leader>tl :call tmux#again('-1')<CR>
 map <Leader>tr :call tmux#again('+1')<CR>

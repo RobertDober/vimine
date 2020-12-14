@@ -44,3 +44,7 @@ describe("elixir", function()
   end)
 end)
 
+  describe("a docstring", function()
+    line('  @doc """')
+    it_behaves_like{lines = {_line, '  ', '  """'}}
+  end)

@@ -1,0 +1,58 @@
+local range = require'tools.fn'.range
+
+local subject
+local function set_subject(low, high, step)
+  local step = step or 1
+  subject = range(low, high, step)
+end
+
+local function assert_range(...)
+  local values = {...}
+  it("has the correct values", function()
+    assert.are.same(values, subject)
+  end)
+end
+
+describe("easy peasy (step = 1)", function()
+  context("empty", function()
+    set_subject(2, 1)
+    assert_range()
+  end)
+  context("single", function()
+    set_subject(2, 2)
+    assert_range(2)
+  end)
+  context("multiple", function()
+    set_subject(0, 3)
+    assert_range(0, 1, 2, 3)
+  end)
+end)
+describe("are we even now? (step = 2)", function()
+  context("empty", function()
+    set_subject(2, 1, 2)
+    assert_range()
+  end)
+  context("single", function()
+    set_subject(2, 2, 2)
+    assert_range(2)
+  end)
+  context("multiple", function()
+    set_subject(0, 3, 2)
+    assert_range(0, 2)
+  end)
+end)
+describe("the sens of negativity", function()
+  context("empty", function()
+    set_subject(2, 3, -1)
+    assert_range()
+  end)
+  context("single", function()
+    set_subject(2, 2, -1)
+    assert_range(2)
+  end)
+  context("multiple", function()
+    set_subject(0, -3, -1)
+    assert_range(0, -1, -2, -3)
+  end)
+  
+end)

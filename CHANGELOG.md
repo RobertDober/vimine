@@ -1,4 +1,6 @@
+# v 1.0.0 2020-12-14 
 
+- RotateAround (only for current line)
 
 # 2020-11-20
 Now on Lua instead of Ruby in the wo_ruby branch

@@ -22,6 +22,15 @@ local function append(list1, list2, fn)
   return result
 end
 
+local function listmod(n, s)
+  local r = n % s
+  if r == 0 then
+    return s
+  else
+    return r
+  end
+end
+
 local function readonly(t, msg)
   local proxy = {}
   local mt = {
@@ -49,8 +58,35 @@ local function slice(list, startpos, endpos, fn)
   return result
 end
 
+local function rotate_left(list, by)
+  local by = by or 1
+  local t = {}
+  local s = #list
+  for idx, value in ipairs(list) do
+    t[listmod(idx - by, s)] = value
+  end
+  return t
+end
+
+local function rotate_right(list, by)
+  local by = by or 1
+  local t = {}
+  local s = #list
+  for idx, value in ipairs(list) do
+    t[listmod(idx + by, s)] = value
+  end
+  return t
+end
+
+local function reverse(list)
+  
+end
+
 return { 
   append = append,
   readonly = readonly,
-  slice  = slice
+  reverse = reverse,
+  rotate_left = rotate_left, 
+  rotate_right = rotate_right,
+  slice  = slice,
 }

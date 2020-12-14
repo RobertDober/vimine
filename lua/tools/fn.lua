@@ -39,10 +39,19 @@ local function map(list, fn)
   end
   return foldl(list, append, {})
 end
+local function range(low, high, step)
+  local step = step or 1
+  local result = {}
+  for i = low, high, step do
+    table.insert(result, i)
+  end
+  return result
+end
 
 return {
   curry = curry,
   each = each,
   foldl = foldl,
   map = map,
+  range = range,
 }

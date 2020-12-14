@@ -3,8 +3,13 @@ local fn = require'tools.fn'
 describe("curry", function()
   local function add(a, b) return a + b end
   local inc = fn.curry(add, 1)
+  local answer = fn.curry(add, 1, 41)
+
   it("can increment", function()
     assert.is_equal(42, inc(41))
+  end)
+  it("can be called", function()
+    assert.is_equal(42, answer())
   end)
 
   describe("this can be very useful with fn tools", function()

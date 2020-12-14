@@ -14,7 +14,9 @@ command! SetRotateAroundSep call <SID>set_rotate_around_sep(<q-args>)
 
 let s:save_cpo = &cpo " save user coptions
 set cpo&vim " reset them to defaults
-command! RotateAround lua require'rotate_around'.rotate()
+command! -range RotateAround lua require'rotate_around'.rotate_around(<line1>, <line2>)
+map <Leader>r :RotateAround<CR>
+imap <Leader>r <Esc>:RotateAround<CR>
 " in plugin/whid.vim
 
 
