@@ -6,12 +6,13 @@ local proxy = {
   get_mark = function(mark)
     return api.nvim_buf_get_mark(0, mark)
   end,
+  inspect = vim.inspect,
   normal_command = function(normal)
     api.nvim_command("normal "..normal)
   end,
   system = function(cmd)
     api.nvim_call_function("system", {cmd})
-  end
+  end,
 }
 
 local function set_proxy(from_name)
