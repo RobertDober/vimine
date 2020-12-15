@@ -14,12 +14,12 @@ return function()
     }
   end
 
-  local function complete_from_patterns(line, all_patterns, alternative)
+  local function complete_from_patterns(ctxt, all_patterns, alternative)
     for _, current_patterns in ipairs(all_patterns) do
-      local fn_completer = T.access_by_match(line, current_patterns)
-      if fn_completer then return fn_completer(line) end
+      local fn_completer = T.access_by_match(ctxt.line, current_patterns)
+      if fn_completer then return fn_completer(ctxt) end
     end
-    if alternative then return alternative(line) end
+    if alternative then return alternative(ctxt) end
   end
 
   local function complete_with_custom(line, custom, indnt)
@@ -32,9 +32,9 @@ return function()
     return make_return_object{ lines=lines }
   end
 
-  local function complete_with_do(line, indnt)
+  local function complete_with_do(ctxt, indnt)
     local indnt = indnt or 2
-    local line = string.gsub(line, "%s+do%s*$", "")
+    local line = string.gsub(ctxt.line, "%s+do%s*$", "")
     line = string.gsub(line, "%s+$", "")
     local lines = {
         line .. " do",

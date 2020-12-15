@@ -1,15 +1,14 @@
-local elixir = require'cccomplete.elixir'()
 -- local dbg = require("debugger")
--- -- Consider enabling auto_where to make stepping through code easier to follow.
 -- dbg.auto_where = 2
+local elixir = require'cccomplete.elixir'()
 
-local _line
+local _ctxt
 local function line(value)
-  _line = value
+  _ctxt = {line = value}
 end
 
 local function subject()
-  return elixir.complete(_line)
+  return elixir.complete(_ctxt)
 end
 
 local function it_behaves_like(opts)
@@ -32,19 +31,19 @@ describe("elixir", function()
   end)
   describe("continuing a pipeline", function()
     line("   |> some_more(:code)")
-    it_behaves_like{lines = {_line, "   |> "}}
+    it_behaves_like{lines = {_ctxt.line, "   |> "}}
   end)
   describe("a docstring", function()
     line('  @doc """')
-    it_behaves_like{lines = {_line, '  ', '  """'}}
+    it_behaves_like{lines = {_ctxt.line, '  ', '  """'}}
   end)
   describe("another docstring", function()
     line('  @moduledoc """')
-    it_behaves_like{lines = {_line, '  ', '  """'}}
+    it_behaves_like{lines = {_ctxt.line, '  ', '  """'}}
   end)
 end)
 
-  describe("a docstring", function()
-    line('  @doc """')
-    it_behaves_like{lines = {_line, '  ', '  """'}}
-  end)
+describe("a docstring", function()
+  line('  @doc """')
+  it_behaves_like{lines = {_ctxt.line, '  ', '  """'}}
+end)

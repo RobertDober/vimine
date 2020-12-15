@@ -9,7 +9,7 @@ describe("lua", function()
   describe("complete busted function", function()
     local function check_busted_completion(name, input, expected)
       local indent = string.match(input, "^%s*")
-      local completion = lua.complete(input)
+      local completion = lua.complete({line = input})
 
       describe(name, function()
         it("has the correct lines", function()

@@ -5,7 +5,7 @@ describe("lua", function()
     local function check_tail_fn_completion(name, input, fncompleted)
       local fncompleted = fncompleted or input
       local indent = string.match(input, "^%s*")
-      local completion = lua.complete(input)
+      local completion = lua.complete({line = input})
       describe(name, function()
         it("has the correct lines", function()
           assert.are.same({fncompleted, indent .. "  ", indent .. "end)"}, completion.lines)

@@ -12,12 +12,13 @@ local ruby_no_dos = {
 return function()
 
 
-  local function complete(line)
-    no_do = ruby_no_dos[string.match(line, ruby_no_do)] 
+  local function complete(ctxt)
+    local line = ctxt.line
+    local no_do = ruby_no_dos[string.match(line, ruby_no_do)] 
     if no_do then
       return complete_with_end(line)
     else
-      return complete_with_do(line)
+      return complete_with_do(ctxt)
     end
   end
 

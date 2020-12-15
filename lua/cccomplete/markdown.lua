@@ -28,7 +28,8 @@ return function()
     }
   end
 
-  local function complete(line)
+  local function complete(ctxt)
+    local line = ctxt.line
     local match = string.match(line, trigger) or string.match(line, bare)
 
     if match then

@@ -1,11 +1,16 @@
 local lua = require('cccomplete.lua')()
+
+local function complete(line)
+  return lua.complete({line = line})
+end
+
 describe("lua", function()
 
   describe("complete without do", function()
     local function check_indented_completion(name, input, fncompleted)
       local fncompleted = fncompleted or input
       local indent = string.match(input, "^%s*")
-      local completion = lua.complete(input)
+      local completion = complete(input)
       describe(name, function()
         it("has the correct lines", function()
           assert.are.same({fncompleted, indent .. "  ", indent .. "end"}, completion.lines)
@@ -38,13 +43,13 @@ describe("lua", function()
 
   describe("complete with do", function()
     describe("any line", function()
-      completion = lua.complete("  something")
+      completion = complete("  something")
       it("adds a  do", function()
         assert.are.same({"  something do", "    ", "  end"}, completion.lines)
       end)
     end)
     describe("any line do present", function()
-      completion = lua.complete("  something  do ")
+      completion = complete("  something  do ")
       it("adds a  do", function()
         assert.are.same({"  something do", "    ", "  end"}, completion.lines)
       end)
@@ -53,7 +58,7 @@ describe("lua", function()
 
   describe("complete table", function()
     describe("ends with {", function()
-      completion = lua.complete(" hello  {  ")
+      completion = complete(" hello  {  ")
       it("adds a }", function()
         assert.are.same({" hello {", "   ", " }"}, completion.lines)
       end)

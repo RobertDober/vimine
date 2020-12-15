@@ -1,3 +1,7 @@
+# v 1.0.1 2020-12-15
+
+- @spec completion for elixir
+
 # v 1.0.0 2020-12-14 
 
 - RotateAround (only for current line)
