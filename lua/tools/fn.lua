@@ -1,5 +1,4 @@
 -- local dbg = require("debugger")
--- -- Consider enabling auto_where to make stepping through code easier to follow.
 -- dbg.auto_where = 2
 
 local append = require"tools.list".append

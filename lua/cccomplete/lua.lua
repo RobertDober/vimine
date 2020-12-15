@@ -19,7 +19,9 @@ local function_def_patterns = {
   "^%s*function%s+[%a_]+",
   "^%s*local%s+function%s+[%a_]+",
   "^%s*[%a_]+%s+=%s+function",
-  "^%s*local%s+[%a_]+%s+=%s+function",
+  "=%s+function%s*$",
+  "=%s+function()%s*$",
+  "=%s+function%b()%s*$",
   "^%s*return%s+function",
 }
 

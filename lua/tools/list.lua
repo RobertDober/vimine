@@ -1,6 +1,7 @@
 -- local dbg = require("debugger")
--- -- Consider enabling auto_where to make stepping through code easier to follow.
 -- dbg.auto_where = 2
+local range = require'tools.range'
+local slice
 
 local function append(list1, list2, fn)
   local result = {}
@@ -31,6 +32,10 @@ local function listmod(n, s)
   end
 end
 
+local function partition(list, spos, epos)
+  return slice(list, 1, spos - 1), slice(list, spos, epos), slice(list, epos + 1)
+end
+
 local function readonly(t, msg)
   local proxy = {}
   local mt = {
@@ -43,15 +48,16 @@ local function readonly(t, msg)
   return proxy
 end
 
-local function slice(list, startpos, endpos, fn)
+slice = function(list, startpos, endpos, fn)
   local endpos = endpos or #list
+  local rng = range(startpos, endpos):intersect(startpos, #list)
   local result = {}
   if fn then
-    for idx = startpos, endpos do
+    for idx in rng:iter() do
       table.insert(result, fn(list[idx]))
     end
   else
-    for idx = startpos, endpos do
+    for idx in rng:iter() do
       table.insert(result, list[idx])
     end
   end
@@ -78,13 +84,19 @@ local function rotate_right(list, by)
   return t
 end
 
+local function replace(source, idx1, idx2, with)
+
+  
+end
 local function reverse(list)
   
 end
 
 return { 
   append = append,
+  partition = partition,
   readonly = readonly,
+  replace = replace,
   reverse = reverse,
   rotate_left = rotate_left, 
   rotate_right = rotate_right,

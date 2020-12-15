@@ -1,3 +1,9 @@
+# v 1.0.2 ????
+
+
+- refactoring of API access into one place
+- stubbing API access in specs
+
 # v 1.0.1 2020-12-15
 
 - @spec completion for elixir

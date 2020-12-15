@@ -1,4 +1,8 @@
-slice = require'tools.list'.slice
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
+local slice = require'tools.list'.slice
+local table = {"a", "b", "c"}
+
 describe("empty", function()
   it("does nothing", function()
     slice({}, 1, 0, function()
@@ -8,7 +12,6 @@ describe("empty", function()
 end)
 
 describe("not empty", function()
-  local table = {"a", "b", "c"}
   it("still may not do anything", function()
     slice(table, 2, 1, function()
       error("Never risen")
@@ -23,5 +26,14 @@ describe("not empty", function()
     it("still just does this", function()
       assert.are.same({"A", "B"}, slice(table, 1, 2, string.upper))
     end)
+  end)
+end)
+
+describe("edge cases", function()
+  it("can be off limits, LHS", function()
+    assert.are.same({"a"}, slice(table, 0, 1))
+  end)
+  it("can be off limits, RHS", function()
+    assert.are.same({"b", "c"}, slice(table, 2, 100))
   end)
 end)
