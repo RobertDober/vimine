@@ -1,23 +1,37 @@
--- local dbg = require("debugger")
--- dbg.auto_where = 2
+local dbg = require("debugger")
+dbg.auto_where = 2
 local lst = require 'tools.list'
 local _buffer = {
   cursor = {1, 0},
   lines = {},
 }
 
-local _options = {
+local _called = {
 }
 
 local _commands = {
+
+}
+local _options = {
+}
+
+local _evaluations = {
+}
+
+local _variables = {
 }
 
 local _vim = {
   api = {
+    nvim_call_function = function(fname, params)
+      table.insert(_called, {fname, params})
+    end,
+    nvim_command = function(cmd)
+      table.insert(_commands, cmd)
+    end,
     nvim_get_current_line = function()
       return _buffer.lines[_buffer.cursor[1]]
     end,
-      
     nvim_win_get_cursor = function(_)
       return _buffer.cursor
     end,
@@ -28,14 +42,21 @@ local _vim = {
       return _options[name]
     end,
     nvim_eval = function(cmd)
-      return _commands[cmd]
+      return _evaluations[cmd]
+    end,
+    nvim_get_var = function(name)
+      return _variables[name]
     end,
     nvim_win_set_cursor = function(_, cursor)
       _buffer.cursor = cursor
     end,
     nvim_buf_set_lines = function(_, lnb1, lnb2, _, lines)
       _buffer.lines = lst.replace(_buffer.lines, lnb1 + 1, lnb2, lines)
-    end
+    end,
+
+    -- for inspection in tests
+    _called = function() return _called end,
+    _executed_commands = function() return _commands end,
   },
   inspect = tostring,
   __stubbed__ = true,
@@ -45,8 +66,8 @@ local _vim = {
 vim = vim or _vim
 
 local stubber_api = {
-  command = function(cmd, result)
-    _commands[cmd] = result
+  evaluation = function(cmd, result)
+    _evaluations[cmd] = result
   end,
   cursor = function(...)
     _buffer.cursor = {...}
@@ -57,15 +78,33 @@ local stubber_api = {
   option = function(key, value)
     _options[key] = value
   end,
-
+  var = function(key, value)
+    _variables[key] = value
+  end,
 }
 
-local function _stub_vim(...)
-  local params = {...}
-  
+local function _stub_vim(params)
+  if params.evaluation then
+    _evaluations[params.evaluation[1]] = params.evaluation[2]
+  end
+  if params.cursor then
+    _buffer.cursor = params.cursor
+  end
+  if params.lines then
+    _buffer.lines = params.lines
+  end
+  if params.option then
+    _options[params.option[1]] = params.option[2]
+  end
+  if params.ft then
+    _options["filetype"] = params.ft
+  end
+  if params.var then
+    _variables[params.var[1]] = params.var[2]
+  end
 end
 
 return {
-  stub    = _stub_vim,
+  stub_vim = _stub_vim,
   stubber = stubber_api,
 }

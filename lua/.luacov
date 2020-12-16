@@ -1,12 +1,14 @@
 
 include = {
-  "ccomplete",
-  "ccomplete%/.+$",
-  "tools",
-  "tools%/.+$",
+--   "cccomplete",
+--   "cccomplete%/.+$",
+--   "tools",
+--   "tools%/.+$",
 }
 
 exclude = {
-  "spec%/.+$"
+  "debugger$",
+  "spec%/.+$",
+  "[.]luarocks/"
 }
 

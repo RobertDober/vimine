@@ -6,8 +6,8 @@ local buffer = {"alpha", "beta", "gamma"}
   stubber.cursor(2,3)
   stubber.lines(table.unpack(buffer))
   stubber.option("ft", "elixir")
-  stubber.command('expand("%:t")', "filename")
-  stubber.command('expand("%")', "/full/path")
+  stubber.evaluation('expand("%:t")', "filename")
+  stubber.evaluation('expand("%")', "/full/path")
 
 local context1 = require'context'.context
 

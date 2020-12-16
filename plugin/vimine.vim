@@ -32,21 +32,6 @@ for i in range(10)
   exec 'nnoremap <Leader>' . i . 'rt :read /tmp/xxx' . i . '<CR>'
 endfor
 
-function! s:toggleComment(line1, line2) " {{{{{
-  ruby << EOF
-    require "filters/comments/toggle"
-    fst_lnb = VIM.evaluate("a:line1")
-    lst_lnb = VIM.evaluate("a:line2")
-    filetyp = VIM.evaluate("&ft")
-    range = fst_lnb.pred..lst_lnb.pred
-    lines = VIM::Buffer.current.lines[range]
-    output = Toggle.run(lines, filetyp) 
-    VIM::Buffer.current.lines[range] = output
-EOF
-endfunction " }}}}}
-command! -range ToggleComment call <SID>toggleComment(<line1>, <line2>)
-vnoremap <Leader>tc :ToggleComment<CR>
-nnoremap <Leader>tc :ToggleComment<CR>
 
 function! s:addApacheSPXLicenceIdentifier() " {{{{{
   let l:identifier = printf(&commentstring, ' SPDX-License-Identifier: Apache-2.0')

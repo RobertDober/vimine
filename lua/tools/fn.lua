@@ -1,6 +1,5 @@
 -- local dbg = require("debugger")
 -- dbg.auto_where = 2
-
 local append = require"tools.list".append
 
 local function curry(fn, ...)

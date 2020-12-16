@@ -2,8 +2,8 @@ local T = require'tools'()
 local map = require'tools.fn'.map
 local _context = require'context'
 local context
+local api
 
-local api     = require'vimapi'
 
 local function elixir_extract_test_tag()
   local tag = string.match(context.line, '^%s*@tag :(%w+)')
@@ -106,8 +106,9 @@ local test_var_suffices = {
   "command", "general_command", "suffix", "window"
 }
 local function run_tests()
-  api.command("write")
   context = _context.context()
+  api = context.api
+  api.command("write")
   local test_command_maker = test_command_makers[context.ft]
   -- print("test command maker", test_command_maker)
   if not test_command_maker then return end
