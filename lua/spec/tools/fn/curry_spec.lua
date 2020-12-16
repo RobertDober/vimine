@@ -1,3 +1,5 @@
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local fn = require'tools.fn'
 
 describe("curry", function()
@@ -23,5 +25,40 @@ describe("curry", function()
       fn.each({1, 2}, add_to)
       assert.are.same({1, 2}, result)
     end)
+  end)
+end)
+
+describe("positional curry", function()
+  local function four(a,b,c,d) return 1000*a + 100*b + 10*c + d end
+  describe("fixed units", function()
+    local fixed = fn.curry_at(four, fn.free, fn.free, fn.free, 1)
+    it("delivers", function()
+      assert.is_equal(4321, fixed(4, 3, 2))
+    end)
+  end)
+  describe("two twos", function()
+    local fixed = fn.curry_at(four, fn.free, 2, 3)
+    it("delivers", function()
+      assert.is_equal(1234, fixed(1, 4))
+    end)
+  end)
+  describe("all given", function()
+    local fixed = fn.curry_at(four, 9, 8, 7, 6)
+    it("delivers", function()
+      assert.is_equal(9876, fixed())
+    end)
+  end)
+end)
+
+describe("keyword curry", function()
+  local function comp(data)
+    return data.factor * 10 + data.offset
+  end
+  local hundred = fn.curry_kwd(comp, {factor = 10})
+  it("can curry the factor", function()
+    assert.is_equal(101, hundred{offset = 1})
+  end)
+  it("can override", function()
+    assert.is_equal(202, hundred{factor=20, offset = 2})
   end)
 end)

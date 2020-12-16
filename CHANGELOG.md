@@ -1,5 +1,11 @@
-# v 1.0.2 WIP
+# v 1.1.0 WIP
 
+- fn.curry_at
+- fn.curry_kwd
+- fn.merge (many tables)
+
+- general cccompletion (for all filetypes)
+- 100% test coverage with all vim API calls speced
 - refactoring of API access into one place
 - stubbing API access in specs
 

@@ -1,6 +1,34 @@
--- local dbg = require("debugger")
--- dbg.auto_where = 2
+local dbg = require("debugger")
+dbg.auto_where = 2
 local append = require"tools.list".append
+
+local free = {}
+local function combine_params(dtp, ctp)
+  local t = {}
+  for _, value in ipairs(dtp) do
+    if value == free then
+      table.insert(t, table.remove(ctp, 1))
+    else
+      table.insert(t, value)
+    end
+  end
+  return append(t, ctp)
+end
+
+local function merge_onto(target, src)
+  for k, v in pairs(src) do
+    target[k] = v
+  end
+end
+
+local function merge(...)
+  local result = {}
+  local tables = {...}
+  for _, table in ipairs(tables) do
+    merge_onto(result, table)
+  end
+  return result
+end
 
 local function curry(fn, ...)
   local def_time_params = {...}
@@ -8,6 +36,23 @@ local function curry(fn, ...)
     local call_time_params = {...}
     local total_params = append(def_time_params, call_time_params)
     return fn(table.unpack(total_params))
+  end
+end
+
+local function curry_at(fn, ...)
+  local def_time_params = {...}
+  return function(...)
+    local call_time_params = {...}
+    local total_params = combine_params(def_time_params, call_time_params)
+    return fn(table.unpack(total_params))
+  end
+end
+
+local function curry_kwd(fn, ctkwds)
+  local ctkwds = ctkwds
+  return function(rtkwds)
+    local total_kwds=merge(ctkwds, rtkwds)
+    return fn(total_kwds)
   end
 end
 
@@ -48,8 +93,12 @@ end
 
 return {
   curry = curry,
+  curry_at = curry_at,
+  curry_kwd = curry_kwd,
   each = each,
+  free = free,
   foldl = foldl,
   map = map,
+  merge = merge,
   range = range,
 }

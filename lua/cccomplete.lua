@@ -6,7 +6,6 @@ local function cccomplete(_lnb1, _lnb2)
   local api = ctxt.api
   local result = complete(ctxt)
   if result then
-    api.command((ctxt.lnb).."d")
     api.set_lines(ctxt.lnb, ctxt.lnb, result.lines)
     api.set_cursor(ctxt.lnb+result.offset, result.col)
   end

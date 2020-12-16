@@ -1,0 +1,31 @@
+local merge = require 'tools.fn'.merge
+
+describe("nada no es mucho", function()
+  it("indeed is not", function()
+    assert.are.same({}, merge())
+  end)
+  it("and even merging with nothing", function()
+    assert.are.same({}, merge({}))
+  end)
+  it("muchos nadas no son mucho", function()
+    assert.are.same({}, merge({}, {}, {}, {}))
+  end)
+end)
+describe("hacemos qualquieras cosas utiles", function()
+  local first  = { a = 1, b = 1, c = 1, d = 1 }
+  local second = {        b = 2,        d = 2,    f = 2}
+  local third  = {        b = 3, c = 3 }
+  it("still can be a nop", function()
+    assert.are.same(first, merge(first))
+    assert.are.same(first, merge(first, {}))
+    assert.are.same(first, merge({}, first))
+  end)
+  it("ou pas", function()
+    assert.are.same({a=1,b=2,c=1,d=2,f=2}, merge(first, second))
+    assert.are.same({a=1,b=3,c=3,d=1}, merge(first, third))
+    assert.are.same({b=2,c=3,d=2,f=2}, merge(third, second,{}))
+  end)
+  it("perché ne ho preparato tre?", function()
+    assert.are.same({a=1, b=3, c=3, d=2, f=2}, merge(first, second, third))
+  end)
+end)
