@@ -1,3 +1,5 @@
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local chunk = require'tools.string'.chunk
 
 local subject
@@ -18,6 +20,9 @@ local function assert_chunk_is(string, startpos, endpos, chunk)
   end)
   it("has the correct chunk", function()
     assert.is_equal(chunk, subject.chunk())
+  end)
+  it("has a nice representation", function()
+    assert.are.same({str = string, spos = startpos, epos = endpos, chunk = chunk}, subject:to_s())
   end)
 end
 

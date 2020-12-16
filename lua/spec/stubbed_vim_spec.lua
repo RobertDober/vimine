@@ -1,14 +1,13 @@
 -- local dbg = require("debugger")
 -- dbg.auto_where = 2
 
-local stub = require'spec.helpers.stub_vim'
-stub(function(stubber)
+local stubber = require'spec.helpers.stub_vim'.stubber
+local buffer = {"alpha", "beta", "gamma"}
   stubber.cursor(2,3)
-  stubber.lines("alpha", "beta", "gamma")
+  stubber.lines(table.unpack(buffer))
   stubber.option("ft", "elixir")
   stubber.command('expand("%:t")', "filename")
   stubber.command('expand("%")', "/full/path")
-end)
 
 local context1 = require'context'.context
 
@@ -49,4 +48,18 @@ describe("context accesses stubbed data", function()
     assert.is_equal("gamma", ctxt.post_line)
   end)
 
+end)
+
+insulate("set lines", function()
+  it("worx", function()
+    vim.api.nvim_buf_set_lines(0, 1, 2, false, {"delta", "eps"})
+    assert.are.same({"alpha", "delta", "eps", "gamma"}, vim.api.nvim_buf_get_lines(0, 0, 4, false))
+    vim.api.nvim_buf_set_lines(0, 0, 999, false, buffer)
+  end)
+end)
+insulate("set cursor", function()
+  it("also worx", function()
+    vim.api.nvim_win_set_cursor(0,{1, 1})
+    assert.is_equal("alpha", vim.api.nvim_get_current_line())
+  end)
 end)

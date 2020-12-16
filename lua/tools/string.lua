@@ -16,7 +16,7 @@ local function chunk(str, spos, epos)
     string = function() return str end,
     suffix = function() return string.sub(str, endpos + 1, -1) end,
     to_s   = function(self) return {
-      str = str, spos = spos, epos = epos, chunk = self.chunk() 
+      str = str, spos = startpos, epos = endpos, chunk = self.chunk() 
     } end
   }
 end

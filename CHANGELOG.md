@@ -1,5 +1,4 @@
-# v 1.0.2 ????
-
+# v 1.0.2 WIP
 
 - refactoring of API access into one place
 - stubbing API access in specs

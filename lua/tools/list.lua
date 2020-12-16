@@ -1,6 +1,6 @@
-local dbg = require("debugger")
-dbg.auto_where = 2
-
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
+local range = require'tools.range'
 local slice
 
 local function append(list1, list2, fn)
@@ -23,6 +23,14 @@ local function append(list1, list2, fn)
   return result
 end
 
+local function concat(...)
+  local result = {}
+  for _, table in ipairs({...}) do
+    result = append(result, table)
+  end
+  return result
+end
+
 local function listmod(n, s)
   local r = n % s
   if r == 0 then
@@ -33,7 +41,11 @@ local function listmod(n, s)
 end
 
 local function partition(list, spos, epos)
-  return slice(list, 1, spos - 1), slice(list, spos, epos), slice(list, epos + 1)
+  local lhs = slice(list, 1, spos - 1)
+  local mhs = slice(list, spos, epos)
+  local rhs = slice(list, math.max(epos, spos - 1) + 1)
+
+  return lhs, mhs, rhs
 end
 
 local function readonly(t, msg)
@@ -50,14 +62,14 @@ end
 
 slice = function(list, startpos, endpos, fn)
   local endpos = endpos or #list
+  local rng = range(startpos, endpos):intersect(startpos, #list)
   local result = {}
   if fn then
-    for idx = startpos, endpos do
+    for idx in rng:iter() do
       table.insert(result, fn(list[idx]))
     end
   else
-    dbg()
-    for idx = startpos, endpos do
+    for idx in rng:iter() do
       table.insert(result, list[idx])
     end
   end
@@ -85,15 +97,18 @@ local function rotate_right(list, by)
 end
 
 local function replace(source, idx1, idx2, with)
-
-  
+  local lhs, middle, rhs = partition(source, idx1, idx2)
+  local result = concat(lhs, with, rhs)
+  return result
 end
+
 local function reverse(list)
   
 end
 
 return { 
   append = append,
+  concat = concat,
   partition = partition,
   readonly = readonly,
   replace = replace,

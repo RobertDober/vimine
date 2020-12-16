@@ -37,10 +37,17 @@ describe("SM", function()
       end)
     end)
 
-    describe("still no trigger → no action #wip", function()
+    describe("still no trigger → no action", function()
       local lines = {"b 12", "a", " "}
       it("returns the acc", function()
         assert.is_equal(0, state_machine(lines, 0))
+      end)
+    end)
+
+    describe("trigger a and go back", function()
+      local lines = {"a", "c"}
+      it("returns the acc", function()
+        assert.is_equal(2, state_machine(lines, 2))
       end)
     end)
   end)
@@ -82,6 +89,22 @@ describe("SM", function()
     describe("an uneventful run", function()
       it("returns zero", function()
         assert.are.same({count = 0}, state_machine({"a", "b"}, {count = 0}))
+      end)
+    end)
+  end)
+
+  describe("functional patterns", function()
+    local is_odd = function(line)
+      return (line + 0) % 2 == 1
+    end
+    local state_machine = sm{
+      start = {
+        {is_odd, function(_,_,acc) return acc + 1 end}
+      }
+    }
+    describe("counting oddities", function()
+      it("does indeed", function()
+        assert.is_equal(2, state_machine({1, 2, 3}, 0))
       end)
     end)
   end)
