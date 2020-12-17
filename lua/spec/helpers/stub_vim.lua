@@ -1,5 +1,5 @@
-local dbg = require("debugger")
-dbg.auto_where = 2
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local lst = require 'tools.list'
 local _buffer = {
   cursor = {1, 0},

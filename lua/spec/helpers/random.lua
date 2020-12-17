@@ -1,5 +1,5 @@
-local dbg = require("debugger")
-dbg.auto_where = 2
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local fn = require'tools.fn'
 
 local data = "abcdefghijklmnopqrstuvwxyz_1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"

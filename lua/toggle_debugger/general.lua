@@ -9,6 +9,7 @@ local function toggle_debugger()
   if not toggler then return end
 
   toggler(ctxt)
+  ctxt.api.command("write")
 end
 
 return {

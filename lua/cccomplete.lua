@@ -1,3 +1,5 @@
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local context = require'context'.context
 local complete = require'cccomplete.general'.complete
 
