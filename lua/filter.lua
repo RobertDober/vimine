@@ -1,10 +1,9 @@
-local api = require("vimapi")
+local api = require("nvimapi")
 
 local function filter_with(lnb1, lnb2, filter)
-  local lnb1 = lnb1 - 1
-  local lines  = api.buf_get_lines(0, lnb1, lnb2, false) -- 0 → current buffer, false → not strict indexing
+  local lines  = api.lines(lnb1, lnb2)
   local result = filter(lines)
-  api.buf_set_lines(0, lnb1, lnb2, false, result)
+  api.set_lines(lnb1, lnb2, result)
 end
 
 return {
