@@ -32,3 +32,13 @@ insulate("general case", function()
     assert.are.same({2, 999}, api.cursor())
   end)
 end)
+
+insulate("regression #1, iex> cccompletion", function()
+  stub_vim{lines = {"  hello >", "    iex>"}, cursor = {2, 100}, ft = "elixir"}
+  complete()
+  it("does not yet add another line", function()
+    assert.are.same({"  hello >", "    iex(0)> "}, api.buffer())
+    assert.are.same({2, 999}, api.cursor())
+  end)
+  
+end)

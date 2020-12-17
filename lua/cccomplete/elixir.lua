@@ -12,6 +12,13 @@ local fn_patterns = {
   ["%s+->%s+$"] = fn_complete_bare,
 }
 
+local function fn_complete_first_docstring(with)
+  local with = with or ""
+  return function(ctxt)
+    local line = string.gsub(ctxt.line, ">%s*", with .. "> ")
+    return H.make_return_object{lines = {line}, offset = 0} 
+  end
+end
 local function fn_complete_docstring(with)
   local with = with or ""
   return function(ctxt)
@@ -21,7 +28,7 @@ local function fn_complete_docstring(with)
   end
 end
 local doctest_patterns = {
-  ["^%s%s%s%s+iex>"] = fn_complete_docstring("(0)"),
+  ["^%s%s%s%s+iex>"] = fn_complete_first_docstring("(0)"),
   ["^%s%s%s%s+[.][.][.]>"] = fn_complete_docstring("(0)"),
   ["^%s%s%s%s+iex[(]%d+[)]>"] = fn_complete_docstring(),
   ["^%s%s%s%s+[.][.][.][(]%d+[)]>"] = fn_complete_docstring(),

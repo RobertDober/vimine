@@ -29,10 +29,10 @@ describe("elixir", function()
     subject = complete(line)
     it_behaves_like_doctest{lines = {"   iex> some code do", "     ", "   end"}}
   end)
-  describe("unnumbered first line", function()
+  describe("unnumbered first line, trigger", function()
     local line = "    iex> some code"
     subject = complete(line)
-    it_behaves_like_doctest{lines = {"    iex(0)> some code", "    ...(0)> "}}
+    it_behaves_like_doctest{lines = {"    iex(0)> some code"}, offset = 0}
   end)
   describe("unnumbered continuation line", function()
     local line = "     ...> some code"
