@@ -27,8 +27,8 @@ insulate("general case", function()
   local time_command = 'strftime("%F %T", localtime())' 
   stub_vim{lines = {"  hello >", "it's now %datetime"}, cursor = {2, 999}, ft = "elixir", evaluation = {time_command, now}}
   complete()
-  it("expands the %datetime word", function()
-    assert.are.same({"  hello >", "it's now " .. now}, api.lines(1, 999))
+  it("expands the %datetime word #wip", function()
+    assert.are.same({"  hello >", "it's now " .. now}, api.buffer())
     assert.are.same({2, 999}, api.cursor())
   end)
 end)

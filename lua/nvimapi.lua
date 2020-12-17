@@ -16,6 +16,7 @@ end
 
 return {
   api = api,
+  buffer = function() return api.nvim_buf_get_lines(0, 0, -1, false) end,
   call_function = call_function,
   command = function(cmd) api.nvim_command(cmd) end,
   cursor = function() return api.nvim_win_get_cursor(0) end,

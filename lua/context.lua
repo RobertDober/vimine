@@ -28,13 +28,6 @@ local function context(...)
   return ctxt 
 end
 
-local function context_with_lines(lnb1, lnb2, ...)
-  local ctxt = context(...)
-  ctxt.lines = api.lines(lnb1, lnb2)
-  return ctxt
-end
-
 return {
   context = context,
-  context_with_lines = context_with_lines
 }

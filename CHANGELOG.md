@@ -1,4 +1,4 @@
-# v 1.1.0 WIP
+# v 1.1.0  2020-12-17
 
 - fn.curry_at
 - fn.curry_kwd

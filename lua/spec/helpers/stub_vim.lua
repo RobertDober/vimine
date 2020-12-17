@@ -36,6 +36,10 @@ local _vim = {
       return _buffer.cursor
     end,
     nvim_buf_get_lines = function(_, lnb1, lnb2, _)
+      local lnb2 = lnb2
+      if lnb2 < 0 then
+        lnb2 = #_buffer.lines + 1 + lnb2
+      end
       return lst.slice(_buffer.lines, lnb1 + 1, lnb2)
     end,
     nvim_buf_get_option = function(_, name)
