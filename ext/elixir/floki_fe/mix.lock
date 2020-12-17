@@ -1,4 +1,0 @@
-%{
-  "floki": {:hex, :floki, "0.26.0", "4df88977e2e357c6720e1b650f613444bfb48c5acfc6a0c646ab007d08ad13bf", [:mix], [{:html_entities, "~> 0.5.0", [hex: :html_entities, repo: "hexpm", optional: false]}], "hexpm", "e7b66ce7feef5518a9cd9fc7b52dd62a64028bd9cb6d6ad282a0f0fc90a4ae52"},
-  "html_entities": {:hex, :html_entities, "0.5.1", "1c9715058b42c35a2ab65edc5b36d0ea66dd083767bef6e3edb57870ef556549", [:mix], [], "hexpm", "30efab070904eb897ff05cd52fa61c1025d7f8ef3a9ca250bc4e6513d16c32de"},
-}
