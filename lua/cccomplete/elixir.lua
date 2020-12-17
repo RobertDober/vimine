@@ -50,7 +50,13 @@ local pipe_patterns = {
 local function fn_doctest(ctxt)
   return H.make_return_object{lines = {ctxt.line, H.indent(ctxt.line), H.indent(ctxt.line, '"""')}}
 end
+local function fn_pure_docstring(ctxt)
+  local doctype = "@" .. string.match(ctxt.line, '^%s*(%w+)$')
+  return H.make_return_object{lines = {H.indent(ctxt.line, doctype .. ' """'), H.indent(ctxt.line), H.indent(ctxt.line, '"""')}}
+end
 local docstring_patterns = {
+  ['^%s*doc$'] = fn_pure_docstring,
+  ['^%s*moduledoc$'] = fn_pure_docstring,
   ['^%s*@doc%s+"""'] = fn_doctest,
   ['^%s*@moduledoc%s+"""'] = fn_doctest,
 }

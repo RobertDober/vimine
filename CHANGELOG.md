@@ -2,6 +2,8 @@
 
 - fixes #1
 
+- implements #3 (elixir cccompletion for doc and moduledoc)
+
 # v 1.1.0  2020-12-17
 
 - fn.curry_at
