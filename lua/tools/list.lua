@@ -62,6 +62,12 @@ end
 
 slice = function(list, startpos, endpos, fn)
   local endpos = endpos or #list
+  if endpos < 0 then
+    endpos = #list + 1 + endpos
+  end
+  if startpos < 0 then
+    startpos = #list + 1 + startpos
+  end
   local rng = range(startpos, endpos):intersect(startpos, #list)
   local result = {}
   if fn then

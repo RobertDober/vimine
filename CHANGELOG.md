@@ -1,8 +1,10 @@
-# v 1.1.1  ????
+# v 1.1.1  2020-12-18
 
-- fixes #1
+- fixes #1 and #4
 
+- implements #2 (negative slice indicies)
 - implements #3 (elixir cccompletion for doc and moduledoc)
+- implements #5 (general cccompletor for `%date` use case, see above ;) )
 
 # v 1.1.0  2020-12-17
 
