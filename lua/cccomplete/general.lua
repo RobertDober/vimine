@@ -8,12 +8,18 @@ local completers = {
   ruby     = require("cccomplete.ruby")(),
 }
 
+local function _insert_date()
+  local now = ctxt.api.eval('strftime("%F", localtime())')
+  local nl  = string.gsub(ctxt.line, "%%date", now)
+  return H.make_return_object{lines = {nl}, offset = 0}
+end
 local function _insert_datetime()
   local now = ctxt.api.eval('strftime("%F %T", localtime())')
   local nl  = string.gsub(ctxt.line, "%%datetime", now)
   return H.make_return_object{lines = {nl}, offset = 0}
 end
 local general_patterns = {
+  date = _insert_date,
   datetime = _insert_datetime,
 }
 local general_pattern = "%%([%w_]+)$"
