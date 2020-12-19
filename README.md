@@ -1,3 +1,6 @@
+
+![CI](https://github.com/RobertDober/vimine/workflows/CI/badge.svg)
+
 # Vimine
 
 My neovim environment (using lua for scripting now) 100% TDD and 100% covered (nvim API stubbed)
