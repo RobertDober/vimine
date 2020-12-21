@@ -1,3 +1,8 @@
+# v 1.1.2  2020-12-21
+
+- cccompletion for crystal added
+
+
 # v 1.1.1  2020-12-18
 
 - fixes #1 and #4
@@ -21,7 +26,7 @@
 
 - @spec completion for elixir
 
-# v 1.0.0 2020-12-14 
+# v 1.0.0 2020-12-14
 
 - RotateAround (only for current line)
 

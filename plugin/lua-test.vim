@@ -7,6 +7,11 @@ if exists( 'g:vimine_did_lua_test' )
 endif
 let g:vimine_did_lua_test = 1
 " FT specific
+let g:vimine_crystal_test_command = "crystal spec"
+let g:vimine_crystal_test_general_command = "crystal spec"
+let g:vimine_crystal_test_suffix  = ""
+let g:vimine_crystal_test_window  = "tests"
+
 let g:vimine_elixir_test_command = "mix test"
 let g:vimine_elixir_test_general_command = "mix test --cover"
 let g:vimine_elixir_test_suffix  = ""

@@ -20,6 +20,23 @@ local trigger_elixir_line_spec = {
   "^%s*context%s",
   "^%s*test",
 }
+
+local function crystal_test_command_maker()
+  local commands = {}
+  local file_path = context.file_path
+  local test_args = context.vimine_crystal_test_command .. " " .. file_path
+  if context.lnb == 1 then
+    test_args = context.vimine_crystal_test_general_command
+  end
+
+  table.insert(commands, 'tmux send-keys -t ' .. context.vimine_crystal_test_window .. ' "' .. test_args .. '" C-m')
+  if #context.vimine_crystal_test_suffix > 0 then
+    table.insert(commands, 'tmux send-keys -t ' .. context.vimine_crystal_test_window .. ' "' .. context.vimine_crystal_test_suffix .. '" C-m')
+  end
+  table.insert(commands, 'tmux select-window -t ' .. context.vimine_crystal_test_window )
+  return commands
+end
+
 local function elixir_test_command_maker()
   local commands = {}
   local file_path = context.file_path
@@ -97,6 +114,7 @@ local function ruby_test_command_maker()
 end
 
 local test_command_makers = {
+  crystal = crystal_test_command_maker,
   elixir = elixir_test_command_maker,
   lua = lua_test_command_maker,
   ruby = ruby_test_command_maker,

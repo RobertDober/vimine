@@ -2,6 +2,7 @@ local H = require'cccomplete.helpers'()
 local ctxt
 
 local completers = {
+  crystal   = require("cccomplete.crystal")(),
   elixir   = require("cccomplete.elixir")(),
   lua      = require("cccomplete.lua")(),
   markdown = require("cccomplete.markdown")(),
