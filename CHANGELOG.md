@@ -1,3 +1,9 @@
+# v 1.2.1  2020-12-25
+this is a merge release for features developped parallelly
+
+- rust snippets
+- more crystal keywords for cccompletion
+
 # v 1.2.0  2020-12-25
 
 - split string into chars
