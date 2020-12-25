@@ -1,9 +1,13 @@
 -- local dbg = require("debugger")
 -- dbg.auto_where = 2
 local lst = require 'tools.list'
+local split = require'tools.string'.split
+
 local _buffer = {
   cursor = {1, 0},
   lines = {},
+  filename = "",
+  path = ""
 }
 
 local _called = {
@@ -87,6 +91,15 @@ local stubber_api = {
   end,
 }
 
+local function _stub_path(path)
+  local filename = split(path, "/")
+  filename = filename[#filename]
+  _evaluations['expand("%")'] = path
+  _evaluations['expand("%:t")'] = filename
+  _buffer.path = path
+  _buffer.filename = filename
+end
+
 local function _stub_vim(params)
   if params.evaluation then
     _evaluations[params.evaluation[1]] = params.evaluation[2]
@@ -102,6 +115,9 @@ local function _stub_vim(params)
   end
   if params.ft then
     _options["filetype"] = params.ft
+  end
+  if params.path then
+    _stub_path(params.path)
   end
   if params.var then
     _variables[params.var[1]] = params.var[2]

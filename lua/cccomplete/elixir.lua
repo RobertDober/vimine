@@ -1,7 +1,32 @@
--- local = local, = local, dbg = require("debugger")
+-- local dbg = require("debugger")
 -- dbg.auto_where = 2
+local A = require "tools.active_support"
 local T = require "tools"()
 local H = require "cccomplete.helpers"()
+
+
+local function test_completion(ctxt)
+  if string.match(ctxt.line, "^module%s*$") then
+    local lines = {
+      "defmodule " .. A.camelize_path(ctxt.file_path) .. " do",
+      "  use ExUnit.Case",
+      "",
+      "  ",
+      "end"
+    }
+    return H.make_return_object{lines = lines, offset = 3}
+  end
+end
+
+local function complete_special(ctxt)
+  local file_name = ctxt.file_name
+  if not file_name then
+    return nil
+  end
+  if string.match(file_name, "_test[.]exs$") then
+    return test_completion(ctxt)
+  end
+end
 
 local function fn_complete_bare(ctxt)
   local line = string.gsub(ctxt.line, "%s*$", "")
@@ -76,6 +101,10 @@ local all_patterns = {
 }
 return function()
   local function complete(ctxt)
+    local special_completion = complete_special(ctxt)
+    if special_completion then
+      return special_completion
+    end
     local completion = H.complete_from_patterns(ctxt, all_patterns)
     if completion then
       return completion

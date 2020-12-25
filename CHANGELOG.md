@@ -1,3 +1,9 @@
+# v 1.2.0  2020-12-25
+
+- split string into chars
+- iteration now possible on strings too (just made foldl _polymorphic_)
+- elixr test file completions → active_support.camelize
+
 # v 1.1.2  2020-12-21
 
 - cccompletion for crystal added

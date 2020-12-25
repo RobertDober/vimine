@@ -1,5 +1,6 @@
 -- local dbg = require("debugger")
 -- dbg.auto_where = 2
+local map = require 'tools.fn'.map
 local _replacer
 
 local function chunk(str, spos, epos)
@@ -50,6 +51,9 @@ local function match_at(str, pos, pattern)
 end
 
 local function split(inputstr, sep)
+  if sep == "" then
+    return map(inputstr)
+  end
   if sep == nil then
     sep = "%s"
   end

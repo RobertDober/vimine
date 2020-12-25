@@ -56,7 +56,7 @@ local function state_machine(states)
   return function(input, acc, start_state)
     set_state(start_start or "start")
     for _, line in ipairs(input) do
-      -- print("state", current_state, "line", line, "out", vim.inspect(acc.lines))
+      -- print("state", current_state, "line", line, "out", #acc)
       acc = transition(line, acc)
     end
     return acc

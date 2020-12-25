@@ -2,6 +2,8 @@
 -- dbg.auto_where = 2
 local append = require"tools.list".append
 
+local function id(x) return x end
+
 local free = {}
 local function combine_params(dtp, ctp)
   local t = {}
@@ -56,6 +58,14 @@ local function curry_kwd(fn, ctkwds)
   end
 end
 
+local function _access(container, idx)
+  if type(container) == "string" then
+    return string.sub(container, idx, idx)
+  else
+    return container[idx]
+  end
+end
+
 local function foldl(list, fn, initial)
   local init_idx = 1
   local acc = initial
@@ -64,8 +74,9 @@ local function foldl(list, fn, initial)
     init_idx = 2
     acc = list[1]
   end
-  for idx = init_idx, #list do
-    acc = fn(acc, list[idx])
+  local size = #list
+  for idx = init_idx, size do
+    acc = fn(acc, _access(list, idx))
   end
   return acc
 end
@@ -76,6 +87,7 @@ local function each(list, fn)
 end
 
 local function map(list, fn)
+  local fn = fn or id
   local append = function(list, ele)
     table.insert(list, fn(ele))
     return list
@@ -92,13 +104,14 @@ local function range(low, high, step)
 end
 
 return {
-  curry = curry,
-  curry_at = curry_at,
+  curry     = curry,
+  curry_at  = curry_at,
   curry_kwd = curry_kwd,
-  each = each,
-  free = free,
-  foldl = foldl,
-  map = map,
-  merge = merge,
-  range = range,
+  each      = each,
+  free      = free,
+  foldl     = foldl,
+  id        = id,
+  map       = map,
+  merge     = merge,
+  range     = range,
 }
