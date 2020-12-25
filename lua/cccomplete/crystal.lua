@@ -6,8 +6,10 @@ local crystal_no_do = "^%s*(%a+)"
 local crystal_no_dos = {
   class = true,
   def = true,
+  enum = true,
   module = true,
   struct = true,
+  when = true,
 }
 
 return function()
