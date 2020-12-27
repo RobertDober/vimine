@@ -7,6 +7,7 @@ local completers = {
   lua      = require("cccomplete.lua")(),
   markdown = require("cccomplete.markdown")(),
   ruby     = require("cccomplete.ruby")(),
+  rust     = require("cccomplete.rust")(),
 }
 
 local function _insert_date()

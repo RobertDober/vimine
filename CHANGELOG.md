@@ -1,21 +1,26 @@
-# v 1.2.1  2020-12-25
+# v1.2.2  2020-12-25
+
+- rust cccompletion
+- elixir cccompletion test coverage back to 100%
+
+# v1.2.1  2020-12-25
 this is a merge release for features developped parallelly
 
 - rust snippets
 - more crystal keywords for cccompletion
 
-# v 1.2.0  2020-12-25
+# v1.2.0  2020-12-25
 
 - split string into chars
 - iteration now possible on strings too (just made foldl _polymorphic_)
 - elixr test file completions → active_support.camelize
 
-# v 1.1.2  2020-12-21
+# v1.1.2  2020-12-21
 
 - cccompletion for crystal added
 
 
-# v 1.1.1  2020-12-18
+# v1.1.1  2020-12-18
 
 - fixes #1 and #4
 
@@ -23,7 +28,7 @@ this is a merge release for features developped parallelly
 - implements #3 (elixir cccompletion for doc and moduledoc)
 - implements #5 (general cccompletor for `%date` use case, see above ;) )
 
-# v 1.1.0  2020-12-17
+# v1.1.0  2020-12-17
 
 - fn.curry_at
 - fn.curry_kwd
@@ -34,14 +39,14 @@ this is a merge release for features developped parallelly
 - refactoring of API access into one place
 - stubbing API access in specs
 
-# v 1.0.1 2020-12-15
+# v1.0.1 2020-12-15
 
 - @spec completion for elixir
 
-# v 1.0.0 2020-12-14
+# v1.0.0 2020-12-14
 
 - RotateAround (only for current line)
 
-# 2020-11-20
+# v1.0.0-dev 2020-11-20
 Now on Lua instead of Ruby in the wo_ruby branch
 Releases on this branch will be made with release tags of the form v1.x.y
