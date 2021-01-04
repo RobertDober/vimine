@@ -2,6 +2,10 @@ if exists("g:vimine_home") || &cp || v:version < 800
   finish
 endif
 
+if !exists("g:vimine_copy_to_clipboard_command")
+  let g:vimine_copy_to_clipboard_command = "xclip -selection clipboard"
+endif
+
 let g:vimine_home = expand("<sfile>:p:h:h")
 if has('ruby')
   exec 'ruby $Vimine="' . g:vimine_home . '"'
@@ -48,3 +52,23 @@ function! s:loadOnDemand(name)
   exec 'source ' . l:file
 endfunction
 command! -nargs=1 LoadOnDemand call <SID>loadOnDemand(<q-args>)
+
+function! s:toClipboard(text)
+  call system('echo -n ' . shellescape(a:text) . ' | ' . g:vimine_copy_to_clipboard_command)
+endfunction
+  
+function! s:copySelectionToClipboard(lnb1, lnb2) " {{{{{
+  let l:selection = join(getline(a:lnb1, a:lnb2), "\n")
+  call s:toClipboard(l:selection)
+endfunction " }}}}}
+
+function! s:copyStringToClipboard() " {{{{{
+  let [_, l:lnb, l:colstart, _] = getpos("'<")
+  let [_, _, l:colend, _] = getpos("'>")
+  let l:line = getline(l:lnb)
+  let l:str  = strpart(l:line, l:colstart-1, l:colend-l:colstart+1)
+  call s:toClipboard(l:str)
+endfunction " }}}}}
+command! -range L42CopySelectionToClipboard call <SID>copySelectionToClipboard(<line1>, <line2>)
+command! -range L42CopyStringToClipboard call <SID>copyStringToClipboard()
+vnoremap c <Esc>:L42CopyStringToClipboard<CR>

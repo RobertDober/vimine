@@ -1,4 +1,6 @@
-# v1.2.2  2020-12-25
+# v1.2.2  2021-01-??
+
+- copy selection to clipboard
 
 - rust cccompletion
 - elixir cccompletion test coverage back to 100%
