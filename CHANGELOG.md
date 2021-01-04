@@ -1,8 +1,12 @@
-# v1.2.2  2021-01-??
-
-- copy selection to clipboard
+# v1.2.3  2021-01-??
 
 - rust cccompletion
+
+# v1.2.2  2021-01-04
+
+- create secure passwords with  `mk_secure_passwords`, command L42MkSecurePassword
+- copy selection to clipboard
+
 - elixir cccompletion test coverage back to 100%
 
 # v1.2.1  2020-12-25

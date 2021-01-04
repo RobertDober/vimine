@@ -72,3 +72,10 @@ endfunction " }}}}}
 command! -range L42CopySelectionToClipboard call <SID>copySelectionToClipboard(<line1>, <line2>)
 command! -range L42CopyStringToClipboard call <SID>copyStringToClipboard()
 vnoremap c <Esc>:L42CopyStringToClipboard<CR>
+
+function! s:mkSecurePassword() " {{{{{
+  let l:secure_password = system("mk_secure_password -n")
+  exec 'normal a' . l:secure_password
+endfunction " }}}}}
+command! L42MkSecurePassword call <SID>mkSecurePassword()
+inoremap <Leader>sp <Esc>:L42MkSecurePassword<CR>
