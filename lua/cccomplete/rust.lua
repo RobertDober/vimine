@@ -17,10 +17,12 @@ local function fn_completion(ctxt)
   return H.make_return_object{lines = {line, H.indent(line, "    "), H.indent(line, "}") }} 
 
 end
-local rust_patterns = {
+local fn_patterns = {
   ['^%s*fn'] = fn_completion,
   ['^%s*pub%s+fn'] = fn_completion,
 }
+
+local rust_patterns = { fn_patterns }
 
 local function default_completion(line)
   local line = string.gsub(line, "%s*{?%s*$", "") .. " {"

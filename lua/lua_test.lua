@@ -47,6 +47,8 @@ local function elixir_test_command_maker()
   local test_args = context.vimine_elixir_test_command .. tag .. file_path
   if context.lnb == 1 then
     test_args = context.vimine_elixir_test_general_command
+  else
+    test_args =  context.vimine_elixir_test_prefix .. test_args
   end
 
   table.insert(commands, 'tmux send-keys -t ' .. context.vimine_elixir_test_window .. ' "' .. test_args .. '" C-m')
@@ -121,7 +123,7 @@ local test_command_makers = {
 }
 
 local test_var_suffices = {
-  "command", "general_command", "suffix", "window"
+  "command", "general_command", "prefix", "suffix", "window"
 }
 local function run_tests()
   context = _context.context()

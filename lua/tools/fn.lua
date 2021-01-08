@@ -94,6 +94,33 @@ local function map(list, fn)
   end
   return foldl(list, append, {})
 end
+
+local function _recursive_insert(list, values)
+  if type(values) == "table" then
+    for _, value in ipairs(values) do
+      _recursive_insert(list, value)
+    end
+  else
+    table.insert(list, values)
+  end
+end
+local function flat_map(list, fn)
+  local fn = fn or id
+  local append = function(list, ele)
+    _recursive_insert(list, fn(ele))
+    return list
+  end
+  return foldl(list, append, {})
+end
+
+local function map(list, fn)
+  local fn = fn or id
+  local append = function(list, ele)
+    table.insert(list, fn(ele))
+    return list
+  end
+  return foldl(list, append, {})
+end
 local function range(low, high, step)
   local step = step or 1
   local result = {}
@@ -112,6 +139,7 @@ return {
   foldl     = foldl,
   id        = id,
   map       = map,
+  flat_map  = flat_map,
   merge     = merge,
   range     = range,
 }

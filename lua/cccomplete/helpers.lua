@@ -1,3 +1,5 @@
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local T = require "tools"()
 
 return function()

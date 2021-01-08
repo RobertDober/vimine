@@ -3,7 +3,28 @@
 local A = require "tools.active_support"
 local T = require "tools"()
 local H = require "cccomplete.helpers"()
+local S = require "tools.string"
+local F = require "tools.fn"
+local L = require "tools.list"
+local equals = require'tools.functors'.equals
 
+local function _upt_to_lib(path)
+  local segments = S.split(path, "/")
+  local tail     = L.tail_from(segments, equals("lib"))
+  return table.concat(tail, "/")
+end
+
+local function defmodule_completion(ctxt)
+  if string.match(ctxt.line, "^module%s*$") then
+    local path = _upt_to_lib(ctxt.file_path)
+    local lines = {
+      "defmodule " .. A.camelize_path(path) .. " do",
+      "  ",
+      "end"
+    }
+    return H.make_return_object{lines = lines, offset = 1}
+  end
+end
 
 local function test_completion(ctxt)
   if string.match(ctxt.line, "^module%s*$") then
@@ -25,6 +46,8 @@ local function complete_special(ctxt)
   end
   if string.match(file_name, "_test[.]exs$") then
     return test_completion(ctxt)
+  else
+    return defmodule_completion(ctxt)
   end
 end
 
@@ -33,7 +56,7 @@ local function fn_complete_bare(ctxt)
   return H.complete_with_end(line)
 end
 
-local fn_patterns = { 
+local fn_patterns = {
   ["%s+->%s+$"] = fn_complete_bare,
 }
 
@@ -41,7 +64,7 @@ local function fn_complete_first_docstring(with)
   local with = with or ""
   return function(ctxt)
     local line = string.gsub(ctxt.line, ">%s*", with .. "> ")
-    return H.make_return_object{lines = {line}, offset = 0} 
+    return H.make_return_object{lines = {line}, offset = 0}
   end
 end
 local function fn_complete_docstring(with)
@@ -49,7 +72,7 @@ local function fn_complete_docstring(with)
   return function(ctxt)
     local line = string.gsub(ctxt.line, ">", with .. ">")
     local number = string.match(line, "([(]%d+[)])")
-    return H.make_return_object{lines = {line, H.indent(line) .. "..." .. number .. "> "}} 
+    return H.make_return_object{lines = {line, H.indent(line) .. "..." .. number .. "> "}}
   end
 end
 local doctest_patterns = {

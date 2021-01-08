@@ -1,6 +1,11 @@
-# v1.2.3  2021-01-??
+# v1.2.3  2021-01-08
 
+- new tool functors
+- list tool tail_from
+- module completion with name generated for elixir (active_support tool)
 - rust cccompletion
+- iex -S mix test completion for elixir tests "&ti" 
+- fn.flat_map
 
 # v1.2.2  2021-01-04
 

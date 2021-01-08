@@ -112,6 +112,20 @@ local function reverse(list)
   
 end
 
+local function tail_from(list, fun, include)
+  local include = include or false
+  local result = {}
+  for i = #list, 1, -1 do
+    if fun(list[i]) then
+      if include then
+        table.insert(result, 1, list[i])
+      end
+      return result
+    end
+    table.insert(result, 1, list[i])
+  end
+  return result
+end
 return { 
   append = append,
   concat = concat,
@@ -122,4 +136,5 @@ return {
   rotate_left = rotate_left, 
   rotate_right = rotate_right,
   slice  = slice,
+  tail_from  = tail_from,
 }

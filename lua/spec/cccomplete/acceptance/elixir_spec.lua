@@ -60,3 +60,4 @@ insulate("implementation #3 doc and moduledoc", function()
     end)
   end)
 end)
+
