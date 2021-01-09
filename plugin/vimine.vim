@@ -71,7 +71,7 @@ function! s:copyStringToClipboard() " {{{{{
 endfunction " }}}}}
 command! -range L42CopySelectionToClipboard call <SID>copySelectionToClipboard(<line1>, <line2>)
 command! -range L42CopyStringToClipboard call <SID>copyStringToClipboard()
-vnoremap c <Esc>:L42CopyStringToClipboard<CR>
+vnoremap cp <Esc>:L42CopyStringToClipboard<CR>
 
 function! s:mkSecurePassword() " {{{{{
   let l:secure_password = system("mk_secure_password -n")

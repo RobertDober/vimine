@@ -20,6 +20,7 @@ return {
   call_function = call_function,
   command = function(cmd) api.nvim_command(cmd) end,
   cursor = function() return api.nvim_win_get_cursor(0) end,
+  get_mark = function(mark) return api.nvim_buf_get_mark(0, mark) end,
   set_cursor = function(l, c) api.nvim_win_set_cursor(0, normalise_cursor(l, c)) end,
   eval = function(str) return api.nvim_eval(str) end,
   line = function() return api.nvim_get_current_line() end,

@@ -22,6 +22,9 @@ local _options = {
 local _evaluations = {
 }
 
+local _marks = {
+}
+
 local _variables = {
 }
 
@@ -45,6 +48,9 @@ local _vim = {
         lnb2 = #_buffer.lines + 1 + lnb2
       end
       return lst.slice(_buffer.lines, lnb1 + 1, lnb2)
+    end,
+    nvim_buf_get_mark = function(_, mark)
+      return _marks[mark] or {0, 0}
     end,
     nvim_buf_get_option = function(_, name)
       return _options[name]
@@ -86,10 +92,18 @@ local stubber_api = {
   option = function(key, value)
     _options[key] = value
   end,
+  set_mark = function(mark, position)
+    _marks[mark] = position
+  end,
   var = function(key, value)
     _variables[key] = value
   end,
 }
+
+local function _set_marks_for_selection(selection)
+  _marks["<"] = selection[1]
+  _marks[">"] = selection[2]
+end
 
 local function _stub_path(path)
   local filename = split(path, "/")
@@ -118,6 +132,9 @@ local function _stub_vim(params)
   end
   if params.path then
     _stub_path(params.path)
+  end
+  if params.selection then
+    _set_marks_for_selection(params.selection)
   end
   if params.var then
     _variables[params.var[1]] = params.var[2]

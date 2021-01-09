@@ -17,14 +17,16 @@ local function _insert_date()
 end
 local function _insert_datetime()
   local now = ctxt.api.eval('strftime("%F %T", localtime())')
-  local nl  = string.gsub(ctxt.line, "%%datetime", now)
+  local nl  = string.gsub(ctxt.line, "%%datetimez", now .. "Z")
+  local nl  = string.gsub(nl, "%%datetime", now)
   return H.make_return_object{lines = {nl}, offset = 0}
 end
 local general_patterns = {
   date = _insert_date,
   datetime = _insert_datetime,
+  datetimez = _insert_datetime,
 }
-local general_pattern = "%%([%w_]+)$"
+local general_pattern = "%%([%w_]+)"
 local function check_for_general_completer()
   local m = string.match(ctxt.line, general_pattern)
   return general_patterns[m]

@@ -21,7 +21,19 @@ describe("%datetime", function()
   end)
 end)
 
-insulate("%date", function()
+describe("%datetimez", function()
+  stub_vim{lines = {"  hello >", "it's now (%datetimez)"}, cursor = {2, 999}, ft = "???"}
+  local now = r.random_string("time_")
+  local time_command = 'strftime("%F %T", localtime())' 
+  stubber.evaluation(time_command, now)
+  complete()
+  it("expands the %datetime word", function()
+    assert.are.same({"  hello >", "it's now (" .. now .. "Z)"}, api.buffer())
+    assert.are.same({2, 999}, api.cursor())
+  end)
+end)
+
+describe("%date", function()
   stub_vim{lines = {"  hello >", "it's now %datetime", "%date"}, cursor = {2, 999}, ft = "???"}
   local now = r.random_string("date_")
   local time_command = 'strftime("%F", localtime())' 
