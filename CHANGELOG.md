@@ -1,6 +1,5 @@
-# v1.2.4  2021-01-??
+# v1.2.4  2021-01-09
 
-- stack
 - selection tools inside `context.lua` 
 - V command → `selection_command.lua`
 - general completions (ft unrelated) for `%datetimez` (zoned)
