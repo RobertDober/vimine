@@ -138,6 +138,7 @@ local function run_tests()
       function(suffix)
         return "vimine_" .. context.ft .. "_test_" .. suffix
       end)
+      -- print(vim.inspect(var_names))
   context:add_variables(var_names)
   local commands = test_command_maker()
   -- execute tmux commands
