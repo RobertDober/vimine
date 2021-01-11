@@ -5,7 +5,6 @@ local L = require'tools.list'
 local complete = require'selection.completer'.complete
 local api = require'nvimapi'
 
-
 local function execute(...)
   local ctxt  = C.context()
   local api = ctxt.api

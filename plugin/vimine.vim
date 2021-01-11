@@ -53,6 +53,28 @@ function! s:loadOnDemand(name)
   exec 'source ' . l:file
 endfunction
 command! -nargs=1 LoadOnDemand call <SID>loadOnDemand(<q-args>)
+
+function! s:toClipboard(text)
+  let @+=a:text
+  call system('echo -n ' . shellescape(a:text) . ' | ' . g:vimine_copy_to_clipboard_command)
+endfunction
+  
+function! s:copySelectionToClipboard(lnb1, lnb2) " {{{{{
+  let l:selection = join(getline(a:lnb1, a:lnb2), "\n")
+  call s:toClipboard(l:selection)
+endfunction " }}}}}
+
+function! s:copyStringToClipboard() " {{{{{
+  let [_, l:lnb, l:colstart, _] = getpos("'<")
+  let [_, _, l:colend, _] = getpos("'>")
+  let l:line = getline(l:lnb)
+  let l:str  = strpart(l:line, l:colstart-1, l:colend-l:colstart+1)
+  call s:toClipboard(l:str)
+endfunction " }}}}}
+command! -range L42CopySelectionToClipboard call <SID>copySelectionToClipboard(<line1>, <line2>)
+command! -range L42CopyStringToClipboard call <SID>copyStringToClipboard()
+vnoremap cp <Esc>:L42CopyStringToClipboard<CR>
+
 function! s:mkSecurePassword() " {{{{{
   let l:secure_password = system("mk_secure_password -n")
   exec 'normal a' . l:secure_password
