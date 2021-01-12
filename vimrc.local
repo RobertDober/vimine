@@ -365,4 +365,5 @@ set statusline+=\
 "   " call plug#end()
 " endif
 
+let g:python3_host_prog = '/home/robert/.asdf/shims/python3'
 let g:coc_global_extensions = ['coc-solargraph']
