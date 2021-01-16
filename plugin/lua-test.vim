@@ -25,6 +25,12 @@ let g:vimine_lua_test_prefix  = ""
 let g:vimine_lua_test_suffix  = ""
 let g:vimine_lua_test_window  = "test"
 
+let g:vimine_python_test_command = "python3 -m unittest"
+let g:vimine_python_test_general_command = "python3 -m unittest"
+let g:vimine_python_test_prefix  = ""
+let g:vimine_python_test_suffix  = ""
+let g:vimine_python_test_window  = "pytest"
+
 let g:vimine_ruby_test_command = "bundle exec rspec"
 let g:vimine_ruby_test_prefix  = ""
 let g:vimine_ruby_test_suffix  = ""

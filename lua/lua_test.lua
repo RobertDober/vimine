@@ -88,6 +88,25 @@ local function lua_test_command_maker()
   return commands
 end
 
+local function python_test_command_maker()
+  local commands = {}
+  local file_path = context.file_path
+  -- context:add_variables( "vimine_python_test_general_command", "vimine_python_test_command", "vimine_python_test_suffix", "vimine_python_test_window")
+  local tag = " "
+  local test_args = context.vimine_python_test_command .. tag .. file_path
+  -- if context.lnb == 1 then
+  --   test_args = context.vimine_python_test_general_command
+  -- end
+
+  table.insert(commands, 'tmux send-keys -t ' .. context.vimine_python_test_window .. ' "' .. test_args .. '" C-m')
+  if #context.vimine_python_test_suffix > 0 then
+    table.insert(commands, 'tmux send-keys -t ' .. context.vimine_python_test_window .. ' "' .. context.vimine_python_test_suffix .. '" C-m')
+  end
+  table.insert(commands, 'tmux select-window -t ' .. context.vimine_python_test_window )
+
+  return commands
+end
+
 local trigger_ruby_line_spec = {
   "^%s*describe%s",
   "^%s*context%s",
@@ -119,6 +138,7 @@ local test_command_makers = {
   crystal = crystal_test_command_maker,
   elixir = elixir_test_command_maker,
   lua = lua_test_command_maker,
+  python = python_test_command_maker,
   ruby = ruby_test_command_maker,
 }
 

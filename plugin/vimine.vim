@@ -18,6 +18,7 @@ function! s:cleanup() " {{{{{
   exec 'normal ' . l:lnb . 'G'
 endfunction " }}}}}
 
+
 command! CheckoutBuffer :call system("git checkout " . expand("%:p") ) | edit!
 command! Cleanup call <SID>cleanup()
 command! MakeRuler call buffer#insert_ruler()
