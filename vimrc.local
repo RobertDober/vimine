@@ -365,5 +365,16 @@ set statusline+=\
 "   " call plug#end()
 " endif
 
-let g:python3_host_prog = '/home/robert/.asdf/shims/python3'
+" Linux and MacOS delta
+for _python3 in ['/home/robert/.asdf/shims/python3',
+      \ '/usr/local/bin/python3' ]
+  if file_readable(_python3)
+    let g:python3_host_prog = _python3
+    break
+  endif
+endfor
+let g:NERDTreeIgnore = ['__init__.py', '*.pyc', '__pycache__', '\~$']
+if file_readable('/usr/local/bin/python3') 
+  let g:python3_host_prog = '/usr/local/bin/python3'
+endif
 let g:coc_global_extensions = ['coc-solargraph']
