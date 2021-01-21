@@ -1,12 +1,17 @@
-if exists("g:vimine_home") || &cp || v:version < 800
+if !exists("g:vimine_home") || &cp || v:version < 800
+  let g:vimine_home = expand("<sfile>:p:h:h")
   finish
 endif
+
+if exists("g:vimine_loaded") || &cp || v:version < 800
+  finish
+endif
+let g:vimine_loaded = 1
 
 if !exists("g:vimine_copy_to_clipboard_command")
   let g:vimine_copy_to_clipboard_command = "xclip -selection clipboard"
 endif
 
-let g:vimine_home = expand("<sfile>:p:h:h")
 if has('ruby')
   exec 'ruby $Vimine="' . g:vimine_home . '"'
   exec 'ruby $:.unshift("' . g:vimine_home . '/ext/ruby/lib")'

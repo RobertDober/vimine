@@ -9,3 +9,6 @@
 /ext/crystal/shard.lock
 /ext/crystal/bin/
 luacov.*
+
+*.pyc
+__pycache__
