@@ -1,5 +1,23 @@
-snippet #
-  	#{${1}}
+snippet rspec
+	# frozen_string_literal: true
+
+	require 'rails_helper'
+
+	RSpec.describe ${1} do
+	  ${2}
+	end
+snippet class
+	# frozen_string_literal: true
+
+	class ${1}
+	  ${2}
+	end
+snippet module
+	# frozen_string_literal: true
+
+	module ${1}
+	  ${2}
+	end
 snippet sh
 	require 'spec_helper'
 	RSpec.describe ${1} do
