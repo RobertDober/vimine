@@ -1,3 +1,5 @@
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local T = require'tools'()
 local map = require'tools.fn'.map
 local _context = require'context'

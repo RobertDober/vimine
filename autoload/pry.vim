@@ -10,7 +10,7 @@ let s:pry_commands = {
 function! pry#insert_pry() " {{{{{
   let l:pry_command = s:pry_commands[&ft]
   call buffer#append_with_prefix(l:pry_command)
-  silent exec 'write'
+  silent exec 'write!'
 endfunction: " }}}}}
 
 function! pry#remove_all_pries() " {{{{{
