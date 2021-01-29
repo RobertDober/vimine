@@ -43,6 +43,7 @@ set cpo&vim " reset them to defaults
 command! -range VimineLuaTest lua require'lua_test'.run_tests()
 map <Leader>t :VimineLuaTest<CR>
 map <Leader>ti :let x=g:vimine_elixir_test_prefix<CR>:let g:vimine_elixir_test_prefix="iex -S "<CR>:VimineLuaTest<CR>:let g:vimine_elixir_test_prefix=x<CR>
+command! L42Rubocop lua require'rubocop'.run()
 " in plugin/whid.vim
 
 

@@ -1,11 +1,11 @@
-if !exists("g:vimine_home") || &cp || v:version < 800
+if !exists("g:vimine_home")
   let g:vimine_home = expand("<sfile>:p:h:h")
+endif
+
+if exists("g:vimine_loaded")
   finish
 endif
 
-if exists("g:vimine_loaded") || &cp || v:version < 800
-  finish
-endif
 let g:vimine_loaded = 1
 
 if !exists("g:vimine_copy_to_clipboard_command")
@@ -78,6 +78,16 @@ endfunction " }}}}}
 command! -range L42CopySelectionToClipboard call <SID>copySelectionToClipboard(<line1>, <line2>)
 command! -range L42CopyStringToClipboard call <SID>copyStringToClipboard()
 vnoremap cp <Esc>:L42CopyStringToClipboard<CR>
+
+function! s:copyFilenameToClipboard() " {{{{{
+  let l:arg = '%'
+  if a:0
+    let l:arg = a:0
+  endif
+  let l:str = expand(l:arg)
+  call s:toClipboard(l:str)
+endfunction " }}}}}
+command! L42CopyFilenameToClipboard call <SID>copyFilenameToClipboard()
 
 function! s:mkSecurePassword() " {{{{{
   let l:secure_password = system("mk_secure_password -n")
