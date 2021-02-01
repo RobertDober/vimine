@@ -10,8 +10,7 @@ let g:vimine_did_cxcomplete = 1
 let s:save_cpo = &cpo " save user coptions
 set cpo&vim " reset them to defaults
 command! -range CXComplete lua require'cxcomplete'.complete()
-imap <C-x> <Esc>:CXComplete<CR>a
-map <C-x> :CXComplete<CR>a
+imap ,,, <Esc>:CXComplete<CR>a
 " in plugin/whid.vim
 
 
