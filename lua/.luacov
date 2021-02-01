@@ -11,5 +11,6 @@ exclude = {
   "spec%/.+$",
   "[.]luarocks/",
   "/usr/local/share",
+  ".asdf/"
 }
 
