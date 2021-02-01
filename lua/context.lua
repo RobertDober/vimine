@@ -21,7 +21,9 @@ local function context(...)
     ft   = api.option('filetype'),
     file_name = api.eval('expand("%:t")'),
     file_path = api.eval('expand("%")'),
-
+    set_current_line = function(new_line)
+      api.set_lines(cursor[1], cursor[1], {new_line})
+    end
   }
   ctxt.pre_line = api.line_at(ctxt.lnb - 1)
   ctxt.post_line = api.line_at(ctxt.lnb + 1)

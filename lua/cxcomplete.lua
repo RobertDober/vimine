@@ -1,5 +1,5 @@
 local access_by_match = require'tools'().access_by_match
-local api             = require'vimapi'
+local api             = require'nvimapi'
 local _context        = require'context'
 local context
 
@@ -47,10 +47,56 @@ local togglers = {
   ruby = ruby_toggler
 }
 
+local default_replacements = {
+  ['->'] = '→',
+  ['=>'] = '⇒',
+  ['<-'] = '←',
+  ['<='] = '⇐',
+  ['--'] = '↔',
+  ['=='] = '⇔',
+  ['??'] = '¿',
+  ['!!'] = '¡',
+  ['copyright'] = '©',
+  ['not'] = '¬',
+  ['cross'] = '×',
+  ['...'] = '…',
+  ['tel'] = '☏',
+  ['ballot'] = '☐',
+  ['ballot_checked'] = '☑',
+  ['ballot_failed'] = '☒',
+  ['ok'] = '✓',
+  ['failed'] = '×',
+  ['error'] = '×',
+  ['check'] = '✓',
+  ['check_heavy'] = '✔',
+  ['cross_heavy'] = '✖',
+  ['x'] = '✗',
+  ['x_heavy'] = '✘',
+  [''] = '',
+  ['x_red'] = '❌',
+  ['white_check'] = '❎',
+  ['!_red'] = '❗',
+  -- [''] = '',
+  -- [''] = '',
+  -- [''] = '',
+  -- [''] = '',
+  -- [''] = '',
+  -- [''] = '',
+}
+local function default_complete()
+  local line   = context.line
+  local suffix = string.gsub(line, ".* ", "")
+  local replacement = default_replacements[suffix]
+  if not replacement then return end
+  local ll = #line
+  local sl = #suffix
+  context.set_current_line(string.sub(context.line, 0, ll - sl) .. replacement)
+end
+
 local function cxcomplete()
   context = _context.context()
   local toggler = togglers[context.ft]
-  if not toggler then return end
+  if not toggler then return default_complete() end
   
   local mark = api.get_mark("<")
   local begcol = mark[2]

@@ -10,10 +10,16 @@ if !exists('g:lab42_tmux_elixir_test_window')
   let g:lab42_tmux_elixir_test_window = 'tests'
 endif
 
+function! s:insert_debug_line() " {{{{{
+  let l:line = getline(".") 
+  let l:prefix = substitute(l:line, '\v\S.*', '', '')
+  call append(line("."), l:prefix . '|> IO.inspect')
+endfunction " }}}}}
 " command! IOInspect :call lab42#elixir#insert_inspect()
 command! ElixirActivateInsertDebugInspect call buffer#uncomment_suffix(' |> IO.inspect')
 command! ElixirDeactivateInsertDebugInspect call buffer#comment_suffix(' |> IO.inspect')
 command! ElixirInsertDebugInspect call buffer#insert_at_cursor(' |> IO.inspect() ')
+command! ElixirInsertDebugLine call <SID>insert_debug_line()
 nmap <Leader>i :ElixirInsertDebugInspect<CR>
 
 function! s:formatThisFile() " {{{{{
