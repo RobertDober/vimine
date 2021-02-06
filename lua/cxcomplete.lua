@@ -28,7 +28,7 @@ local function ruby_toggler(cols)
   local new_value = kind(selected)
   local new_line = context.line:sub(1, cols.begcol) .. new_value .. context.line:sub(cols.endcol+2)
   api.set_current_line(new_line)
-  api.normal_command('viw')
+  api.normal('viw')
 end
 
 local lua_toggles = {
