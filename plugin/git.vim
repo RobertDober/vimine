@@ -9,7 +9,11 @@ endif
 let s:save_cpo = &cpo " save user coptions
 set cpo&vim " reset them to defaults
 command! GitMergeTakeCurrent lua require'git'.take_current()
+map gmtc :GitMergeTakeCurrent<CR>
 command! GitMergeTakeIncoming lua require'git'.take_incoming()
+map gmti :GitMergeTakeIncoming<CR>
+map gnc /<<<<<<< <CR>
+
 
 let &cpo = s:save_cpo " and restore after
 unlet s:save_cpo
