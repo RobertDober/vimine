@@ -14,8 +14,8 @@ command! -range -nargs=* V lua require'selection_command'.execute(<f-args>)
 command! -range -nargs=* CL lua require'selection_command'.execute_lines(<q-args>)
 imap <C-c> <Esc>:CCComplete<CR>a
 map <C-c> :CCComplete<CR>a
-vmap <C-c> :V 
-vmap <C-c> :CL 
+vmap <C-c> :V
+vmap <C-c> :CL
 " in plugin/whid.vim
 
 let &cpo = s:save_cpo " and restore after

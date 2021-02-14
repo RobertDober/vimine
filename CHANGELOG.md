@@ -1,3 +1,13 @@
+# v1.2.6  2021-??-??
+
+- selection completion (imap ,,,) 
+
+# v1.2.5  2021-02-14
+
+- rubocop
+- file name navigation
+- minor enhancements
+
 # v1.2.4  2021-01-09
 
 - selection tools inside `context.lua` 
