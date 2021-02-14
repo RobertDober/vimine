@@ -25,7 +25,6 @@ command! Cleanup call <SID>cleanup()
 command! MakeRuler call buffer#insert_ruler()
 command! Pry call pry#insert_pry()
 command! UnPry call pry#remove_all_pries()
-command! -range Rubocop :call ruby#cop#repair(<line1>, <line2>) 
 command! WriteAndSource :w|source %
 
 map <Leader>tnt :tabnew<CR><C-t>

@@ -60,6 +60,21 @@ local function readonly(t, msg)
   return proxy
 end
 
+local function _flatten(acc, list)
+  for _, ele in ipairs(list) do
+    if type(ele) == 'table' then
+      _flatten(acc, ele)
+    else
+      table.insert(acc, ele)
+    end
+  end
+  return acc
+end
+
+local function flatten(...)
+  local list = {...}
+  return _flatten({}, list)
+end
 slice = function(list, startpos, endpos, fn)
   local endpos = endpos or #list
   if endpos < 0 then
@@ -129,6 +144,7 @@ end
 return { 
   append = append,
   concat = concat,
+  flatten = flatten,
   partition = partition,
   readonly = readonly,
   replace = replace,
