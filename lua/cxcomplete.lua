@@ -1,3 +1,6 @@
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
+
 local access_by_match = require'tools'().access_by_match
 local api             = require'nvimapi'
 local _context        = require'context'

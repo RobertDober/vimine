@@ -74,6 +74,8 @@ end
 
 return {
   context = context,
+  local_context = local_context,
   get_selection = get_selection,
-  set_selection = set_selection
+  set_selection = set_selection,
+
 }

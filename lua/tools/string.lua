@@ -1,6 +1,7 @@
 -- local dbg = require("debugger")
 -- dbg.auto_where = 2
 local map = require 'tools.fn'.map
+local find_match = require 'tools/fn'.find_match
 local _replacer
 
 local function chunk(str, spos, epos)
@@ -64,8 +65,40 @@ local function split(inputstr, sep)
   return t
 end
 
+
+local matching_pairs = {
+  ["%w"] = "%W",
+  ["%s"] = "%S"
+}
+
+local function find_matched(str, start, incr, pattern)
+  local idx = start
+  local len = #str
+  while idx > 0 and idx <= len do
+    if string.match(string.sub(str, idx, idx), pattern) then return idx end
+    idx = idx + incr
+  end
+  -- print("idx "..idx)
+  return idx
+end
+
+local function split_at_col(line, col)
+  local col = col + 1
+  local char = string.sub(line, col, col)
+  local matched = find_match(matching_pairs, char)
+  if not matched then return "", line, "" end
+  local lpos = find_matched(line, col-1, -1, matched)
+  local rpos = find_matched(line, col+1, 1, matched)
+  -- print("lpos"..lpos)
+  -- print("rpos"..rpos)
+  return string.sub(line, 1, lpos),
+    string.sub(line, lpos+1, rpos-1),
+    string.sub(line, rpos, #line)
+end
+
 return {
   chunk = chunk,
   match_at = match_at,
-  split = split
+  split = split,
+  split_at_col = split_at_col,
 }

@@ -18,6 +18,5 @@ vmap <C-c> :V
 vmap <C-c> :CL 
 " in plugin/whid.vim
 
-
 let &cpo = s:save_cpo " and restore after
 unlet s:save_cpo

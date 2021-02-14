@@ -86,13 +86,17 @@ local function each(list, fn)
   foldl(list, function(_, ele) fn(ele) end, true)
 end
 
-local function map(list, fn)
-  local fn = fn or id
-  local append = function(list, ele)
-    table.insert(list, fn(ele))
-    return list
+local function find(table, fn)
+  for pattern, value in pairs(table) do
+    if fn(pattern) then return value end
   end
-  return foldl(list, append, {})
+  return nil
+end
+
+local function find_match(table, matchee)
+  return find(table, function(pattern)
+    return string.match(matchee, pattern)
+  end)
 end
 
 local function _recursive_insert(list, values)
@@ -135,11 +139,13 @@ return {
   curry_at  = curry_at,
   curry_kwd = curry_kwd,
   each      = each,
-  free      = free,
+  find      = find,
+  find_match = find_match,
+  flat_map  = flat_map,
   foldl     = foldl,
+  free      = free,
   id        = id,
   map       = map,
-  flat_map  = flat_map,
   merge     = merge,
   range     = range,
 }
