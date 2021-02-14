@@ -81,3 +81,5 @@ function! s:mkSecurePassword() " {{{{{
 endfunction " }}}}}
 command! L42MkSecurePassword call <SID>mkSecurePassword()
 inoremap <Leader>sp <Esc>:L42MkSecurePassword<CR>
+
+lua api=require'nvimapi'
