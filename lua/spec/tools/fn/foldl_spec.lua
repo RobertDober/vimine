@@ -1,3 +1,5 @@
+-- local dbg = require("debugger")
+-- dbg.auto_where = 2
 local foldl = require'tools.fn'.foldl
 
 local function add(a,b)

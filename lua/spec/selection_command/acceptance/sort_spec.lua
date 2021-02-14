@@ -21,7 +21,16 @@ describe("sort a list", function()
     it("will change it", function()
       assert.is_equal("prefix ['x', 'y', 'z'] suffix", api.line_at(1))
     end)
+  end)
+end)
 
-    
+describe("nop", function()
+  stub_vim{lines = {"prefix ['y', 'z', 'x'] suffix"}, selection = {{1, 20}, {1, 8}}} -- N.B. order is not important for cols, index 0 based
+  local selection = get_selection()[1]
+  describe("undefined command", function()
+    execute('no op')
+    it("will not change anything", function()
+      assert.are.same({"prefix ['y', 'z', 'x'] suffix"}, api.buffer())
+    end)
   end)
 end)
