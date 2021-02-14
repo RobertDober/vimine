@@ -14,7 +14,9 @@ imap ;;; <Esc>:CLComplete<CR>a
 map ;;; <Esc>:CLComplete<CR>
 
 command! -range CXComplete lua require'cxcomplete'.complete()
+command! -range CVComplete lua require'cvcomplete'.complete()
 imap ,,, <Esc>:CXComplete<CR>a
+vmap <C-x> :CVComplete<CR>gv
 map ,,, :CXComplete<CR>
 
 let &cpo = s:save_cpo " and restore after

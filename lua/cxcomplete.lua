@@ -1,13 +1,19 @@
 -- local dbg = require("debugger")
 -- dbg.auto_where = 2
 
-local access_by_match = require'tools'().access_by_match
+
+local find_match = require'tools.fn'.find_match
 local api             = require'nvimapi'
 local _context        = require'context'
 local context
 
 local function get_selection(cols)
   return context.line:sub(cols.begcol+1, cols.endcol+1)
+end
+
+local function replace_selection(new_value, cols)
+  local new_line = context.line:sub(1, cols.begcol) .. new_value .. context.line:sub(cols.endcol+2)
+  api.set_current_line(new_line)
 end
 
 local function ruby_sym_to_sq(selection)
@@ -21,17 +27,15 @@ local function ruby_dq_to_sym(selection,col)
 end
 local ruby_toggles = {
   ["^:[%a_][%a%d_]+$"] = ruby_sym_to_sq,
-  ["'[%a_][%a%d_]+'$"] = ruby_sq_to_dq,
-  ['"[%a_][%a%d_]+"$'] = ruby_dq_to_sym,
+  ["^'[%a_][%a%d_]+'$"] = ruby_sq_to_dq,
+  ['^"[%a_][%a%d_]+"$'] = ruby_dq_to_sym,
 }
 local function ruby_toggler(cols)
   local selected = get_selection(cols)
-  local kind = access_by_match(selected, ruby_toggles)
+  local kind = find_match(ruby_toggles, selected)
   if not kind then return end
   local new_value = kind(selected)
-  local new_line = context.line:sub(1, cols.begcol) .. new_value .. context.line:sub(cols.endcol+2)
-  api.set_current_line(new_line)
-  api.normal('viw')
+  return new_value
 end
 
 local lua_toggles = {
@@ -43,13 +47,12 @@ local function lua_toggler(cols)
   local new_value = lua_toggles[selected] or selected
   local new = context.line:sub(1, cols.begcol) .. new_value .. context.line:sub(cols.endcol+2)
   api.set_current_line(new)
-  api.normal_command('viw')
+  api.normal('viw')
 end
 local togglers = {
   lua = lua_toggler,
   ruby = ruby_toggler
 }
-
 local default_replacements = {
   ['->'] = '→',
   ['=>'] = '⇒',
@@ -106,7 +109,13 @@ local function cxcomplete()
   local endcol = api.get_mark(">")[2]
 
   new = toggler{begcol=begcol, endcol=endcol}
+  if new then
+    replace_selection(new, {begcol=begcol, endcol=endcol})
+    api.normal('gv')
+    return
+  end
 
+  return default_complete()
 end
 
 return {
