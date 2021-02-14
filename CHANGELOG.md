@@ -1,6 +1,7 @@
-# v1.2.6  2021-??-??
+# v1.2.6  2021-02-14
 
-- selection completion (imap ,,,) 
+- selection completion (c-x) 
+- CL Command rubocop
 
 # v1.2.5  2021-02-14
 
