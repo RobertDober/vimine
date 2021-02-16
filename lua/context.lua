@@ -15,15 +15,18 @@ local function context(...)
   local ctxt = {
     api     = api,
     col = cursor[2],
+    char = string.sub(api.line(), cursor[2]+1, cursor[2]+1),
     cursor = cursor,
     lnb  = cursor[1],
     line = api.line(),
     ft   = api.option('filetype'),
     file_name = api.eval('expand("%:t")'),
     file_path = api.eval('expand("%")'),
+    prefix = string.sub(api.line(), 1, cursor[2]),
     set_current_line = function(new_line)
       api.set_lines(cursor[1], cursor[1], {new_line})
-    end
+    end,
+    suffix = string.sub(api.line(), cursor[2]+2),
   }
   ctxt.pre_line = api.line_at(ctxt.lnb - 1)
   ctxt.post_line = api.line_at(ctxt.lnb + 1)

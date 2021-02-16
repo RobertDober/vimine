@@ -24,3 +24,4 @@ describe("context of current situation", function()
     assert.is_equal(2, ctxt.beta)
   end)
 end)
+
