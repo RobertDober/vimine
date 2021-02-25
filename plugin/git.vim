@@ -12,7 +12,7 @@ command! GitMergeTakeCurrent lua require'git'.take_current()
 map gmtc :GitMergeTakeCurrent<CR>
 command! GitMergeTakeIncoming lua require'git'.take_incoming()
 map gmti :GitMergeTakeIncoming<CR>
-map gnc /<<<<<<< <CR>
+map gnc /<<<<<<< <CR>zz
 
 
 let &cpo = s:save_cpo " and restore after

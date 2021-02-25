@@ -14,8 +14,9 @@ command! -range -nargs=* V lua require'selection_command'.execute(<f-args>)
 command! -range -nargs=* CL lua require'selection_command'.execute_lines(<f-args>)
 command! CIComplete lua require'cicomplete'.complete()
 map <C-i> :CIComplete<CR>a
-imap <C-i> <ESC>:CIComplete<CR>a
-imap <C-c> <Esc>:CCComplete<CR>a
+" Need a different mapping
+" imap <C-i> <ESC>:CIComplete<CR>a
+" imap <C-c> <Esc>:CCComplete<CR>a
 map <C-c> :CCComplete<CR>a
 vmap <C-c> :CL
 " in plugin/whid.vim
