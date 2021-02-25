@@ -12,7 +12,7 @@ endif
 let g:vimine_rails_commands = 1
 
 function! s:completions(A, L, P)
-  return [
+  let l:candidates = [
         \ 'db/mig',
         \ 'app',
         \ 'app/controllers',
@@ -43,5 +43,6 @@ function! s:completions(A, L, P)
         \ 'spec/services',
         \ 'spec/support',
         \ 'tmp']
+  return join(l:candidates, "\n")
 endfunction
-command! -nargs=1 -complete=customlist,<SID>completions OpenDir NERDTree <args>
+command! -nargs=1 -complete=custom,<SID>completions OpenDir NERDTree <args>
