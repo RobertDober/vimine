@@ -16,7 +16,7 @@ command! CIComplete lua require'cicomplete'.complete()
 map <C-i> :CIComplete<CR>a
 " Need a different mapping
 " imap <C-i> <ESC>:CIComplete<CR>a
-" imap <C-c> <Esc>:CCComplete<CR>a
+imap <C-c> <Esc>:CCComplete<CR>a
 map <C-c> :CCComplete<CR>a
 vmap <C-c> :CL
 " in plugin/whid.vim
