@@ -12,3 +12,4 @@ luacov.*
 
 *.pyc
 __pycache__
+node_modules/
